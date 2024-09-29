@@ -1,0 +1,146 @@
+@startuml
+
+class PlacaDeVideo{
+    - modelo: String
+    - categoria: String
+    - preco: Double
+    - vram: Integer
+    - resolucao: String
+    - energia: Integer
+    - descricao: String
+    - compatibilidade: Integer
+}
+
+class Clock{
+    - clockBase: Double
+    - clockBoost: Double
+}
+
+enum Fan{
+    + ONE: int
+    + DOUBLE: int 
+    + TRIPLE: int
+}
+
+class Tamanho{
+    - altura: Integer
+    - largura: Integer
+    - comprimento: Integer
+}
+
+class Fabricante{
+    - nome: String
+    - cnpj: String
+    - email: String
+}
+
+class Cliente{
+    - nome: String
+    - cpf: String
+    - dataNascimento: LocalDate
+    - email: String 
+}
+
+class Endereco{
+    - cep: String
+    - cidade: String
+    - estado: String
+    - bairro: String
+    - numero: String
+}
+
+class EnderecoEntrega{
+    - cep: String
+    - cidade: String
+    - estado: String
+    - bairro: String
+    - numero: String
+}
+
+class Lote {
+    - codigo: String
+    - quantidade: Integer
+    - dataFabricacao: LocalDate
+}
+
+class ItemPedido{
+    - quantidade: Integer
+    - preco: Float
+}
+
+class Pedido{
+    - valoTotal: String
+    - data: LocalDate
+}
+
+class Cartao extends Pagamento {
+    - numero: String
+    - titular: String
+    - dataValidade: LocalDate
+    - cvv: String
+}
+
+class Pix extends Pagamento {
+    - codigo: String
+}
+
+class Boleto extends Pagamento {
+    - codigoBarra: String
+}
+
+enum TipoCartao {
+    + CREDITO: int
+    + DEBITO: int
+}
+
+abstract class Pagamento{
+    - valor: Float
+}
+
+enum StatusPedido{
+    + AGUARDANDO_PAGAMENTO: int
+    + PROCESSANDO: int
+    + ENVIADO: int
+    + ENTREGUE: int
+    + CANCELADO: int 
+}
+
+class TelefoneCliente{
+    - numero: String
+}
+
+class TelefoneFabricante{
+    - numero: String 
+}
+
+' RELACIONAMENTOS
+PlacaDeVideo "*" --> "1" Fabricante
+PlacaDeVideo "1" --> "*" Tamanho
+PlacaDeVideo "1" --> "*" Fan
+PlacaDeVideo "1" --> "*" Clock
+
+Lote "1" --> "*" PlacaDeVideo 
+
+Fabricante "1" *--> "*" TelefoneFabricante
+
+ItemPedido "*" --> "1" Lote
+
+Cliente "1" --> "*" Endereco
+Cliente "1" --> "*" PlacaDeVideo : listaDesejos
+Cliente "1" *--> "*" TelefoneCliente
+
+Pedido "1" --> "1" ItemPedido
+Pedido "1" *--> "1" EnderecoEntrega
+Pedido "*" *--> "1" Cliente
+Pedido "1" --> "1" Pagamento
+Pedido "1" --> "*" StatusPedido
+
+Cartao "*" *--> "1" TipoCartao
+
+' ANOTACOES
+
+note bottom of Tamanho: todas as medidas em mm
+
+
+
+@enduml
