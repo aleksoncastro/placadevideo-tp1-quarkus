@@ -2,6 +2,7 @@ package br.unitins.tp1.placadevideo.resource;
 
 import java.util.List;
 
+import br.unitins.tp1.placadevideo.dto.MunicipioDTORequest;
 import br.unitins.tp1.placadevideo.model.Municipio;
 import br.unitins.tp1.placadevideo.service.MunicipioService;
 import jakarta.inject.Inject;
@@ -41,14 +42,14 @@ public class MunicipioResource {
     }
 
     @POST
-    public Municipio create(Municipio municipio) {
+    public Municipio create(MunicipioDTORequest municipio) {
         return municipioService.create(municipio);
     }
 
     @PUT
     @Path("/{id}")
-    public void update(@PathParam("id") Long id, Municipio municipio) {
-        municipioService.update(municipio);
+    public void update(@PathParam("id") Long id, MunicipioDTORequest municipio) {
+        municipioService.update(id, municipio);
     }
 
     @DELETE

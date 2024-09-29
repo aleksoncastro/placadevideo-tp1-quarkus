@@ -1,5 +1,6 @@
 package br.unitins.tp1.placadevideo.service;
 
+import br.unitins.tp1.placadevideo.dto.MunicipioDTORequest;
 import br.unitins.tp1.placadevideo.model.Municipio;
 
 import java.util.List;
@@ -12,9 +13,9 @@ public interface MunicipioService {
 
     List<Municipio> findAll();
 
-    Municipio create(Municipio municipio);
+    Municipio create(MunicipioDTORequest dto);
 
-    Municipio update(Municipio municipio);
+    Municipio update(Long id, MunicipioDTORequest dto);
 
     void delete(Long id);
 
