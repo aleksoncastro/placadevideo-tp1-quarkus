@@ -16,7 +16,7 @@ public class MunicipioRepository implements PanacheRepository<Municipio> {
     }
 
     public List<Municipio> findByNome(Estado estado ){
-        return find("SELECT m FROM Municipio m Where m.estado.id LIKE ?1", estado.getId() ).list();
+        return find("SELECT municipio FROM Municipio municipio Where municipio.estado.id LIKE ?1", estado.getId() ).list();
         
     }
 }

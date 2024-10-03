@@ -2,7 +2,8 @@ package br.unitins.tp1.placadevideo.resource;
 
 import java.util.List;
 
-import br.unitins.tp1.placadevideo.dto.EstadoDTORequest;
+import br.unitins.tp1.placadevideo.dto.EstadoRequestDTO;
+import br.unitins.tp1.placadevideo.dto.EstadoResponseDTO;
 import br.unitins.tp1.placadevideo.model.Estado;
 import br.unitins.tp1.placadevideo.service.EstadoService;
 import jakarta.inject.Inject;
@@ -42,14 +43,13 @@ public class EstadoResource {
     }
 
     @POST
-    public Estado create(EstadoDTORequest estado) {
-
-        return estadoService.create(estado);
+    public EstadoResponseDTO create(EstadoRequestDTO dto) {
+        return EstadoResponseDTO.valueOf(estadoService.create(dto));
     }
 
     @PUT
     @Path("/{id}")
-    public void update(@PathParam("id") Long id, EstadoDTORequest estado) {
+    public void update(@PathParam("id") Long id, EstadoRequestDTO estado) {
         estadoService.update(id, estado);
     }
 

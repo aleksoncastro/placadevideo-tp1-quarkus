@@ -1,11 +1,10 @@
 package br.unitins.tp1.placadevideo.resource;
 
-import java.util.List;
-
-import br.unitins.tp1.placadevideo.dto.MunicipioDTORequest;
-import br.unitins.tp1.placadevideo.model.Municipio;
+import br.unitins.tp1.placadevideo.dto.MunicipioRequestDTO;
+import br.unitins.tp1.placadevideo.dto.MunicipioResponseDTO;
 import br.unitins.tp1.placadevideo.service.MunicipioService;
 import jakarta.inject.Inject;
+import jakarta.validation.Valid;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
@@ -15,6 +14,8 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.Response.Status;
 
 @Path("/municipios")
 @Produces(MediaType.APPLICATION_JSON)
@@ -26,36 +27,46 @@ public class MunicipioResource {
 
     @GET
     @Path("/{id}")
-    public Municipio findById(@PathParam("id") Long id) {
-        return municipioService.findById(id);
+    public Response findById(@PathParam("id") Long id) {
+        return Response.ok(MunicipioResponseDTO.valueOf(municipioService.findById(id))).build();
     }
 
     @GET
     @Path("/search/{nome}")
-    public List<Municipio> findByNome(@PathParam("nome") String nome) {
-        return municipioService.findByNome(nome);
+    public Response findByNome(@PathParam("nome") String nome) {
+        return Response.ok(municipioService.findByNome(nome).
+                                stream().
+                                map(m -> MunicipioResponseDTO.valueOf(m)).
+                                toList())
+                                .build();
     }
 
     @GET
-    public List<Municipio> findAll() {
-        return municipioService.findAll();
+    public Response findAll() {
+        return Response.ok(municipioService.findAll().
+                                stream().
+                                map(m -> MunicipioResponseDTO.valueOf(m)).
+                                toList()).build();
     }
 
     @POST
-    public Municipio create(MunicipioDTORequest municipio) {
-        return municipioService.create(municipio);
+    public Response create(@Valid MunicipioRequestDTO dto) {
+        return Response.status(Status.CREATED).entity(MunicipioResponseDTO.valueOf(municipioService.create(dto))
+        ).build();
     }
 
     @PUT
     @Path("/{id}")
-    public void update(@PathParam("id") Long id, MunicipioDTORequest municipio) {
-        municipioService.update(id, municipio);
+    public Response update(@PathParam("id") Long id, @Valid MunicipioRequestDTO dto) {
+        municipioService.update(id, dto);
+        return Response.noContent().build();
     }
 
     @DELETE
     @Path("/{id}")
-    public void delete(@PathParam("id") Long id) {
+    public Response delete(@PathParam("id") Long id) {
         municipioService.delete(id);
+        return Response.noContent().build();
     }
 
 }

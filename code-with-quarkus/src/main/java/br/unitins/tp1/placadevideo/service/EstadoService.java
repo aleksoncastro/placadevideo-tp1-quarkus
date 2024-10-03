@@ -1,6 +1,6 @@
 package br.unitins.tp1.placadevideo.service;
 
-import br.unitins.tp1.placadevideo.dto.EstadoDTORequest;
+import br.unitins.tp1.placadevideo.dto.EstadoRequestDTO;
 import br.unitins.tp1.placadevideo.model.Estado;
 
 import java.util.List;
@@ -13,9 +13,9 @@ public interface EstadoService {
 
     List<Estado> findAll();
 
-    Estado create(EstadoDTORequest dto);
+    Estado create(EstadoRequestDTO dto);
 
-    Estado update(Long id, EstadoDTORequest dto);
+    Estado update(Long id, EstadoRequestDTO dto);
 
     void delete(Long id);
 

@@ -2,7 +2,7 @@ package br.unitins.tp1.placadevideo.service;
 
 import java.util.List;
 
-import br.unitins.tp1.placadevideo.dto.MunicipioDTORequest;
+import br.unitins.tp1.placadevideo.dto.MunicipioRequestDTO;
 import br.unitins.tp1.placadevideo.model.Municipio;
 import br.unitins.tp1.placadevideo.repository.MunicipioRepository;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -24,7 +24,7 @@ public class MunicipioServiceImpl implements MunicipioService{
     }
 
     @Override
-    public List<Municipio> findByNome(String nome) {
+    public List<Municipio> findByNome(String nome) { 
         return municipioRepository.findByNome(nome);
     }
 
@@ -35,10 +35,10 @@ public class MunicipioServiceImpl implements MunicipioService{
 
     @Override
     @Transactional
-    public Municipio create(MunicipioDTORequest dto) {
+    public Municipio create(MunicipioRequestDTO dto) {
        Municipio municipio = new Municipio();
-       municipio.setNome(dto.getNome());
-       municipio.setEstado(estadoService.findById(dto.getIdEstado()));
+       municipio.setNome(dto.nome());
+       municipio.setEstado(estadoService.findById(dto.idEstado()));
        municipioRepository.persist(municipio);
        
        return municipio;       
@@ -46,10 +46,10 @@ public class MunicipioServiceImpl implements MunicipioService{
 
     @Override
     @Transactional
-    public Municipio update(Long id, MunicipioDTORequest dto) {
+    public Municipio update(Long id, MunicipioRequestDTO dto) {
         Municipio municipio = municipioRepository.findById(id); 
-        municipio.setNome(dto.getNome());
-        municipio.setEstado(estadoService.findById(dto.getIdEstado()));
+        municipio.setNome(dto.nome());
+        municipio.setEstado(estadoService.findById(dto.idEstado()));
         //buscando o estado apartir de um id do municipio
        
         return municipio;

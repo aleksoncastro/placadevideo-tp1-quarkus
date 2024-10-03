@@ -2,7 +2,7 @@ package br.unitins.tp1.placadevideo.service;
 
 import java.util.List;
 
-import br.unitins.tp1.placadevideo.dto.EstadoDTORequest;
+import br.unitins.tp1.placadevideo.dto.EstadoRequestDTO;
 import br.unitins.tp1.placadevideo.model.Estado;
 import br.unitins.tp1.placadevideo.repository.EstadoRepository;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -32,10 +32,10 @@ public class EstadoServiceImpl implements EstadoService {
 
     @Override
     @Transactional
-    public Estado create(EstadoDTORequest dto) {
+    public Estado create(EstadoRequestDTO dto) {
         Estado estado = new Estado();
-        estado.setNome(dto.getNome());
-        estado.setSigla(dto.getSigla());
+        estado.setNome(dto.nome());
+        estado.setSigla(dto.sigla());
 
         estadoRepository.persist(estado);
         return estado;
@@ -43,10 +43,10 @@ public class EstadoServiceImpl implements EstadoService {
 
     @Override
     @Transactional
-    public Estado update(Long id, EstadoDTORequest dto) {
+    public Estado update(Long id, EstadoRequestDTO dto) {
         Estado estado = estadoRepository.findById(id);
-        estado.setNome(dto.getNome());
-        estado.setSigla(dto.getSigla());
+        estado.setNome(dto.nome());
+        estado.setSigla(dto.sigla());
 
         return estado;
     }
