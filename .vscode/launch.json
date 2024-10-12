@@ -6,11 +6,11 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "preLaunchTask": "quarkus:dev (code-with-quarkus)",
+            "preLaunchTask": "quarkus:dev (placadevideo-tp1-quarkus)",
             "type": "java",
             "request": "attach",
             "hostName": "localhost",
-            "name": "Debug Quarkus application (code-with-quarkus)",
+            "name": "Debug Quarkus application (placadevideo-tp1-quarkus)",
             "port": 5005
         }
     ]

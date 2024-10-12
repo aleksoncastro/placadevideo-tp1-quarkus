@@ -30,13 +30,13 @@
 				}
 			],
 			"group": "build",
-			"label": "quarkus:dev (code-with-quarkus)",
+			"label": "quarkus:dev (placadevideo-tp1-quarkus)",
 			"command": "./mvnw quarkus:dev ",
 			"windows": {
 				"command": ".\\mvnw.cmd quarkus:dev "
 			},
 			"options": {
-				"cwd": "code-with-quarkus"
+				"cwd": "placadevideo-tp1-quarkus"
 			}
 		},
 		{
@@ -64,13 +64,13 @@
 				}
 			],
 			"group": "build",
-			"label": "package -Pnative (code-with-quarkus)",
+			"label": "package -Pnative (placadevideo-tp1-quarkus)",
 			"command": "./mvnw package -Pnative ",
 			"windows": {
 				"command": ".\\mvnw.cmd package -Pnative "
 			},
 			"options": {
-				"cwd": "code-with-quarkus"
+				"cwd": "placadevideo-tp1-quarkus"
 			}
 		}
 	]
