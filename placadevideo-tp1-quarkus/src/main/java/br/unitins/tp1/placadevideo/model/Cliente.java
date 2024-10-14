@@ -1,10 +1,12 @@
 package br.unitins.tp1.placadevideo.model;
 
 import java.time.LocalDate;
+import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class Cliente extends DefaultEntity{
@@ -19,8 +21,9 @@ private LocalDate dataNascimento;
 
 private String email;
 
-@ManyToOne
-private Endereco endereco;
+@OneToMany(cascade = CascadeType.ALL)
+
+private List<Endereco> enderecos;
 
 public String getNome() {
     return nome;
@@ -54,14 +57,12 @@ public void setEmail(String email) {
     this.email = email;
 }
 
-public Endereco getEndereco() {
-    return endereco;
+public List<Endereco> getEnderecos() {
+    return enderecos;
 }
 
-public void setEndereco(Endereco endereco) {
-    this.endereco = endereco;
+public void setEnderecos(List<Endereco> enderecos) {
+    this.enderecos = enderecos;
 }
-
-
 
 }

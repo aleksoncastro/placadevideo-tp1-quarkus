@@ -1,19 +1,18 @@
 package br.unitins.tp1.placadevideo.model;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Endereco extends DefaultEntity {
     private String cep;
     private String cidade;
-    
-    @OneToOne 
-    @JoinColumn(name = "id", unique = true)
-    private Estado estado;
+    private String estado;
     private String bairro;
     private String numero;
+    
+    @ManyToOne
+    private Cliente cliente;
 
     // Getters and Setters
     public String getCep() {
@@ -48,11 +47,21 @@ public class Endereco extends DefaultEntity {
         this.numero = numero;
     }
 
-    public Estado getEstado() {
+    public String getEstado() {
         return estado;
     }
 
-    public void setEstado(Estado estado) {
+    public void setEstado(String estado) {
         this.estado = estado;
     }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    
 }
