@@ -2,7 +2,6 @@ package br.unitins.tp1.placadevideo.resource;
 
 import br.unitins.tp1.placadevideo.dto.EnderecoRequestDTO;
 import br.unitins.tp1.placadevideo.dto.EnderecoResponseDTO;
-import br.unitins.tp1.placadevideo.model.Cliente;
 import br.unitins.tp1.placadevideo.service.EnderecoService;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
@@ -34,8 +33,8 @@ public class EnderecoResource {
 
     @GET
     @Path("/search/{idCliente}")
-    public Response findByCliente(@PathParam("Cliente") Long idCliente) {
-
+    public Response findByCliente(@PathParam("idCliente") Long idCliente) {
+ 
         return Response.ok(enderecoService.findByCliente(idCliente).
                                 stream().
                                 map(o -> EnderecoResponseDTO.valueOf(o)).
@@ -52,8 +51,9 @@ public class EnderecoResource {
     }
 
     @POST
-    public Response create(@Valid EnderecoRequestDTO dto, Cliente cliente) {
-        return Response.status(Status.CREATED).entity(EnderecoResponseDTO.valueOf(enderecoService.create(dto, cliente))
+    @Path("/{idCliente}")
+    public Response create(@PathParam("id") Long id, @Valid EnderecoRequestDTO dto) {
+        return Response.status(Status.CREATED).entity(EnderecoResponseDTO.valueOf(enderecoService.create(dto, id))
         ).build();
     }
 

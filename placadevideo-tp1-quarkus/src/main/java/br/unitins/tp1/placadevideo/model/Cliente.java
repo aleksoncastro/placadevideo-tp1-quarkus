@@ -22,7 +22,6 @@ private LocalDate dataNascimento;
 private String email;
 
 @OneToMany(cascade = CascadeType.ALL)
-
 private List<Endereco> enderecos;
 
 public String getNome() {

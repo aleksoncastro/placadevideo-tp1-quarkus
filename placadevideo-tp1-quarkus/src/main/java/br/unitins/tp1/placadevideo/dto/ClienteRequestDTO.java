@@ -1,6 +1,7 @@
 package br.unitins.tp1.placadevideo.dto;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import jakarta.validation.constraints.NotBlank;
 
@@ -13,7 +14,7 @@ public record ClienteRequestDTO(
     LocalDate dataNascimento,
     @NotBlank(message = "O campo deve ser informado") 
     String email, 
-    EnderecoRequestDTO endereco
+    List<EnderecoRequestDTO> enderecos
 ) {
     
 }

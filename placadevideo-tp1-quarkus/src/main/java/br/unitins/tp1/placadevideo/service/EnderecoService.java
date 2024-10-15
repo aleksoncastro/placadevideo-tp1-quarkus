@@ -1,10 +1,9 @@
 package br.unitins.tp1.placadevideo.service;
 
-import br.unitins.tp1.placadevideo.dto.EnderecoRequestDTO;
-import br.unitins.tp1.placadevideo.model.Cliente;
-import br.unitins.tp1.placadevideo.model.Endereco;
-
 import java.util.List;
+
+import br.unitins.tp1.placadevideo.dto.EnderecoRequestDTO;
+import br.unitins.tp1.placadevideo.model.Endereco;
 
 public interface EnderecoService {
 
@@ -14,11 +13,14 @@ public interface EnderecoService {
 
     List<Endereco> findAll();
 
-    Endereco create(EnderecoRequestDTO dto, Cliente cliente);
+    Endereco create(EnderecoRequestDTO dto, Long idCliente);
+
 
     Endereco update(Long id, EnderecoRequestDTO dto);
 
     void delete(Long id);
+
+    void deleteByCliente(Long idCliente);
 
 
 }

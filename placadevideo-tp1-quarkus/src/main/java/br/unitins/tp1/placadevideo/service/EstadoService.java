@@ -18,6 +18,4 @@ public interface EstadoService {
     Estado update(Long id, EstadoRequestDTO dto);
 
     void delete(Long id);
-
-
 }

@@ -10,7 +10,16 @@ public class Endereco extends DefaultEntity {
     private String estado;
     private String bairro;
     private String numero;
+    private Long idCliente;
     
+    public Long getIdCliente() {
+        return idCliente;
+    }
+
+    public void setIdCliente(Long idCliente) {
+        this.idCliente = idCliente;
+    }
+
     @ManyToOne
     private Cliente cliente;
 
