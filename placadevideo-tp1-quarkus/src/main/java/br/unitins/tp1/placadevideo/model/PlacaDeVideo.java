@@ -1,18 +1,9 @@
 package br.unitins.tp1.placadevideo.model;
 
-import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 
 @Entity
-public class PlacaDeVideo extends PanacheEntityBase {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    
+public class PlacaDeVideo extends DefaultEntity {
     private String modelo;
     private String categoria;
     private double preco;
@@ -22,14 +13,6 @@ public class PlacaDeVideo extends PanacheEntityBase {
     private String descricao;
     private int compatibilidade;
 
-    public Long getId() {
-        return id;
-    }
-    
-    public void setId(Long id) {
-        this.id = id;
-    }
-    
     public String getModelo() {
         return modelo;
     }

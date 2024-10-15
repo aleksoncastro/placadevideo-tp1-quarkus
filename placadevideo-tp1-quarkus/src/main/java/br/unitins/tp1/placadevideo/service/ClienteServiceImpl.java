@@ -60,18 +60,7 @@ public class ClienteServiceImpl implements ClienteService {
             Endereco endereco = enderecoServiceImpl.create(enderecoDTO, cliente.getId());
             cliente.getEnderecos().add(endereco);
         }
-        // for (EnderecoRequestDTO enderecoDTO : dto.enderecos()) {
-        //     Endereco endereco = new Endereco();
-        //     endereco.setCep(enderecoDTO.cep());
-        //     endereco.setCidade(enderecoDTO.cidade());
-        //     endereco.setEstado(enderecoDTO.estado());
-        //     endereco.setBairro(enderecoDTO.bairro());
-        //     endereco.setNumero(enderecoDTO.numero());
-        //     endereco.setIdCliente(cliente.getId());
-
-        //     enderecoRepository.persist(endereco);
-        //     cliente.getEnderecos().add(endereco);
-        // }
+        
         //Atualiza o cliente no banco
         clienteRepository.persist(cliente);
 
@@ -114,23 +103,13 @@ public class ClienteServiceImpl implements ClienteService {
         // Limpa os endereços existentes
         cliente.getEnderecos().clear();
 
+        cliente.setEnderecos(new ArrayList<>());
+
+        // endereco associado a ele
         for (EnderecoRequestDTO enderecoDTO : dto.enderecos()) {
-            enderecoServiceImpl.create(enderecoDTO, cliente.getId());
+            Endereco endereco = enderecoServiceImpl.create(enderecoDTO, cliente.getId());
+            cliente.getEnderecos().add(endereco);
         }
-
-        // Adiciona os novos endereços
-        // for (EnderecoRequestDTO enderecoDTO : dto.enderecos()) {
-        //     Endereco endereco = new Endereco();
-        //     endereco.setCep(enderecoDTO.cep());
-        //     endereco.setCidade(enderecoDTO.cidade());
-        //     endereco.setEstado(enderecoDTO.estado());
-        //     endereco.setBairro(enderecoDTO.bairro());
-        //     endereco.setNumero(enderecoDTO.numero());
-        //     endereco.setIdCliente(cliente.getId());
-
-        //     enderecoRepository.persist(endereco);
-        //     cliente.getEnderecos().add(endereco);
-        // }
 
         // Persistindo as alterações do cliente
         clienteRepository.persist(cliente);

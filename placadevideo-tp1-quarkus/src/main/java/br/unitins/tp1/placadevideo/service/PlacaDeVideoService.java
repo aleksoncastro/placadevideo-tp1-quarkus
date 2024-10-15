@@ -1,8 +1,9 @@
 package br.unitins.tp1.placadevideo.service;
 
-import br.unitins.tp1.placadevideo.model.PlacaDeVideo;
-
 import java.util.List;
+
+import br.unitins.tp1.placadevideo.dto.PlacaDeVideoRequestDTO;
+import br.unitins.tp1.placadevideo.model.PlacaDeVideo;
 
 public interface PlacaDeVideoService {
 
@@ -12,9 +13,11 @@ public interface PlacaDeVideoService {
 
     List<PlacaDeVideo> findAll();
 
-    PlacaDeVideo create(PlacaDeVideo placaDeVideo);
+    PlacaDeVideo create(PlacaDeVideoRequestDTO dto);
 
-    PlacaDeVideo update(PlacaDeVideo placaDeVideo);
+    PlacaDeVideo update(Long id, PlacaDeVideoRequestDTO dto);
 
     void delete(Long id);
+
+
 }

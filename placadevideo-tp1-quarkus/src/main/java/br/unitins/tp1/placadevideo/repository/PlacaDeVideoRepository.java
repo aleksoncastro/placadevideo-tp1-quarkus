@@ -9,7 +9,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 @ApplicationScoped
 public class PlacaDeVideoRepository implements PanacheRepository<PlacaDeVideo>{
     
-    public List<PlacaDeVideo> findbyMoedelo(String modelo){
+    public List<PlacaDeVideo> findbyModelo(String modelo){
         return find("SELECT p FROM PlacaDeVideo p WHERE p.modelo LIKE ?1", "%" + modelo + "%").list();
     }
 
