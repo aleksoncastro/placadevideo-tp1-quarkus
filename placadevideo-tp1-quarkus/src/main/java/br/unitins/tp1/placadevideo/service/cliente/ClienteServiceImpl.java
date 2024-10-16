@@ -5,8 +5,10 @@ import java.util.List;
 
 import br.unitins.tp1.placadevideo.dto.ClienteRequestDTO;
 import br.unitins.tp1.placadevideo.dto.EnderecoRequestDTO;
+import br.unitins.tp1.placadevideo.dto.TelefoneRequestDTO;
 import br.unitins.tp1.placadevideo.model.Cliente;
 import br.unitins.tp1.placadevideo.model.Endereco;
+import br.unitins.tp1.placadevideo.model.Telefone;
 import br.unitins.tp1.placadevideo.repository.cliente.ClienteRepository;
 import br.unitins.tp1.placadevideo.repository.endereco.EnderecoRepository;
 import br.unitins.tp1.placadevideo.service.endereco.EnderecoServiceImpl;
@@ -68,7 +70,7 @@ public class ClienteServiceImpl implements ClienteService {
         return cliente;
     }
 
-    @Override
+
     @Transactional
     public void addEndereco(Long clienteId, EnderecoRequestDTO dto) {
         Cliente cliente = clienteRepository.findById(clienteId);
@@ -99,6 +101,7 @@ public class ClienteServiceImpl implements ClienteService {
         cliente.setCpf(dto.cpf());
         cliente.setDataNascimento(dto.dataNascimento());
         cliente.setEmail(dto.email());
+        cliente.setTelefones(getTelefones(dto));
 
         // Atualiza os endereços do cliente
         // Limpa os endereços existentes
@@ -123,6 +126,19 @@ public class ClienteServiceImpl implements ClienteService {
         enderecoRepository.deleteClienteEndereco(id);
         enderecoRepository.deleteByCliente(id);
         clienteRepository.deleteById(id);
+    }
+
+     private List<Telefone> getTelefones(ClienteRequestDTO dto) {
+        List<Telefone> telefones = new ArrayList<>();
+
+        for (int i = 0; i < dto.telefones().size(); i++) {
+            Telefone telefone = new Telefone();
+            TelefoneRequestDTO telefoneRequestDTO = dto.telefones().get(i);
+            telefone.setCodigoArea(telefoneRequestDTO.codigoArea());
+            telefone.setNumero(telefoneRequestDTO.numero());
+            telefones.add(telefone);
+        }
+        return telefones;
     }
 
 }

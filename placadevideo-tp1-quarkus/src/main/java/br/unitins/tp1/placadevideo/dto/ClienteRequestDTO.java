@@ -14,7 +14,8 @@ public record ClienteRequestDTO(
     LocalDate dataNascimento,
     @NotBlank(message = "O campo deve ser informado") 
     String email, 
-    List<EnderecoRequestDTO> enderecos
+    List<EnderecoRequestDTO> enderecos,
+    List<TelefoneRequestDTO> telefones
 ) {
     
 }

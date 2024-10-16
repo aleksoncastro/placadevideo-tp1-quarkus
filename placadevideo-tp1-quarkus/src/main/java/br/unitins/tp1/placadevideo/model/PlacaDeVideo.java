@@ -1,6 +1,7 @@
 package br.unitins.tp1.placadevideo.model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class PlacaDeVideo extends DefaultEntity {
@@ -12,6 +13,17 @@ public class PlacaDeVideo extends DefaultEntity {
     private int energia;
     private String descricao;
     private int compatibilidade;
+
+    @ManyToOne
+    private Lote lote;
+
+    public Lote getLote() {
+        return lote;
+    }
+
+    public void setLote(Lote lote) {
+        this.lote = lote;
+    }
 
     public String getModelo() {
         return modelo;

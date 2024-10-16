@@ -11,7 +11,8 @@ public record PlacaDeVideoResponseDTO(
         String resolucao,
         int energia,
         String descricao,
-        int compatibilidade) {
+        int compatibilidade,
+        LoteResponseDTO lote) {
 
     public static PlacaDeVideoResponseDTO valueOf(PlacaDeVideo placadevideo){
         return new PlacaDeVideoResponseDTO(
@@ -23,7 +24,8 @@ public record PlacaDeVideoResponseDTO(
             placadevideo.getResolucao(),
             placadevideo.getEnergia(),
             placadevideo.getDescricao(),
-            placadevideo.getCompatibilidade()
+            placadevideo.getCompatibilidade(),
+            LoteResponseDTO.valueOf(placadevideo.getLote())
         );
     }
 }
