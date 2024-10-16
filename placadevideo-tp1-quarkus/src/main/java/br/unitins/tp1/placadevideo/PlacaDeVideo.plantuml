@@ -28,7 +28,7 @@ class Tamanho{
     - comprimento: Integer
 }
 
-class Fabricante{
+class Fornecedor{
     - nome: String
     - cnpj: String
     - email: String
@@ -107,21 +107,23 @@ enum StatusPedido{
 
 class TelefoneCliente{
     - numero: String
+    - codigoArea: String
 }
 
-class TelefoneFabricante{
+class TelefoneFornecedor{
     - numero: String 
+    - codigoArea: String
 }
 
 ' RELACIONAMENTOS
-PlacaDeVideo "*" --> "1" Fabricante
+PlacaDeVideo "*" --> "1" Fornecedor
 PlacaDeVideo "1" --> "*" Tamanho
 PlacaDeVideo "1" --> "*" Fan
 PlacaDeVideo "1" --> "*" Clock
 
 Lote "1" --> "*" PlacaDeVideo 
 
-Fabricante "1" *--> "*" TelefoneFabricante
+Fornecedor "1" *--> "*" TelefoneFornecedor
 
 ItemPedido "*" --> "1" Lote
 
