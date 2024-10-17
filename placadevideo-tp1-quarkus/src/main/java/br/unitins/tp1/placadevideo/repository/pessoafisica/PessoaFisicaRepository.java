@@ -1,4 +1,4 @@
-package br.unitins.tp1.placadevideo.repository.pessoafiisica;
+package br.unitins.tp1.placadevideo.repository.pessoafisica;
 
 import java.util.List;
 

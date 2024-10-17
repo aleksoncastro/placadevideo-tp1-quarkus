@@ -5,7 +5,7 @@ import java.util.List;
 import br.unitins.tp1.placadevideo.dto.PessoaFisicaRequestDTO;
 import br.unitins.tp1.placadevideo.model.PessoaFisica;
 import br.unitins.tp1.placadevideo.model.Sexo;
-import br.unitins.tp1.placadevideo.repository.pessoafiisica.PessoaFisicaRepository;
+import br.unitins.tp1.placadevideo.repository.pessoafisica.PessoaFisicaRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;

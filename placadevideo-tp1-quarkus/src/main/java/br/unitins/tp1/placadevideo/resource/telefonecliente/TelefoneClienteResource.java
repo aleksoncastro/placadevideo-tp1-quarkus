@@ -1,8 +1,8 @@
-package br.unitins.tp1.placadevideo.resource.endereco;
+package br.unitins.tp1.placadevideo.resource.telefonecliente;
 
-import br.unitins.tp1.placadevideo.dto.EnderecoRequestDTO;
-import br.unitins.tp1.placadevideo.dto.EnderecoResponseDTO;
-import br.unitins.tp1.placadevideo.service.endereco.EnderecoService;
+import br.unitins.tp1.placadevideo.dto.TelefoneClienteRequestDTO;
+import br.unitins.tp1.placadevideo.dto.TelefoneClienteResponseDTO;
+import br.unitins.tp1.placadevideo.service.telefone.TelefoneClienteService;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.Consumes;
@@ -17,57 +17,57 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
 
-@Path("/enderecos")
+@Path("/telefoneclientes")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public class EnderecoResource {
+public class TelefoneClienteResource {
 
     @Inject
-    public EnderecoService enderecoService;
+    public TelefoneClienteService telefoneclienteService;
 
     @GET
     @Path("/{id}")
     public Response findById(@PathParam("id") Long id) {
-        return Response.ok(EnderecoResponseDTO.valueOf(enderecoService.findById(id))).build();
+        return Response.ok(TelefoneClienteResponseDTO.valueOf(telefoneclienteService.findById(id))).build();
     }
 
     @GET
     @Path("/search/{idCliente}")
     public Response findByCliente(@PathParam("idCliente") Long idCliente) {
  
-        return Response.ok(enderecoService.findByCliente(idCliente).
+        return Response.ok(telefoneclienteService.findByCliente(idCliente).
                                 stream().
-                                map(o -> EnderecoResponseDTO.valueOf(o)).
+                                map(o -> TelefoneClienteResponseDTO.valueOf(o)).
                                 toList())
                                 .build();
     }
 
     @GET
     public Response findAll() {
-        return Response.ok(enderecoService.findAll().
+        return Response.ok(telefoneclienteService.findAll().
                                 stream().
-                                map(o -> EnderecoResponseDTO.valueOf(o)).
+                                map(o -> TelefoneClienteResponseDTO.valueOf(o)).
                                 toList()).build();
     }
 
     @POST
     @Path("/{idCliente}")
-    public Response create(@PathParam("idCliente") Long id, @Valid EnderecoRequestDTO dto) {
-        return Response.status(Status.CREATED).entity(EnderecoResponseDTO.valueOf(enderecoService.create(dto, id))
+    public Response create(@PathParam("id") Long id, @Valid TelefoneClienteRequestDTO dto) {
+        return Response.status(Status.CREATED).entity(TelefoneClienteResponseDTO.valueOf(telefoneclienteService.create(dto, id))
         ).build();
     }
 
     @PUT
     @Path("/{id}")
-    public Response update(@PathParam("id") Long id, @Valid EnderecoRequestDTO dto) {
-        enderecoService.update(id, dto);
+    public Response update(@PathParam("id") Long id, @Valid TelefoneClienteRequestDTO dto) {
+        telefoneclienteService.update(id, dto);
         return Response.noContent().build();
     }
 
     @DELETE
     @Path("/{id}")
     public Response delete(@PathParam("id") Long id) {
-        enderecoService.delete(id);
+        telefoneclienteService.delete(id);
         return Response.noContent().build();
     }
 

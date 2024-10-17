@@ -8,8 +8,7 @@ public record EnderecoResponseDTO(
     String cidade,
     String estado,
     String bairro, 
-    String numero,
-    Long idCliente
+    String numero
 ) {
     public static EnderecoResponseDTO valueOf(Endereco endereco){
         return new EnderecoResponseDTO(
@@ -18,8 +17,7 @@ public record EnderecoResponseDTO(
             endereco.getCidade(),
             endereco.getEstado(),
             endereco.getBairro(),
-            endereco.getNumero(),
-            endereco.getIdCliente()
+            endereco.getNumero()
         );
     }
 }

@@ -15,7 +15,7 @@ public record ClienteRequestDTO(
     @NotBlank(message = "O campo deve ser informado") 
     String email, 
     List<EnderecoRequestDTO> enderecos,
-    List<TelefoneRequestDTO> telefones
+    List<TelefoneClienteRequestDTO> telefones
 ) {
     
 }

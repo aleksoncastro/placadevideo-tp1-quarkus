@@ -10,7 +10,7 @@ public record FornecedorResponseDTO(
     String nome,
     String  cnpj,
     String email, 
-    List<TelefoneResponseDTO> telefones
+    List<TelefoneFornecedorResponseDTO> telefones
 ) {
 
     public static  FornecedorResponseDTO valueOf(Fornecedor fornecedor) {
@@ -20,7 +20,7 @@ public record FornecedorResponseDTO(
             fornecedor.getCnpj(),
             fornecedor.getEmail(),
             fornecedor.getTelefones().stream()
-            .map(TelefoneResponseDTO::valueOf)
+            .map(TelefoneFornecedorResponseDTO::valueOf)
             .collect(Collectors.toList())
         );
     }

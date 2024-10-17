@@ -11,7 +11,7 @@ public record FornecedorRequestDTO(
     String cnpj,
     @NotBlank(message = "O campo deve ser informado") 
     String email, 
-    List<TelefoneRequestDTO> telefones
+    List<TelefoneFornecedorRequestDTO> telefones
 ) {
     
 }

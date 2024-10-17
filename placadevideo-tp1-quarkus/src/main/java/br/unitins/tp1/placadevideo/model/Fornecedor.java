@@ -20,6 +20,12 @@ private String cnpj;
 
 private String email;
 
+@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true , fetch = FetchType.EAGER)
+@JoinTable(name = "fornecedor_telefone", joinColumns = @JoinColumn(name = "id_fornecedor"), inverseJoinColumns = @JoinColumn(name = "id_telefone", unique = true))
+private List<TelefoneFornecedor> telefones;
+
+
+
 public String getCnpj() {
     return cnpj;
 }
@@ -27,18 +33,6 @@ public String getCnpj() {
 public void setCnpj(String cnpj) {
     this.cnpj = cnpj;
 }
-
-public List<Telefone> getTelefones() {
-    return telefones;
-}
-
-public void setTelefones(List<Telefone> telefones) {
-    this.telefones = telefones;
-}
-
-@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true , fetch = FetchType.EAGER)
-@JoinTable(name = "fornecedor_telefone", joinColumns = @JoinColumn(name = "id_fornecedor"), inverseJoinColumns = @JoinColumn(name = "id_telefone", unique = true))
-private List<Telefone> telefones;
 
 public String getNome() {
     return nome;
@@ -54,6 +48,14 @@ public String getEmail() {
 
 public void setEmail(String email) {
     this.email = email;
+}
+
+public List<TelefoneFornecedor> getTelefones() {
+    return telefones;
+}
+
+public void setTelefones(List<TelefoneFornecedor> telefones) {
+    this.telefones = telefones;
 }
 
 }

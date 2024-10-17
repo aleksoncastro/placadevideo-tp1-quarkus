@@ -1,13 +1,20 @@
 package br.unitins.tp1.placadevideo.model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 @Entity
-public class Telefone extends DefaultEntity {
+public class TelefoneCliente extends DefaultEntity {
 
     private String codigoArea;
     private String numero;
 
+
+    @ManyToOne
+    @JoinColumn(name = "cliente_id")
+    private  Cliente cliente;
+    
     public String getCodigoArea() {
         return codigoArea;
     }

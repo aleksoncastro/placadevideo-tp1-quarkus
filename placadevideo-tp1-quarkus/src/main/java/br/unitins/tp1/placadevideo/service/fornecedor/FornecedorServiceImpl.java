@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.unitins.tp1.placadevideo.dto.FornecedorRequestDTO;
-import br.unitins.tp1.placadevideo.dto.TelefoneRequestDTO;
+import br.unitins.tp1.placadevideo.dto.TelefoneFornecedorRequestDTO;
 import br.unitins.tp1.placadevideo.model.Fornecedor;
-import br.unitins.tp1.placadevideo.model.Telefone;
+import br.unitins.tp1.placadevideo.model.TelefoneFornecedor;
 import br.unitins.tp1.placadevideo.repository.fornecedor.FornecedorRepository;
-import br.unitins.tp1.placadevideo.service.endereco.EnderecoServiceImpl;
+import br.unitins.tp1.placadevideo.service.telefone.TelefoneFornecedorServiceImpl;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityNotFoundException;
@@ -21,7 +21,7 @@ public class FornecedorServiceImpl implements FornecedorService {
     public FornecedorRepository fornecedorRepository;
 
     @Inject
-    public EnderecoServiceImpl enderecoServiceImpl;
+    public TelefoneFornecedorServiceImpl telefoneServiceImpl;
 
     @Override
     public Fornecedor findById(Long id) {
@@ -45,7 +45,18 @@ public class FornecedorServiceImpl implements FornecedorService {
         fornecedor.setNome(dto.nome());
         fornecedor.setCnpj(dto.cnpj());
         fornecedor.setEmail(dto.email());
-        fornecedor.setTelefones(getTelefones(dto));
+
+        // cria o fornecedor primeiro
+        fornecedorRepository.persist(fornecedor);
+
+        fornecedor.setTelefones(new ArrayList<>());
+
+        // telefone associado a ele
+        for (TelefoneFornecedorRequestDTO telefoneDTO : dto.telefones()) {
+            TelefoneFornecedor telefone = telefoneServiceImpl.create(telefoneDTO, fornecedor.getId());
+            fornecedor.getTelefones().add(telefone);
+        }
+        
         
         //Atualiza o fornecedor no banco
         fornecedorRepository.persist(fornecedor);
@@ -68,7 +79,6 @@ public class FornecedorServiceImpl implements FornecedorService {
         // Remove os antigos
         fornecedor.getTelefones().clear();
 
-        fornecedor.setTelefones(getTelefones(dto));
         // Persistindo as alterações do fornecedor
         fornecedorRepository.persist(fornecedor);
         return fornecedor;
@@ -81,17 +91,6 @@ public class FornecedorServiceImpl implements FornecedorService {
     }
 
 
-    private List<Telefone> getTelefones(FornecedorRequestDTO dto) {
-        List<Telefone> telefones = new ArrayList<>();
-
-        for (int i = 0; i < dto.telefones().size(); i++) {
-            Telefone telefone = new Telefone();
-            TelefoneRequestDTO telefoneRequestDTO = dto.telefones().get(i);
-            telefone.setCodigoArea(telefoneRequestDTO.codigoArea());
-            telefone.setNumero(telefoneRequestDTO.numero());
-            telefones.add(telefone);
-        }
-        return telefones;
-    }
+   
 
 }

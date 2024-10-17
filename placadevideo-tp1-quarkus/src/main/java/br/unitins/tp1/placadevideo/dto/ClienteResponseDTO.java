@@ -13,7 +13,7 @@ public record ClienteResponseDTO(
     LocalDate dataNascimento,
     String email, 
     List<EnderecoResponseDTO> enderecos,
-    List<TelefoneResponseDTO> telefones
+    List<TelefoneClienteResponseDTO> telefones
 ) {
 
     public static  ClienteResponseDTO valueOf(Cliente cliente) {
@@ -27,7 +27,7 @@ public record ClienteResponseDTO(
             .map(EnderecoResponseDTO::valueOf)
             .collect(Collectors.toList()),
             cliente.getTelefones().stream()
-            .map(TelefoneResponseDTO::valueOf)
+            .map(TelefoneClienteResponseDTO::valueOf)
             .collect(Collectors.toList())
 
         );
