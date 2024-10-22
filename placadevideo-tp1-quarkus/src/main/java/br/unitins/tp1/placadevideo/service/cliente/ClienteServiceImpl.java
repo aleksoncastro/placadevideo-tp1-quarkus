@@ -70,12 +70,12 @@ public class ClienteServiceImpl implements ClienteService {
 
         // endereco e telefone associado a ele
         for (EnderecoRequestDTO enderecoDTO : dto.enderecos()) {
-            Endereco endereco = enderecoServiceImpl.create(enderecoDTO, cliente.getId());
+            Endereco endereco = enderecoServiceImpl.create(enderecoDTO);
             cliente.getEnderecos().add(endereco);
         }
 
         for (TelefoneClienteRequestDTO telefoneDTO : dto.telefones()) {
-            TelefoneCliente telefone = telefoneClienteServiceImpl.create(telefoneDTO, cliente.getId());
+            TelefoneCliente telefone = telefoneClienteServiceImpl.create(telefoneDTO);
             cliente.getTelefones().add(telefone);
         }
         
@@ -85,21 +85,33 @@ public class ClienteServiceImpl implements ClienteService {
         return cliente;
     }
 
-
+    @Override
     @Transactional
     public void addEndereco(Long clienteId, EnderecoRequestDTO dto) {
         Cliente cliente = clienteRepository.findById(clienteId);
-        if (cliente != null) {
-            Endereco endereco = new Endereco();
-            endereco.setCep(dto.cep());
-            endereco.setCidade(dto.cidade());
-            endereco.setEstado(dto.estado());
-            endereco.setBairro(dto.bairro());
-            endereco.setNumero(dto.numero());
-
-            enderecoRepository.persist(endereco);
-            cliente.getEnderecos().add(endereco);
+        if (cliente == null) {
+            throw new IllegalArgumentException("Cliente com ID " + clienteId + " não encontrado.");
         }
+    
+        Endereco endereco = enderecoServiceImpl.create(dto);
+        endereco.setCliente(cliente);
+        enderecoRepository.persist(endereco);
+        cliente.getEnderecos().add(endereco);
+    }
+
+    @Override
+    @Transactional
+    public void addTelefone(Long clienteId, TelefoneClienteRequestDTO dto) {
+        Cliente cliente = clienteRepository.findById(clienteId);
+        if (cliente == null) {
+            throw new IllegalArgumentException("Cliente com ID " + clienteId + " não encontrado.");
+        }
+
+        TelefoneCliente telefone = telefoneClienteServiceImpl.create(dto);
+        telefone.setCliente(cliente);
+        telefoneClienteRepository.persist(telefone);
+        cliente.getTelefones().add(telefone);
+
     }
 
     @Override
@@ -125,7 +137,7 @@ public class ClienteServiceImpl implements ClienteService {
 
         // endereco associado a ele
         for (EnderecoRequestDTO enderecoDTO : dto.enderecos()) {
-            Endereco endereco = enderecoServiceImpl.create(enderecoDTO, cliente.getId());
+            Endereco endereco = enderecoServiceImpl.create(enderecoDTO);
             cliente.getEnderecos().add(endereco);
         }
 
@@ -137,8 +149,8 @@ public class ClienteServiceImpl implements ClienteService {
     @Override
     @Transactional
     public void delete(Long id) {
-        enderecoRepository.deleteClienteEndereco(id);
-        enderecoRepository.deleteByCliente(id);
+        //clienteRepository.deleteClienteEndereco(id, id);;
         clienteRepository.deleteById(id);
     }
+
 }

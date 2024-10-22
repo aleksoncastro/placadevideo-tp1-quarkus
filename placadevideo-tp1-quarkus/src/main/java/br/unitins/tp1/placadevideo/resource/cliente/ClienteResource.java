@@ -2,6 +2,8 @@ package br.unitins.tp1.placadevideo.resource.cliente;
 
 import br.unitins.tp1.placadevideo.dto.ClienteRequestDTO;
 import br.unitins.tp1.placadevideo.dto.ClienteResponseDTO;
+import br.unitins.tp1.placadevideo.dto.EnderecoRequestDTO;
+import br.unitins.tp1.placadevideo.dto.TelefoneClienteRequestDTO;
 import br.unitins.tp1.placadevideo.service.cliente.ClienteService;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
@@ -53,6 +55,20 @@ public class ClienteResource {
     public Response create(@Valid ClienteRequestDTO dto) {
         return Response.status(Status.CREATED).entity(ClienteResponseDTO.valueOf(clienteService.create(dto))
         ).build();
+    }
+
+    @POST
+    @Path("/{id}/enderecos")
+    public Response addEndereco(@PathParam("id") Long clienteId, @Valid EnderecoRequestDTO enderecoDTO) {
+        clienteService.addEndereco(clienteId, enderecoDTO);
+        return Response.status(Status.CREATED).build();
+    }
+
+    @POST
+    @Path("/{id}/telefones")
+    public Response addEndereco(@PathParam("id") Long clienteId, @Valid TelefoneClienteRequestDTO telefoneDTO) {
+        clienteService.addTelefone(clienteId, telefoneDTO);;
+        return Response.status(Status.CREATED).build();
     }
 
     @PUT

@@ -15,6 +15,14 @@ public class TelefoneCliente extends DefaultEntity {
     @JoinColumn(name = "cliente_id")
     private  Cliente cliente;
     
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
     public String getCodigoArea() {
         return codigoArea;
     }

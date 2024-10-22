@@ -4,6 +4,7 @@ import java.util.List;
 
 import br.unitins.tp1.placadevideo.dto.FornecedorRequestDTO;
 import br.unitins.tp1.placadevideo.dto.FornecedorResponseDTO;
+import br.unitins.tp1.placadevideo.dto.TelefoneFornecedorRequestDTO;
 import br.unitins.tp1.placadevideo.model.Fornecedor;
 import br.unitins.tp1.placadevideo.service.fornecedor.FornecedorService;
 import jakarta.inject.Inject;
@@ -50,6 +51,13 @@ public class FornecedorResource {
     @POST
     public Response create(@Valid FornecedorRequestDTO fornecedor) {
         return Response.status(Status.CREATED).entity(FornecedorResponseDTO.valueOf(fornecedorService.create(fornecedor))).build();
+    }
+
+    @POST
+    @Path("/{id}/telefones")
+    public Response addEndereco(@PathParam("id") Long fornecedorId, @Valid TelefoneFornecedorRequestDTO telefoneDTO) {
+        fornecedorService.addTelefone(fornecedorId, telefoneDTO);;
+        return Response.status(Status.CREATED).build();
     }
 
     @PUT

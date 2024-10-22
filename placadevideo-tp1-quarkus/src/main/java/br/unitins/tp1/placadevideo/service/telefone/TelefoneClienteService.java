@@ -15,7 +15,7 @@ public interface TelefoneClienteService {
 
     List<TelefoneCliente> findAll();
 
-    TelefoneCliente create(TelefoneClienteRequestDTO dto, Long id);
+    TelefoneCliente create(TelefoneClienteRequestDTO dto);
 
     TelefoneCliente update(Long id, TelefoneClienteRequestDTO dto);
 

@@ -15,6 +15,14 @@ public class TelefoneFornecedor extends DefaultEntity {
     @JoinColumn(name = "fornecedor_id")
     private  Fornecedor fornecedor;
 
+    public Fornecedor getFornecedor() {
+        return fornecedor;
+    }
+
+    public void setFornecedor(Fornecedor fornecedor) {
+        this.fornecedor = fornecedor;
+    }
+
     public String getCodigoArea() {
         return codigoArea;
     }

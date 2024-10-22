@@ -21,10 +21,10 @@ private LocalDate dataNascimento;
 
 private String email;
 
-@OneToMany(cascade = CascadeType.ALL)
+@OneToMany(cascade = CascadeType.ALL, mappedBy = "cliente")
 private List<Endereco> enderecos;
 
-@OneToMany(cascade = CascadeType.ALL)
+@OneToMany(cascade = CascadeType.ALL, mappedBy = "cliente")
 private List<TelefoneCliente> telefones;
 
 
