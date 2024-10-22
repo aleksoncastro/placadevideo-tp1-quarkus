@@ -14,7 +14,7 @@ import jakarta.transaction.Transactional;
 public class TelefoneClienteServiceImpl implements TelefoneClienteService {
 
     @Inject
-    public TelefoneClienteRepository telefoneclienteRepository;
+    public TelefoneClienteRepository telefoneClienteRepository;
 
     @Inject
     public ClienteRepository  clienteRepository;
@@ -22,17 +22,22 @@ public class TelefoneClienteServiceImpl implements TelefoneClienteService {
 
     @Override
     public TelefoneCliente findById(Long id) {
-        return telefoneclienteRepository.findById(id);
+        return telefoneClienteRepository.findById(id);
+    }
+
+    @Override
+    public TelefoneCliente findByNumero(String numero) {
+        return telefoneClienteRepository.findByNumero(numero); 
     }
 
     @Override
     public List<TelefoneCliente> findByCliente(Long id) {
-        return telefoneclienteRepository.findByTelefoneCliente(id);
+        return telefoneClienteRepository.findByTelefoneCliente(id);
     }
 
     @Override
     public List<TelefoneCliente> findAll() {
-        return telefoneclienteRepository.findAll().list();
+        return telefoneClienteRepository.findAll().list();
     }
 
     @Override
@@ -42,17 +47,17 @@ public class TelefoneClienteServiceImpl implements TelefoneClienteService {
         TelefoneCliente telefone = new TelefoneCliente();
         telefone.setCodigoArea(dto.codigoArea());
         telefone.setNumero(dto.numero());
-        telefoneclienteRepository.persist(telefone);
+        telefoneClienteRepository.persist(telefone);
         return telefone;
     }
 
     @Override
     @Transactional
     public TelefoneCliente update(Long id, TelefoneClienteRequestDTO dto) {
-        TelefoneCliente telefone = telefoneclienteRepository.findById(id);
+        TelefoneCliente telefone = telefoneClienteRepository.findById(id);
         telefone.setCodigoArea(dto.codigoArea());
         telefone.setNumero(dto.numero());
-        telefoneclienteRepository.persist(telefone);
+        telefoneClienteRepository.persist(telefone);
 
         return telefone;
     }
@@ -60,7 +65,8 @@ public class TelefoneClienteServiceImpl implements TelefoneClienteService {
     @Override
     @Transactional
     public void delete(Long id) {
-        telefoneclienteRepository.deleteById(id);
+        telefoneClienteRepository.deleteById(id);
     }
+
 
 }

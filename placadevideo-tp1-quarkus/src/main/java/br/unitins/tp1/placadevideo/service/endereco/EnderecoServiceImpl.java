@@ -19,6 +19,11 @@ public class EnderecoServiceImpl implements EnderecoService {
     public Endereco findById(Long id) {
         return enderecoRepository.findById(id);
     }
+
+    @Override
+    public Endereco findByCep(String cep) {
+        return enderecoRepository.findByCep(cep); 
+    }
    
     @Override
     public List<Endereco> findByCliente(Long idCliente) {

@@ -78,21 +78,4 @@ VALUES
 (1, '11', '3222-1234'),
 (2, '21', '3344-5678');
 
--- Inserindo dados na tabela fornecedor_telefone
-INSERT INTO fornecedor_telefone (id_fornecedor, id_telefone) 
-VALUES 
-(1, 1),
-(2, 2);
 
-
--- Inserindo dados na tabela Cliente_Endereco
-INSERT INTO Cliente_Endereco (Cliente_id, enderecos_id) 
-VALUES 
-(1, 1),
-(2, 2);
-
--- Inserindo dados na tabela Cliente_TelefoneCliente
-INSERT INTO Cliente_TelefoneCliente (Cliente_id, telefones_id) 
-VALUES 
-(1, 1),
-(2, 2);

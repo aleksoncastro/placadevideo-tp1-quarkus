@@ -42,6 +42,11 @@ public class ClienteResource {
                                 toList())
                                 .build();
     }
+    @GET
+    @Path("/search/{cpf}")
+    public Response findByCpf(@PathParam("cpf") String cpf){
+        return Response.ok(ClienteResponseDTO.valueOf(clienteService.findByCpf(cpf))).build();
+    }
 
     @GET
     public Response findAll() {

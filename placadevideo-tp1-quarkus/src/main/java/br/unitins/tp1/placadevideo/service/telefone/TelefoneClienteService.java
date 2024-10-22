@@ -11,6 +11,8 @@ public interface TelefoneClienteService {
 
     TelefoneCliente findById(Long id);
 
+    TelefoneCliente findByNumero(String numero);
+
     List<TelefoneCliente> findByCliente(Long id);
 
     List<TelefoneCliente> findAll();

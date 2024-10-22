@@ -32,6 +32,12 @@ public class TelefoneClienteResource {
     }
 
     @GET
+    @Path("/search/{numero}")
+    public Response findByNumero(@PathParam("numero") String numero) {
+        return Response.ok(TelefoneClienteResponseDTO.valueOf(telefoneclienteService.findByNumero(numero))).build();
+    }
+
+    @GET
     @Path("/search/{idCliente}")
     public Response findByCliente(@PathParam("idCliente") Long idCliente) {
  

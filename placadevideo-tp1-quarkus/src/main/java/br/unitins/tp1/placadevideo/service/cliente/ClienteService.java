@@ -13,9 +13,15 @@ public interface ClienteService {
 
     List<Cliente> findByNome(String nome);
 
+    Cliente findByCpf(String cpf);
+
     List<Cliente> findAll();
 
     Cliente create(ClienteRequestDTO dto);
+
+    void updateTelefone(Long id, Long idTelefone, TelefoneClienteRequestDTO dto);
+
+    void updateEndereco(Long id, Long idEndereco, EnderecoRequestDTO dto);
 
     void addEndereco(Long clienteId, EnderecoRequestDTO dto);
     

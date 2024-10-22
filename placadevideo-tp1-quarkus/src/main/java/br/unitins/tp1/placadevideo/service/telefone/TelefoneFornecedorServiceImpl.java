@@ -14,7 +14,7 @@ import jakarta.transaction.Transactional;
 public class TelefoneFornecedorServiceImpl implements TelefoneFornecedorService {
 
     @Inject
-    public TelefoneFornecedorRepository telefonefornecedorRepository;
+    public TelefoneFornecedorRepository telefoneFornecedorRepository;
 
     @Inject
     public FornecedorRepository  fornecedorRepository;
@@ -22,17 +22,22 @@ public class TelefoneFornecedorServiceImpl implements TelefoneFornecedorService 
 
     @Override
     public TelefoneFornecedor findById(Long id) {
-        return telefonefornecedorRepository.findById(id);
+        return telefoneFornecedorRepository.findById(id);
+    }
+
+    @Override
+    public TelefoneFornecedor findByNumero(String numero) {
+        return telefoneFornecedorRepository.findByNumero(numero); 
     }
 
     @Override
     public List<TelefoneFornecedor> findByFornecedor(Long id) {
-        return telefonefornecedorRepository.findByTelefoneFornecedor(id);
+        return telefoneFornecedorRepository.findByTelefoneFornecedor(id);
     }
 
     @Override
     public List<TelefoneFornecedor> findAll() {
-        return telefonefornecedorRepository.findAll().list();
+        return telefoneFornecedorRepository.findAll().list();
     }
 
     @Override
@@ -42,17 +47,17 @@ public class TelefoneFornecedorServiceImpl implements TelefoneFornecedorService 
         TelefoneFornecedor telefone = new TelefoneFornecedor();
         telefone.setCodigoArea(dto.codigoArea());
         telefone.setNumero(dto.numero());
-        telefonefornecedorRepository.persist(telefone);
+        telefoneFornecedorRepository.persist(telefone);
         return telefone;
     }
 
     @Override
     @Transactional
     public TelefoneFornecedor update(Long id, TelefoneFornecedorRequestDTO dto) {
-        TelefoneFornecedor telefone = telefonefornecedorRepository.findById(id);
+        TelefoneFornecedor telefone = telefoneFornecedorRepository.findById(id);
         telefone.setCodigoArea(dto.codigoArea());
         telefone.setNumero(dto.numero());
-        telefonefornecedorRepository.persist(telefone);
+        telefoneFornecedorRepository.persist(telefone);
 
         return telefone;
     }
@@ -60,7 +65,7 @@ public class TelefoneFornecedorServiceImpl implements TelefoneFornecedorService 
     @Override
     @Transactional
     public void delete(Long id) {
-        telefonefornecedorRepository.deleteById(id);
+        telefoneFornecedorRepository.deleteById(id);
     }
 
 }

@@ -25,4 +25,8 @@ public class ClienteRepository implements PanacheRepository<Cliente> {
           .executeUpdate();
     }
 
+    public Cliente findByCpf(String cpf) {
+        return find("SELECT p FROM Cliente p WHERE p.cpf = ?1",  cpf ).firstResult();
+    }
+
 }

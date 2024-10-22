@@ -32,6 +32,12 @@ public class EnderecoResource {
     }
 
     @GET
+    @Path("/search/{cep}")
+    public Response findByCep(@PathParam("id") String cep) {
+        return Response.ok(EnderecoResponseDTO.valueOf(enderecoService.findByCep(cep))).build();
+    }
+
+    @GET
     @Path("/search/{idCliente}")
     public Response findByCliente(@PathParam("idCliente") Long idCliente) {
  

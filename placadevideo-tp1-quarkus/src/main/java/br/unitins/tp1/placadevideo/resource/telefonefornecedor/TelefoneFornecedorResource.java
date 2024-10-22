@@ -17,7 +17,7 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
 
-@Path("/telefonefornecedors")
+@Path("/telefonefornecedores")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class TelefoneFornecedorResource {
@@ -29,6 +29,12 @@ public class TelefoneFornecedorResource {
     @Path("/{id}")
     public Response findById(@PathParam("id") Long id) {
         return Response.ok(TelefoneFornecedorResponseDTO.valueOf(telefonefornecedorService.findById(id))).build();
+    }
+
+     @GET
+    @Path("/search/{numero}")
+    public Response findByNumero(@PathParam("numero") String numero) {
+        return Response.ok(TelefoneFornecedorResponseDTO.valueOf(telefonefornecedorService.findByNumero(numero))).build();
     }
 
     @GET

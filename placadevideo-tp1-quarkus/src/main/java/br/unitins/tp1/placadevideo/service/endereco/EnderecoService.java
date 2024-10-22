@@ -9,6 +9,8 @@ public interface EnderecoService {
 
     Endereco findById(Long id);
 
+    Endereco findByCep(String cep);
+
     List<Endereco> findByCliente(Long idCliente);
 
     List<Endereco> findAll();

@@ -14,4 +14,8 @@ public class TelefoneClienteRepository implements PanacheRepository<TelefoneClie
         
     }
 
+    public TelefoneCliente findByNumero(String numero) {
+        return find("SELECT t FROM TelefoneCliente t WHERE t.numero = ?1", numero ).firstResult();
+    }
+
 }

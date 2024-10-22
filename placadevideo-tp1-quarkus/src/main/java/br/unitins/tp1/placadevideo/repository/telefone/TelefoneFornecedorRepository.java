@@ -14,4 +14,8 @@ public class TelefoneFornecedorRepository implements PanacheRepository<TelefoneF
         
     }
 
+    public TelefoneFornecedor findByNumero(String numero) {
+        return find("SELECT t FROM TelefoneFornecedor t WHERE t.numero = ?1", numero ).firstResult();
+    }
+
 }

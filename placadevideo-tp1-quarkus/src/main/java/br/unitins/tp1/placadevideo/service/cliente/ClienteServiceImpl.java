@@ -48,6 +48,11 @@ public class ClienteServiceImpl implements ClienteService {
         return clienteRepository.findByNome(nome);
     }
 
+     @Override
+    public Cliente findByCpf(String cpf) {
+        return clienteRepository.findByCpf(cpf);
+    }
+
     @Override
     public List<Cliente> findAll() {
         return clienteRepository.findAll().list();
@@ -130,18 +135,29 @@ public class ClienteServiceImpl implements ClienteService {
        
 
         // Atualiza os endereços do cliente
-        // Limpa os endereços existentes
-        cliente.getEnderecos().clear();
-
-        cliente.setEnderecos(new ArrayList<>());
-
-        // endereco associado a ele
-        for (EnderecoRequestDTO enderecoDTO : dto.enderecos()) {
-            Endereco endereco = enderecoServiceImpl.create(enderecoDTO);
-            cliente.getEnderecos().add(endereco);
+    for (EnderecoRequestDTO enderecoDTO : dto.enderecos()) {
+       
+        Endereco enderecoExistente = cliente.getEnderecos().stream().filter(e -> e.getId()); 
+        if (enderecoExistente != null) {
+            enderecoServiceImpl.update(enderecoExistente.getId(), enderecoDTO);
+        } else {
+            Endereco novoEndereco = enderecoServiceImpl.create(enderecoDTO);
+            cliente.getEnderecos().add(novoEndereco);
         }
+    }
 
-        // Persistindo as alterações do cliente
+    // Atualiza os telefones do cliente
+    for (TelefoneClienteRequestDTO telefoneDTO : dto.telefones()) {
+        TelefoneCliente telefoneExistente = telefoneClienteServiceImpl.findByNumero(telefoneDTO.numero()); // Assumindo que TelefoneCliente tem um método id()
+
+        if (telefoneExistente != null) {
+            telefoneClienteServiceImpl.update(telefoneExistente.getId(), telefoneDTO);
+        } else {
+            TelefoneCliente novoTelefone = telefoneClienteServiceImpl.create(telefoneDTO);
+            cliente.getTelefones().add(novoTelefone);
+        }
+    }
+
         clienteRepository.persist(cliente);
         return cliente;
     }
@@ -149,7 +165,6 @@ public class ClienteServiceImpl implements ClienteService {
     @Override
     @Transactional
     public void delete(Long id) {
-        //clienteRepository.deleteClienteEndereco(id, id);;
         clienteRepository.deleteById(id);
     }
 

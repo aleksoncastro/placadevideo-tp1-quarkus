@@ -18,6 +18,10 @@ public class EnderecoRepository implements PanacheRepository<Endereco> {
         delete("DELETE FROM cliente_endereco WHERE cliente_id = ?1", idCliente);
     }
 
+    public Endereco findByCep(String cep) {
+        return find("SELECT e FROM Endereco e WHERE e.cep = ?1", cep ).firstResult();
+    }
+
     public void deleteByCliente(long idCliente){
         delete("DELETE FROM Endereco WHERE cliente.id = ?1", idCliente);
 
