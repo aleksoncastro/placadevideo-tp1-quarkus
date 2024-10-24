@@ -9,6 +9,8 @@ public interface PessoaFisicaService {
 
     PessoaFisica findById(Long id);
 
+    PessoaFisica findByCpf(String cpf);
+
     List<PessoaFisica> findByNome(String nome);
 
     List<PessoaFisica> findAll();

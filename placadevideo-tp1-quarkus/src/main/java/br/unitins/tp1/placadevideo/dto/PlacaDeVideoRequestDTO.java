@@ -11,7 +11,7 @@ public record PlacaDeVideoRequestDTO(
         @NotBlank(message = "O campo deve ser informado")
         String categoria,
         @NotBlank(message = "O campo deve ser informado")
-        double preco,
+        float preco,
         @NotBlank(message = "O campo deve ser informado")
         int vram,
         @NotBlank(message = "O campo deve ser informado")

@@ -7,13 +7,11 @@ import java.time.LocalDate;
 
 @Entity
 public class Cartao extends DefaultEntity {
-    @Column(length = 60, nullable = false, unique = true )
+    @Column(length = 60, nullable = false, unique = true)
     private String numero;
-    @Column(length = 60, nullable = false, unique = true )
+    @Column(length = 60, nullable = false)
     private String titular;
-    @Column(unique = true)
     private LocalDate dataValidade;
-    @Column(unique = true)
     private String cvv;
 
     public String getNumero() {

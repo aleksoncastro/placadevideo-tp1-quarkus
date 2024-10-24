@@ -10,6 +10,8 @@ public interface FornecedorService {
 
     Fornecedor findById(Long id);
 
+    Fornecedor findByCnpj(String cnpj);
+
     List<Fornecedor> findByNome(String nome);
 
     List<Fornecedor> findAll();
@@ -18,7 +20,7 @@ public interface FornecedorService {
 
     void addTelefone(Long fornecedorId, TelefoneFornecedorRequestDTO dto);
     
-    Fornecedor update(Long id, FornecedorRequestDTO dto);
+    Fornecedor update(Long fornecedorId, Long telefoneId, FornecedorRequestDTO dto);
 
     void delete(Long id);
 

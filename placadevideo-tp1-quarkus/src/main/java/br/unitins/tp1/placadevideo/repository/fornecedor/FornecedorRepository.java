@@ -13,4 +13,9 @@ public class FornecedorRepository implements PanacheRepository<Fornecedor> {
         return find("SELECT fornecedor FROM Fornecedor fornecedor Where fornecedor.nome LIKE ?1", "%"+ nome + "%").list();
     }
 
+    public Fornecedor findByCnpj(String cnpj) {
+        return find("SELECT f FROM Fornecedor f WHERE f.cnpj = ?1",  cnpj ).firstResult();
+    }
+
+
 }

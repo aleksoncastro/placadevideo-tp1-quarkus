@@ -3,7 +3,7 @@
 class PlacaDeVideo{
     - modelo: String
     - categoria: String
-    - preco: Double
+    - preco: float
     - vram: Integer
     - resolucao: String
     - energia: Integer

@@ -36,30 +36,24 @@ public class ClienteResource {
     @GET
     @Path("/search/{nome}")
     public Response findByNome(@PathParam("nome") String nome) {
-        return Response.ok(clienteService.findByNome(nome).
-                                stream().
-                                map(o -> ClienteResponseDTO.valueOf(o)).
-                                toList())
-                                .build();
+        return Response.ok(clienteService.findByNome(nome).stream().map(o -> ClienteResponseDTO.valueOf(o)).toList())
+                .build();
     }
+
     @GET
     @Path("/search/{cpf}")
-    public Response findByCpf(@PathParam("cpf") String cpf){
+    public Response findByCpf(@PathParam("cpf") String cpf) {
         return Response.ok(ClienteResponseDTO.valueOf(clienteService.findByCpf(cpf))).build();
     }
 
     @GET
     public Response findAll() {
-        return Response.ok(clienteService.findAll().
-                                stream().
-                                map(o -> ClienteResponseDTO.valueOf(o)).
-                                toList()).build();
+        return Response.ok(clienteService.findAll().stream().map(o -> ClienteResponseDTO.valueOf(o)).toList()).build();
     }
 
     @POST
     public Response create(@Valid ClienteRequestDTO dto) {
-        return Response.status(Status.CREATED).entity(ClienteResponseDTO.valueOf(clienteService.create(dto))
-        ).build();
+        return Response.status(Status.CREATED).entity(ClienteResponseDTO.valueOf(clienteService.create(dto))).build();
     }
 
     @POST
@@ -72,14 +66,19 @@ public class ClienteResource {
     @POST
     @Path("/{id}/telefones")
     public Response addEndereco(@PathParam("id") Long clienteId, @Valid TelefoneClienteRequestDTO telefoneDTO) {
-        clienteService.addTelefone(clienteId, telefoneDTO);;
+        clienteService.addTelefone(clienteId, telefoneDTO);
+        ;
         return Response.status(Status.CREATED).build();
     }
 
     @PUT
-    @Path("/{id}")
-    public Response update(@PathParam("id") Long id, @Valid ClienteRequestDTO dto) {
-        clienteService.update(id, dto);
+    @Path("/{id}/endereco/{enderecoId}/telefone/{telefoneId}")
+    public Response update(
+            @PathParam("id") Long id,
+            @PathParam("enderecoId") Long enderecoId,
+            @PathParam("telefoneId") Long telefoneId,
+            @Valid ClienteRequestDTO dto) {
+        clienteService.update(id, enderecoId, telefoneId, dto);
         return Response.noContent().build();
     }
 

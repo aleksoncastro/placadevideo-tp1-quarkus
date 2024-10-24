@@ -9,6 +9,8 @@ public interface PlacaDeVideoService {
 
     PlacaDeVideo findById(Long id);
 
+    PlacaDeVideo findByDescricao(String  descricao);
+
     List<PlacaDeVideo> findByModelo(String modelo);
 
     List<PlacaDeVideo> findAll();

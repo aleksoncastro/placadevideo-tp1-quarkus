@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 public record CartaoRequestDTO(
     String numero,
-    String Titular,
+    String titular,
     LocalDate dataValidade,
     String cvv
 ) {

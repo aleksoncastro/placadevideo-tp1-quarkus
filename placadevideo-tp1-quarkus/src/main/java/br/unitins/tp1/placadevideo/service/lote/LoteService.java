@@ -9,6 +9,8 @@ public interface LoteService {
 
     Lote findById(Long id);
 
+    Lote findByCodigo(String codigo);
+
     List<Lote> findAll();
 
     Lote create(LoteRequestDTO dto);

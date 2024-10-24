@@ -2,6 +2,7 @@ package br.unitins.tp1.placadevideo.service.fornecedor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import br.unitins.tp1.placadevideo.dto.FornecedorRequestDTO;
 import br.unitins.tp1.placadevideo.dto.TelefoneFornecedorRequestDTO;
@@ -32,6 +33,11 @@ public class FornecedorServiceImpl implements FornecedorService {
     public Fornecedor findById(Long id) {
         return fornecedorRepository.findById(id);
     }
+    
+    @Override
+    public Fornecedor findByCnpj(String cnpj){
+        return fornecedorRepository.findByCnpj(cnpj);
+    }
 
     @Override
     public List<Fornecedor> findByNome(String nome) {
@@ -57,7 +63,7 @@ public class FornecedorServiceImpl implements FornecedorService {
         fornecedor.setTelefones(new ArrayList<>());
 
         // telefone associado a ele
-        for (TelefoneFornecedorRequestDTO telefoneDTO : dto.telefones()) {
+       for (TelefoneFornecedorRequestDTO telefoneDTO : dto.telefones()) {
             TelefoneFornecedor telefone = telefoneFornecedorServiceImpl.create(telefoneDTO);
             fornecedor.getTelefones().add(telefone);
         }
@@ -86,8 +92,8 @@ public class FornecedorServiceImpl implements FornecedorService {
 
     @Override
     @Transactional
-    public Fornecedor update(Long id, FornecedorRequestDTO dto) {
-        Fornecedor fornecedor = fornecedorRepository.findById(id);
+    public Fornecedor update(Long fornecedorId, Long telefoneId, FornecedorRequestDTO dto) {
+        Fornecedor fornecedor = fornecedorRepository.findById(fornecedorId);
         if (fornecedor == null) {
             throw new EntityNotFoundException("Fornecedor não encontrado");
         }
@@ -96,8 +102,16 @@ public class FornecedorServiceImpl implements FornecedorService {
         fornecedor.setNome(dto.nome());
         fornecedor.setCnpj(dto.cnpj());
         fornecedor.setEmail(dto.email());
-        // Remove os antigos
-        fornecedor.getTelefones().clear();
+        
+        // Atualiza os telefones do fornecedor
+    for (TelefoneFornecedorRequestDTO telefoneDTO : dto.telefones()) {
+        TelefoneFornecedor telefoneExistente = telefoneFornecedorRepository.findById(telefoneId);
+        if (telefoneExistente != null) {
+            telefoneFornecedorServiceImpl.update(telefoneExistente.getId(), telefoneDTO);
+        } else {
+            throw new NoSuchElementException("Não encontrado!");
+        }
+    }
 
         // Persistindo as alterações do fornecedor
         fornecedorRepository.persist(fornecedor);

@@ -36,6 +36,12 @@ public class FornecedorResource {
     }
 
     @GET
+    @Path("/search/cnpj/{cnpj}")
+    public Response findByCnpj(@PathParam("cnpj") String cnpj) {
+        return Response.ok(FornecedorResponseDTO.valueOf(fornecedorService.findByCnpj(cnpj))).build();
+    }
+
+    @GET
     @Path("/search/{nome}")
     public Response findByNome(@PathParam("nome") String nome) {
         List<Fornecedor> fornecedors = fornecedorService.findByNome(nome);
@@ -61,9 +67,12 @@ public class FornecedorResource {
     }
 
     @PUT
-    @Path("/{id}")
-    public Response update(@PathParam("id") Long id, @Valid FornecedorRequestDTO fornecedor) {
-        fornecedorService.update(id, fornecedor);
+    @Path("{id}/telefone/{telefoneId}")
+    public Response update(
+        @PathParam("id") Long id, 
+        @PathParam("telefoneId") Long telefoneId,
+        @Valid FornecedorRequestDTO fornecedor) {
+        fornecedorService.update(id, telefoneId , fornecedor);
         return Response.noContent().build();
     }
 

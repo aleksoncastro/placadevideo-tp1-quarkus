@@ -7,7 +7,7 @@ import jakarta.persistence.ManyToOne;
 public class PlacaDeVideo extends DefaultEntity {
     private String modelo;
     private String categoria;
-    private double preco;
+    private float preco;
     private int vram;
     private String resolucao;
     private int energia;
@@ -41,11 +41,11 @@ public class PlacaDeVideo extends DefaultEntity {
         this.categoria = categoria;
     }
 
-    public double getPreco() {
+    public float getPreco() {
         return preco;
     }
 
-    public void setPreco(double preco) {
+    public void setPreco(float preco) {
         this.preco = preco;
     }
 

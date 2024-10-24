@@ -17,7 +17,7 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
 
-@Path("/placadevideos")
+@Path("/placasdevideos")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class PlacaDeVideoResource {
@@ -29,6 +29,12 @@ public class PlacaDeVideoResource {
     @Path("/{id}")
     public Response findById(@PathParam("id") Long id) {
         return Response.ok(PlacaDeVideoResponseDTO.valueOf(placadevideoService.findById(id))).build();
+    }
+
+    @GET
+    @Path("/search/descricao/{descricao}")
+    public Response findByDescricao(@PathParam("descricao") String descricao) {
+        return Response.ok(PlacaDeVideoResponseDTO.valueOf(placadevideoService.findByDescricao(descricao))).build();
     }
 
     @GET

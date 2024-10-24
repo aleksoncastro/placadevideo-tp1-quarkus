@@ -18,4 +18,8 @@ public class PlacaDeVideoRepository implements PanacheRepository<PlacaDeVideo>{
         return find("SELECT p FROM PlacaDeVideo p WHERE p.lote.id LIKE ?1", lote.getId()).list();
     }
 
+    public PlacaDeVideo findByDescricao(String descricao) {
+        return find("SELECT p FROM PlacaDeVideo p WHERE p.descricao = ?1",  descricao ).firstResult();
+    }
+
 }

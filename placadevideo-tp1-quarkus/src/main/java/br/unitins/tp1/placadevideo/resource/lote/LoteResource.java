@@ -32,17 +32,19 @@ public class LoteResource {
     }
 
     @GET
+    @Path("/search/codigo/{codigo}")
+    public Response findById(@PathParam("codigo") String codigo) {
+        return Response.ok(LoteResponseDTO.valueOf(loteService.findByCodigo(codigo))).build();
+    }
+
+    @GET
     public Response findAll() {
-        return Response.ok(loteService.findAll().
-                                stream().
-                                map(o -> LoteResponseDTO.valueOf(o)).
-                                toList()).build();
+        return Response.ok(loteService.findAll().stream().map(o -> LoteResponseDTO.valueOf(o)).toList()).build();
     }
 
     @POST
     public Response create(@Valid LoteRequestDTO dto) {
-        return Response.status(Status.CREATED).entity(LoteResponseDTO.valueOf(loteService.create(dto))
-        ).build();
+        return Response.status(Status.CREATED).entity(LoteResponseDTO.valueOf(loteService.create(dto))).build();
     }
 
     @PUT

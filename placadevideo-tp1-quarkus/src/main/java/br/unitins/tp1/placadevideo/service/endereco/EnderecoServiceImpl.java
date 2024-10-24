@@ -60,6 +60,8 @@ public class EnderecoServiceImpl implements EnderecoService {
         endereco.setEstado(dto.estado());
         endereco.setBairro(dto.bairro());
         endereco.setNumero(dto.numero());
+
+        enderecoRepository.persist(endereco);
         return endereco;
     }
 

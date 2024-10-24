@@ -36,7 +36,7 @@ public class CartaoServiceImpl implements CartaoService {
     public Cartao create(CartaoRequestDTO dto) {
         Cartao cartao = new Cartao();
         cartao.setNumero(dto.numero());
-        cartao.setTitular(dto.Titular());
+        cartao.setTitular(dto.titular());
         cartao.setDataValidade(dto.dataValidade());
         cartao.setCvv(dto.cvv());
 
@@ -56,7 +56,7 @@ public class CartaoServiceImpl implements CartaoService {
             throw new EntityNotFoundException("Cartao não encontrado");
         }
         cartao.setNumero(dto.numero());
-        cartao.setTitular(dto.Titular());
+        cartao.setTitular(dto.titular());
         cartao.setDataValidade(dto.dataValidade());
         cartao.setCvv(dto.cvv());
 

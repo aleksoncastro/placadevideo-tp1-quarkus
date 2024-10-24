@@ -13,6 +13,8 @@ public interface TelefoneClienteService {
 
     TelefoneCliente findByNumero(String numero);
 
+    TelefoneCliente findByCodigo(String codigo);
+
     List<TelefoneCliente> findByCliente(Long id);
 
     List<TelefoneCliente> findAll();

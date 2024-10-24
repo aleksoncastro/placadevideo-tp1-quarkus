@@ -19,15 +19,11 @@ public interface ClienteService {
 
     Cliente create(ClienteRequestDTO dto);
 
-    void updateTelefone(Long id, Long idTelefone, TelefoneClienteRequestDTO dto);
-
-    void updateEndereco(Long id, Long idEndereco, EnderecoRequestDTO dto);
-
     void addEndereco(Long clienteId, EnderecoRequestDTO dto);
     
     void addTelefone(Long clienteId, TelefoneClienteRequestDTO dto);
 
-    Cliente update(Long id, ClienteRequestDTO dto);
+    Cliente update(Long idCliente, Long enderecoId, Long telefoneId, ClienteRequestDTO dto);
 
     void delete(Long id);
 

@@ -2,6 +2,7 @@ package br.unitins.tp1.placadevideo.service.cliente;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import br.unitins.tp1.placadevideo.dto.ClienteRequestDTO;
 import br.unitins.tp1.placadevideo.dto.EnderecoRequestDTO;
@@ -121,8 +122,8 @@ public class ClienteServiceImpl implements ClienteService {
 
     @Override
     @Transactional
-    public Cliente update(Long id, ClienteRequestDTO dto) {
-        Cliente cliente = clienteRepository.findById(id);
+    public Cliente update(Long idCliente, Long enderecoId, Long telefoneId, ClienteRequestDTO dto) {
+        Cliente cliente = clienteRepository.findById(idCliente);
         if (cliente == null) {
             throw new EntityNotFoundException("Cliente não encontrado");
         }
@@ -136,25 +137,21 @@ public class ClienteServiceImpl implements ClienteService {
 
         // Atualiza os endereços do cliente
     for (EnderecoRequestDTO enderecoDTO : dto.enderecos()) {
-       
-        Endereco enderecoExistente = cliente.getEnderecos().stream().filter(e -> e.getId()); 
+        Endereco enderecoExistente = enderecoRepository.findById(enderecoId);
         if (enderecoExistente != null) {
             enderecoServiceImpl.update(enderecoExistente.getId(), enderecoDTO);
         } else {
-            Endereco novoEndereco = enderecoServiceImpl.create(enderecoDTO);
-            cliente.getEnderecos().add(novoEndereco);
+            throw new NoSuchElementException("Não encontrado!");
         }
     }
 
     // Atualiza os telefones do cliente
     for (TelefoneClienteRequestDTO telefoneDTO : dto.telefones()) {
-        TelefoneCliente telefoneExistente = telefoneClienteServiceImpl.findByNumero(telefoneDTO.numero()); // Assumindo que TelefoneCliente tem um método id()
-
+        TelefoneCliente telefoneExistente = telefoneClienteRepository.findById(telefoneId);
         if (telefoneExistente != null) {
             telefoneClienteServiceImpl.update(telefoneExistente.getId(), telefoneDTO);
         } else {
-            TelefoneCliente novoTelefone = telefoneClienteServiceImpl.create(telefoneDTO);
-            cliente.getTelefones().add(novoTelefone);
+            throw new NoSuchElementException("Não encontrado!");
         }
     }
 
@@ -167,5 +164,6 @@ public class ClienteServiceImpl implements ClienteService {
     public void delete(Long id) {
         clienteRepository.deleteById(id);
     }
+
 
 }

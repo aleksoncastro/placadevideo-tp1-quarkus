@@ -6,7 +6,7 @@ public record PlacaDeVideoResponseDTO(
         Long id,
         String modelo,
         String categoria,
-        double preco,
+        float preco,
         int vram,
         String resolucao,
         int energia,

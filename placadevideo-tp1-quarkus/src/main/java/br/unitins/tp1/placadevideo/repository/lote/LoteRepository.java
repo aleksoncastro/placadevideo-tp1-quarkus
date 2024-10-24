@@ -13,4 +13,8 @@ public class LoteRepository implements PanacheRepository<Lote> {
         return find("SELECT cliente FROM Cliente cliente Where cliente.nome LIKE ?1", "%"+ nome + "%").list();
     }
 
+    public Lote findByCodigo(String codigo) {
+        return find("SELECT l FROM Lote l WHERE l.codigo = ?1",  codigo ).firstResult();
+    }
+
 }

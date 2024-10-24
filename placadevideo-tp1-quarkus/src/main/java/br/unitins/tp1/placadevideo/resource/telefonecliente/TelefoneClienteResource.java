@@ -17,7 +17,7 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
 
-@Path("/telefoneclientes")
+@Path("/telefonesclientes")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class TelefoneClienteResource {
@@ -32,7 +32,7 @@ public class TelefoneClienteResource {
     }
 
     @GET
-    @Path("/search/{numero}")
+    @Path("/search/numero/{numero}")
     public Response findByNumero(@PathParam("numero") String numero) {
         return Response.ok(TelefoneClienteResponseDTO.valueOf(telefoneclienteService.findByNumero(numero))).build();
     }

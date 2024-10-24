@@ -26,6 +26,11 @@ public class PlacaDeVideoServiceImpl implements PlacaDeVideoService {
     }
 
     @Override
+    public PlacaDeVideo findByDescricao(String  descricao) {
+        return placaDeVideoRepository.findByDescricao(descricao);
+    }
+
+    @Override
     public List<PlacaDeVideo> findByModelo(String modelo) {
         return placaDeVideoRepository.findbyModelo(modelo);
     }

@@ -12,23 +12,29 @@ import jakarta.transaction.Transactional;
 
 @ApplicationScoped
 public class TelefoneClienteServiceImpl implements TelefoneClienteService {
-
+    
     @Inject
     public TelefoneClienteRepository telefoneClienteRepository;
-
+    
     @Inject
     public ClienteRepository  clienteRepository;
-
-
+    
+    
     @Override
     public TelefoneCliente findById(Long id) {
         return telefoneClienteRepository.findById(id);
     }
-
+    
     @Override
     public TelefoneCliente findByNumero(String numero) {
-        return telefoneClienteRepository.findByNumero(numero); 
+        return telefoneClienteRepository.findByNumero(numero);
     }
+
+    @Override
+    public TelefoneCliente findByCodigo(String codigo){
+        return telefoneClienteRepository.findByNumero(codigo);
+    }
+    
 
     @Override
     public List<TelefoneCliente> findByCliente(Long id) {
@@ -58,7 +64,6 @@ public class TelefoneClienteServiceImpl implements TelefoneClienteService {
         telefone.setCodigoArea(dto.codigoArea());
         telefone.setNumero(dto.numero());
         telefoneClienteRepository.persist(telefone);
-
         return telefone;
     }
 
@@ -67,6 +72,9 @@ public class TelefoneClienteServiceImpl implements TelefoneClienteService {
     public void delete(Long id) {
         telefoneClienteRepository.deleteById(id);
     }
+
+
+
 
 
 }

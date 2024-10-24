@@ -12,13 +12,18 @@ import jakarta.transaction.Transactional;
 
 @ApplicationScoped
 public class LoteServiceImpl implements LoteService {
-
+    
     @Inject
     public LoteRepository loteRepository;
-
+    
     @Override
     public Lote findById(Long id) {
         return loteRepository.findById(id);
+    }
+    
+    @Override
+    public Lote findByCodigo(String codigo) {
+        return loteRepository.findByCodigo(codigo);
     }
 
     @Override
@@ -63,5 +68,6 @@ public class LoteServiceImpl implements LoteService {
     public void delete(Long id) {
         loteRepository.deleteById(id);
     }
+
 
 }
