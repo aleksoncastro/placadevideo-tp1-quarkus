@@ -127,7 +127,7 @@ Fornecedor "1" *--> "*" TelefoneFornecedor
 
 ItemPedido "*" --> "1" Lote
 
-Cliente "1" --> "*" Endereco
+Cliente "1" *--> "*" Endereco
 Cliente "1" --> "*" PlacaDeVideo : listaDesejos
 Cliente "1" *--> "*" TelefoneCliente
 
