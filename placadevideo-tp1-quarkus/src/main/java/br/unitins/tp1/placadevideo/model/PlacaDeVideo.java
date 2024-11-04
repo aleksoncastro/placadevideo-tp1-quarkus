@@ -1,28 +1,54 @@
 package br.unitins.tp1.placadevideo.model;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class PlacaDeVideo extends DefaultEntity {
     private String modelo;
     private String categoria;
-    private float preco;
-    private int vram;
+    private Double preco;
+    private Integer vram;
     private String resolucao;
-    private int energia;
+    private Integer energia;
     private String descricao;
-    private int compatibilidade;
-
-    @ManyToOne
-    private Lote lote;
-
-    public Lote getLote() {
-        return lote;
+    private Integer compatibilidade;
+    private Fan fan;
+    private Double clokBase;
+    private Double clockBoost;
+    @OneToMany
+    private Fornecedor fornecedor;
+    
+    public Fornecedor getFornecedor() {
+        return fornecedor;
     }
 
-    public void setLote(Lote lote) {
-        this.lote = lote;
+    public void setFornecedor(Fornecedor fornecedor) {
+        this.fornecedor = fornecedor;
+    }
+
+    public Double getClokBase() {
+        return clokBase;
+    }
+
+    public void setClokBase(Double clokBase) {
+        this.clokBase = clokBase;
+    }
+    
+    public Double getClockBoost() {
+        return clockBoost;
+    }
+
+    public void setClockBoost(Double clockBoost) {
+        this.clockBoost = clockBoost;
+    }
+
+    public Fan getFan() {
+        return fan;
+    }
+
+    public void setFan(Fan fan) {
+        this.fan = fan;
     }
 
     public String getModelo() {
@@ -41,19 +67,19 @@ public class PlacaDeVideo extends DefaultEntity {
         this.categoria = categoria;
     }
 
-    public float getPreco() {
+    public Double getPreco() {
         return preco;
     }
 
-    public void setPreco(float preco) {
+    public void setPreco(Double preco) {
         this.preco = preco;
     }
 
-    public int getVram() {
+    public Integer getVram() {
         return vram;
     }
 
-    public void setVram(int vram) {
+    public void setVram(Integer vram) {
         this.vram = vram;
     }
 
@@ -65,11 +91,11 @@ public class PlacaDeVideo extends DefaultEntity {
         this.resolucao = resolucao;
     }
 
-    public int getEnergia() {
+    public Integer getEnergia() {
         return energia;
     }
 
-    public void setEnergia(int energia) {
+    public void setEnergia(Integer energia) {
         this.energia = energia;
     }
 
@@ -81,11 +107,11 @@ public class PlacaDeVideo extends DefaultEntity {
         this.descricao = descricao;
     }
 
-    public int getCompatibilidade() {
+    public Integer getCompatibilidade() {
         return compatibilidade;
     }
 
-    public void setCompatibilidade(int compatibilidade) {
+    public void setCompatibilidade(Integer compatibilidade) {
         this.compatibilidade = compatibilidade;
     }
 

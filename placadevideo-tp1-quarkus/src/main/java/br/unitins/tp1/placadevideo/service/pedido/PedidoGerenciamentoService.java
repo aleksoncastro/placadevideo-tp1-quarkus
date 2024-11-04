@@ -2,20 +2,17 @@ package br.unitins.tp1.placadevideo.service.pedido;
 
 import java.util.List;
 
-import br.unitins.tp1.placadevideo.dto.PedidoRequestDTO;
 import br.unitins.tp1.placadevideo.model.Pedido;
+import br.unitins.tp1.placadevideo.model.StatusPedido;
 
-public interface PedidoService {
-
+public interface PedidoGerenciamentoService {
+    
     Pedido findById(Long id);
 
-    List<Pedido> findByUsername(String username);
+    Pedido atualizarStatus(Long id, StatusPedido novoStatus);
 
-    Pedido create(PedidoRequestDTO dto);
+    List<Pedido> findAll();
 
     void cancelarPedido(Long id);
-
-    
-
 
 }

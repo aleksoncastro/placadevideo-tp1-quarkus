@@ -1,18 +1,23 @@
 package br.unitins.tp1.placadevideo.dto;
 
+import br.unitins.tp1.placadevideo.model.Fan;
 import br.unitins.tp1.placadevideo.model.PlacaDeVideo;
 
 public record PlacaDeVideoResponseDTO(
         Long id,
         String modelo,
         String categoria,
-        float preco,
-        int vram,
+        Double preco,
+        Integer vram,
         String resolucao,
-        int energia,
+        Integer energia,
         String descricao,
-        int compatibilidade,
-        LoteResponseDTO lote) {
+        Integer compatibilidade,
+        Double clokBase,
+        Double clokBoost,
+        Fan fan,
+        FornecedorResponseDTO fornecedor
+        ) {
 
     public static PlacaDeVideoResponseDTO valueOf(PlacaDeVideo placadevideo){
         return new PlacaDeVideoResponseDTO(
@@ -25,7 +30,11 @@ public record PlacaDeVideoResponseDTO(
             placadevideo.getEnergia(),
             placadevideo.getDescricao(),
             placadevideo.getCompatibilidade(),
-            LoteResponseDTO.valueOf(placadevideo.getLote())
+            placadevideo.getClokBase(),
+            placadevideo.getClockBoost(),
+            placadevideo.getFan(),
+            FornecedorResponseDTO.valueOf(placadevideo.getFornecedor())
+            
         );
     }
 }

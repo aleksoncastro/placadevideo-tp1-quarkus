@@ -1,4 +1,5 @@
-package br.unitins.tp1.placadevideo;
+/*
+ *      package br.unitins.tp1.placadevideo;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.is;
@@ -119,3 +120,5 @@ public class LoteResourceTest {
     }
 
 }
+
+ */

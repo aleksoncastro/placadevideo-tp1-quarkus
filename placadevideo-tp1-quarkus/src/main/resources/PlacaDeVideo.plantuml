@@ -1,5 +1,3 @@
-@startuml
-
 class PlacaDeVideo{
     - modelo: String
     - categoria: String
@@ -9,11 +7,6 @@ class PlacaDeVideo{
     - energia: Integer
     - descricao: String
     - compatibilidade: Integer
-}
-
-class Clock{
-    - clockBase: Double
-    - clockBoost: Double
 }
 
 enum Fan{
@@ -69,7 +62,7 @@ class ItemPedido{
 }
 
 class Pedido{
-    - valoTotal: String
+    - valoTotal: Double
     - data: LocalDate
 }
 
@@ -86,11 +79,6 @@ class Pix extends Pagamento {
 
 class Boleto extends Pagamento {
     - codigoBarra: String
-}
-
-enum TipoCartao {
-    + CREDITO: int
-    + DEBITO: int
 }
 
 abstract class Pagamento{
@@ -117,11 +105,10 @@ class TelefoneFornecedor{
 
 ' RELACIONAMENTOS
 PlacaDeVideo "*" --> "1" Fornecedor
-PlacaDeVideo "1" --> "*" Tamanho
-PlacaDeVideo "1" --> "*" Fan
-PlacaDeVideo "1" --> "*" Clock
+PlacaDeVideo "*" --> "1" Tamanho
+PlacaDeVideo "*" --> "1" Fan
 
-Lote "1" --> "*" PlacaDeVideo 
+Lote "*" --> "1" PlacaDeVideo 
 
 Fornecedor "1" *--> "*" TelefoneFornecedor
 
@@ -135,9 +122,7 @@ Pedido "1" --> "1" ItemPedido
 Pedido "1" *--> "1" EnderecoEntrega
 Pedido "*" *--> "1" Cliente
 Pedido "1" --> "1" Pagamento
-Pedido "1" --> "*" StatusPedido
-
-Cartao "*" *--> "1" TipoCartao
+Pedido "*" --> "1" StatusPedido
 
 ' ANOTACOES
 

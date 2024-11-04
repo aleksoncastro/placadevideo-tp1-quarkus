@@ -8,7 +8,8 @@ public record LoteResponseDTO(
     Long id,
     String codigo,
     Integer quantidade,
-    LocalDate dataFabricacao
+    LocalDate dataFabricacao,
+    PlacaDeVideoResponseDTO placaDeVideo
 
 ) {
     public static LoteResponseDTO valueOf(Lote lote){
@@ -16,7 +17,8 @@ public record LoteResponseDTO(
             lote.getId(),
             lote.getCodigo(),
             lote.getQuantidade(),
-            lote.getDataFabricacao()
+            lote.getDataFabricacao(),
+            PlacaDeVideoResponseDTO.valueOf(lote.getPlacaDeVideo())
         );
     }
 }
