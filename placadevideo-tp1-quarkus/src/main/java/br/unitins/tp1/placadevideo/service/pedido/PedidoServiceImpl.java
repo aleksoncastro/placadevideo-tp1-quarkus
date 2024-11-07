@@ -1,13 +1,19 @@
 package br.unitins.tp1.placadevideo.service.pedido;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import br.unitins.tp1.placadevideo.dto.ItemPedidoRequestDTO;
 import br.unitins.tp1.placadevideo.dto.PedidoRequestDTO;
+import br.unitins.tp1.placadevideo.model.ItemPedido;
+import br.unitins.tp1.placadevideo.model.Lote;
 import br.unitins.tp1.placadevideo.model.Pedido;
 import br.unitins.tp1.placadevideo.model.StatusPedido;
 import br.unitins.tp1.placadevideo.repository.pedido.PedidoRepository;
-import br.unitins.tp1.placadevideo.service.estado.EstadoService;
+import br.unitins.tp1.placadevideo.service.lote.LoteService;
+import br.unitins.tp1.placadevideo.service.usuario.UsuarioService;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -19,7 +25,10 @@ public class PedidoServiceImpl implements PedidoService {
    public PedidoRepository pedidoRepository;
 
    @Inject
-   public EstadoService estadoService;
+   public LoteService loteService;
+
+   @Inject
+   public UsuarioService usuarioService;
 
    @Override
    public Pedido findById(Long id) {
@@ -36,9 +45,23 @@ public class PedidoServiceImpl implements PedidoService {
 
    @Override
    @Transactional
-   public Pedido create(PedidoRequestDTO dto) {
-      //Pedido pedido = new Pedido();
-      
+   public Pedido create(PedidoRequestDTO dto,String username) {
+      Pedido pedido = new Pedido();
+      pedido.setData(LocalDateTime.now());
+      pedido.setUsuario(usuarioService.findByUsername(username));
+
+      pedido.setListaItemPedido(new ArrayList<ItemPedido>());
+
+      for(ItemPedidoRequestDTO itemDTO: dto.listaItemPedido()){
+         ItemPedido item = new ItemPedido();
+
+         Lote lote = loteService.findByIdPlacaDeVideo(itemDTO.idProduto());
+         item.setLote(lote);
+         item.setPreco(itemDTO.preco());
+         item.setQuantidade(itemDTO.quantidade());
+
+         pedido.getListaItemPedido().add(item);
+      }
 
 
       return null;
@@ -59,5 +82,6 @@ public class PedidoServiceImpl implements PedidoService {
          throw new RuntimeException("Pedido não encontrado");
       }
    }
+
 
 }

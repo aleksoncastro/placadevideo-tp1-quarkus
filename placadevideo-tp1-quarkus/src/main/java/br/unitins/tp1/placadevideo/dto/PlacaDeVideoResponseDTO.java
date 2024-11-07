@@ -15,8 +15,8 @@ public record PlacaDeVideoResponseDTO(
         Integer compatibilidade,
         Double clokBase,
         Double clokBoost,
-        Fan fan,
-        FornecedorResponseDTO fornecedor
+        Fan fan
+       // FornecedorResponseDTO fornecedor
         ) {
 
     public static PlacaDeVideoResponseDTO valueOf(PlacaDeVideo placadevideo){
@@ -32,8 +32,8 @@ public record PlacaDeVideoResponseDTO(
             placadevideo.getCompatibilidade(),
             placadevideo.getClokBase(),
             placadevideo.getClockBoost(),
-            placadevideo.getFan(),
-            FornecedorResponseDTO.valueOf(placadevideo.getFornecedor())
+            placadevideo.getFan()
+           // FornecedorResponseDTO.valueOf(placadevideo.getFornecedor())
             
         );
     }

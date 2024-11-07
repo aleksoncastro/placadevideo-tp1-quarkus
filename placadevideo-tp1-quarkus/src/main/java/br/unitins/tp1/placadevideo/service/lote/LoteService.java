@@ -11,6 +11,8 @@ public interface LoteService {
 
     Lote findByCodigo(String codigo);
 
+    Lote findByIdPlacaDeVideo(Long idPlaca );
+
     List<Lote> findAll();
 
     Lote create(LoteRequestDTO dto);

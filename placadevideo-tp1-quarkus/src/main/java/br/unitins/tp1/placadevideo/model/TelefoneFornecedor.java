@@ -14,7 +14,7 @@ public class TelefoneFornecedor extends DefaultEntity {
     @ManyToOne
     @JoinColumn(name = "fornecedor_id")
     private  Fornecedor fornecedor;
-
+    
     public Fornecedor getFornecedor() {
         return fornecedor;
     }

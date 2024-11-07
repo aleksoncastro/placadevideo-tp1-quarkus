@@ -17,15 +17,13 @@ public class Pedido extends DefaultEntity {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_usuario")
     private Usuario usuario;
+
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_pedido")
     private List<ItemPedido> listaItemPedido;
+    
     private Double valorTotal;
     private StatusPedido statusPedido;
-
-    public Pedido(){
-        this.data = LocalDateTime.now();
-    }
     
     public StatusPedido getStatusPedido() {
         return statusPedido;

@@ -31,10 +31,10 @@ VALUES
 ('RJ', 'Rio de Janeiro');
 
 -- Inserindo dados na tabela Fornecedor
-INSERT INTO Fornecedor (cnpj, nome, email) 
+/*INSERT INTO Fornecedor (cnpj, nome, email) 
 VALUES 
 ('12.345.678/0001-99', 'Tech Supplies', 'contato@techsupplies.com'),
-('98.765.432/0001-11', 'Gadget Store', 'contato@gadgetstore.com');
+('98.765.432/0001-11', 'Gadget Store', 'contato@gadgetstore.com');*/
 
 -- Inserindo dados na tabela Lote
 INSERT INTO Lote (dataFabricacao, quantidade, codigo) 
@@ -61,11 +61,11 @@ VALUES
 (2, 2, '777.888.999-00');
 
 -- Inserindo dados na tabela PlacaDeVideo
-INSERT INTO PlacaDeVideo (compatibilidade, energia, preco, vram, lote_id, categoria, descricao, modelo, resolucao) 
+/*INSERT INTO PlacaDeVideo (compatibilidade, energia, preco, vram, lote_id, categoria, descricao, modelo, resolucao) 
 VALUES 
 (1, 200, 2500.00, 8, 1, 'Gamer', 'RTX 3070', 'NVIDIA', '4K'),
 (1, 180, 1500.00, 6, 2, 'Gamer', 'GTX 1660', 'NVIDIA', 'Full HD');
-
+*/
 -- Inserindo dados na tabela TelefoneCliente
 INSERT INTO TelefoneCliente (cliente_id, codigoArea, numero) 
 VALUES 
@@ -73,9 +73,9 @@ VALUES
 (2, '21', '98888-7777');
 
 -- Inserindo dados na tabela TelefoneFornecedor
-INSERT INTO TelefoneFornecedor (fornecedor_id, codigoArea, numero) 
+/*INSERT INTO TelefoneFornecedor (fornecedor_id, codigoArea, numero) 
 VALUES 
 (1, '11', '3222-1234'),
 (2, '21', '3344-5678');
-
+*/
 

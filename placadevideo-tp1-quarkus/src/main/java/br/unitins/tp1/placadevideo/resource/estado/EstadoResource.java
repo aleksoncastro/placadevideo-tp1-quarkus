@@ -6,6 +6,7 @@ import br.unitins.tp1.placadevideo.dto.EstadoRequestDTO;
 import br.unitins.tp1.placadevideo.dto.EstadoResponseDTO;
 import br.unitins.tp1.placadevideo.model.Estado;
 import br.unitins.tp1.placadevideo.service.estado.EstadoService;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
@@ -27,12 +28,14 @@ public class EstadoResource {
 
     @GET
     @Path("/{id}")
+    @RolesAllowed("Adm")
     public Estado findById(@PathParam("id") Long id) {
         return estadoService.findById(id);
     }
 
     @GET
     @Path("/search/{nome}")
+    @RolesAllowed("{Adm, User}")
     public List<Estado> findByNome(@PathParam("nome") String nome) {
         return estadoService.findByNome(nome);
     }

@@ -35,7 +35,12 @@ public class LoteServiceImpl implements LoteService {
     public List<Lote> findAll() {
         return loteRepository.findAll().list();
     }
-
+    
+    @Override
+    public Lote findByIdPlacaDeVideo(Long idPlaca) {
+        return loteRepository.findByIdPlacaDeVideo(idPlaca);
+    }
+    
     @Override
     @Transactional
     public Lote create(LoteRequestDTO dto) {
@@ -84,6 +89,7 @@ public class LoteServiceImpl implements LoteService {
     public void delete(Long id) {
         loteRepository.deleteById(id);
     }
+
 
 
 }

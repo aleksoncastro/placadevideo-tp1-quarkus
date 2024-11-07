@@ -1,7 +1,6 @@
 package br.unitins.tp1.placadevideo.model;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
 
 @Entity
 public class PlacaDeVideo extends DefaultEntity {
@@ -16,8 +15,8 @@ public class PlacaDeVideo extends DefaultEntity {
     private Fan fan;
     private Double clokBase;
     private Double clockBoost;
-    @OneToMany
-    private Fornecedor fornecedor;
+    
+    /*private Fornecedor fornecedor; 
     
     public Fornecedor getFornecedor() {
         return fornecedor;
@@ -25,8 +24,7 @@ public class PlacaDeVideo extends DefaultEntity {
 
     public void setFornecedor(Fornecedor fornecedor) {
         this.fornecedor = fornecedor;
-    }
-
+    } */
     public Double getClokBase() {
         return clokBase;
     }

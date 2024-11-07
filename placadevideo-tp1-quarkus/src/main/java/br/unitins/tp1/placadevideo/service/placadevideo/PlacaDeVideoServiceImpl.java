@@ -6,7 +6,7 @@ import br.unitins.tp1.placadevideo.dto.PlacaDeVideoRequestDTO;
 import br.unitins.tp1.placadevideo.model.Fan;
 import br.unitins.tp1.placadevideo.model.PlacaDeVideo;
 import br.unitins.tp1.placadevideo.repository.placadevideo.PlacaDeVideoRepository;
-import br.unitins.tp1.placadevideo.service.fornecedor.FornecedorService;
+
 import br.unitins.tp1.placadevideo.service.lote.LoteService;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -22,9 +22,9 @@ public class PlacaDeVideoServiceImpl implements PlacaDeVideoService {
     @Inject
     public LoteService loteService;
 
-    @Inject
+   /* @Inject
     public FornecedorService fornecedorService;
-
+ */
     @Override
     public PlacaDeVideo findById(Long id) {
         return placaDeVideoRepository.findById(id);
@@ -61,7 +61,7 @@ public class PlacaDeVideoServiceImpl implements PlacaDeVideoService {
         placaDeVideo.setClokBase(dto.clockBase());
         placaDeVideo.setClockBoost(dto.clockBoost());
         placaDeVideo.setFan(Fan.valueOf(dto.idFan()));
-        placaDeVideo.setFornecedor(fornecedorService.findById(dto.idFornecedor()));
+       // placaDeVideo.setFornecedor(fornecedorService.findById(dto.idFornecedor()));
         //Atualiza o placadevideo no banco
         placaDeVideoRepository.persist(placaDeVideo);
 
@@ -87,7 +87,7 @@ public class PlacaDeVideoServiceImpl implements PlacaDeVideoService {
         placaDeVideo.setClokBase(dto.clockBase());
         placaDeVideo.setClockBoost(dto.clockBoost());
         placaDeVideo.setFan(Fan.valueOf(dto.idFan()));
-        placaDeVideo.setFornecedor(fornecedorService.findById(dto.idFornecedor()));
+       // placaDeVideo.setFornecedor(fornecedorService.findById(dto.idFornecedor()));
 
         // Persistindo as alterações do placadevideo
         placaDeVideoRepository.persist(placaDeVideo);

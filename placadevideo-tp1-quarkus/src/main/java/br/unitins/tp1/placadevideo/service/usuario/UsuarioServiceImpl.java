@@ -25,8 +25,8 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public List<Usuario> findByNome(String nome) {
-        return usuarioRepository.findByNome(nome);
+    public Usuario findByUsername(String nome) {
+        return usuarioRepository.findByUsername(nome);
     }
     
     @Override
@@ -62,6 +62,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     public void delete(Long id) {
         usuarioRepository.deleteById(id);
     }
+
 
    
 }
