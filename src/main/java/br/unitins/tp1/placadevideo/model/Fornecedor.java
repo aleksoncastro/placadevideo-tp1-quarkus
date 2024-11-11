@@ -11,7 +11,7 @@ public class Fornecedor extends DefaultEntity {
     private String nome;
     private String cnpj;
     private String email;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fornecedor")
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<TelefoneFornecedor> telefones;
 
 

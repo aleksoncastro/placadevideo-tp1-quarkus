@@ -7,11 +7,12 @@ import jakarta.enterprise.context.ApplicationScoped;
 @ApplicationScoped
 public class LoteRepository implements PanacheRepository<Lote> {
     /**
-     * @return  retorna a placa com o lote mais antigo e com quantidade maior que zero
+     * @return retorna a placa com o lote mais antigo e com quantidade maior que
+     *         zero
      */
 
-    public Lote findByIdPlacaDeVideo(Long idPlaca ){
-        StringBuffer jpql = null;
+    public Lote findByIdPlacaDeVideo(Long idPlaca) {
+        StringBuffer jpql = new StringBuffer();
         jpql.append("SELECT  ");
         jpql.append("l ");
         jpql.append("FROM  ");
@@ -20,12 +21,17 @@ public class LoteRepository implements PanacheRepository<Lote> {
         jpql.append(" l.placadevideo.id LIKE ?1 ");
         jpql.append("AND l.quantidade > 0  ");
         jpql.append(" ORDER BY l.datafabricacao DESC  ");
-        
-        return find("SELECT l FROM Lote l Where l.placadevideo.id LIKE ?1 AND l.quantidade > 0 ORDER BY l.datafabricacao ", idPlaca  ).firstResult();
+
+        return find(jpql.toString(), idPlaca).firstResult();
     }
 
     public Lote findByCodigo(String codigo) {
-        return find("SELECT l FROM Lote l WHERE l.codigo = ?1", codigo ).firstResult();
+        StringBuffer jpql = new StringBuffer();
+        jpql.append("SELECT l ");
+        jpql.append("FROM Lote l ");
+        jpql.append("WHERE l.codigo = ?1");
+
+        return find(jpql.toString(), codigo).firstResult();
     }
 
 }
