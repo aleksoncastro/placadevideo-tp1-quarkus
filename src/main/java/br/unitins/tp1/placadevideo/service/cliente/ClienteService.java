@@ -2,10 +2,10 @@ package br.unitins.tp1.placadevideo.service.cliente;
 
 import java.util.List;
 
-import br.unitins.tp1.placadevideo.dto.ClienteRequestDTO;
-import br.unitins.tp1.placadevideo.dto.EnderecoRequestDTO;
-import br.unitins.tp1.placadevideo.dto.TelefoneClienteRequestDTO;
-import br.unitins.tp1.placadevideo.model.Cliente;
+import br.unitins.tp1.placadevideo.dto.Request.ClienteRequestDTO;
+import br.unitins.tp1.placadevideo.dto.Request.EnderecoRequestDTO;
+import br.unitins.tp1.placadevideo.dto.Request.TelefoneClienteRequestDTO;
+import br.unitins.tp1.placadevideo.model.usuario.Cliente;
 
 public interface ClienteService {
 

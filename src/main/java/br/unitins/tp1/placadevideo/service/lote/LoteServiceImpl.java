@@ -2,11 +2,11 @@ package br.unitins.tp1.placadevideo.service.lote;
 
 import java.util.List;
 
-import br.unitins.tp1.placadevideo.dto.LoteRequestDTO;
+import br.unitins.tp1.placadevideo.dto.Request.LoteRequestDTO;
 import br.unitins.tp1.placadevideo.model.Lote;
-import br.unitins.tp1.placadevideo.model.PlacaDeVideo;
 import br.unitins.tp1.placadevideo.repository.lote.LoteRepository;
 import br.unitins.tp1.placadevideo.repository.placadevideo.PlacaDeVideoRepository;
+import br.unitins.tp1.placadevideo.service.placadevideo.PlacaDeVideoService;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityNotFoundException;
@@ -20,6 +20,9 @@ public class LoteServiceImpl implements LoteService {
 
     @Inject
     public PlacaDeVideoRepository placaDeVideoRepository;
+
+    @Inject
+    public PlacaDeVideoService placaDeVideoService;
     
     @Override
     public Lote findById(Long id) {
@@ -46,14 +49,10 @@ public class LoteServiceImpl implements LoteService {
     public Lote create(LoteRequestDTO dto) {
         Lote lote = new Lote();
         lote.setCodigo(dto.codigo());
-        lote.setQuantidade(dto.quantidade());
+        lote.setEstoque(dto.estoque());
         lote.setDataFabricacao(dto.dataFabricacao());
-        PlacaDeVideo placaDeVideo = placaDeVideoRepository.findById(dto.idPlacaDeVideo());
-        if (placaDeVideo == null) {
-            throw new RuntimeException("Placa de vídeo não encontrada com o ID fornecido.");
-        }
-        lote.setPlacaDeVideo(placaDeVideo);
-
+        lote.setPlacaDeVideo(placaDeVideoService.findById(dto.idPlacaDeVideo()));
+        
         //Atualiza o lote no banco
         loteRepository.persist(lote);
 
@@ -70,14 +69,9 @@ public class LoteServiceImpl implements LoteService {
             throw new EntityNotFoundException("Lote não encontrado");
         }
         lote.setCodigo(dto.codigo());
-        lote.setQuantidade(dto.quantidade());
+        lote.setEstoque(dto.estoque());
         lote.setDataFabricacao(dto.dataFabricacao());
-        PlacaDeVideo placaDeVideo = placaDeVideoRepository.findById(dto.idPlacaDeVideo());
-        if (placaDeVideo == null) {
-            throw new RuntimeException("Placa de vídeo não encontrada com o ID fornecido.");
-        }
-        lote.setPlacaDeVideo(placaDeVideo);
-
+        lote.setPlacaDeVideo(placaDeVideoService.findById(dto.idPlacaDeVideo()));
 
         // Persistindo as alterações do lote
         loteRepository.persist(lote);

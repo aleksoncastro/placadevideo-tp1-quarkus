@@ -2,8 +2,8 @@ package br.unitins.tp1.placadevideo.resource.estado;
 
 import java.util.List;
 
-import br.unitins.tp1.placadevideo.dto.EstadoRequestDTO;
-import br.unitins.tp1.placadevideo.dto.EstadoResponseDTO;
+import br.unitins.tp1.placadevideo.dto.Request.EstadoRequestDTO;
+import br.unitins.tp1.placadevideo.dto.Response.EstadoResponseDTO;
 import br.unitins.tp1.placadevideo.model.Estado;
 import br.unitins.tp1.placadevideo.service.estado.EstadoService;
 import jakarta.annotation.security.RolesAllowed;

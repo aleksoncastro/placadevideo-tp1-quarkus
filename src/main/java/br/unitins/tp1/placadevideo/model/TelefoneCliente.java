@@ -1,5 +1,6 @@
 package br.unitins.tp1.placadevideo.model;
 
+import br.unitins.tp1.placadevideo.model.usuario.Cliente;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;

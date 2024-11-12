@@ -9,7 +9,7 @@ import jakarta.persistence.ManyToOne;
 @Entity
 public class Lote extends DefaultEntity {
     private String codigo;
-    private Integer quantidade;
+    private Integer estoque;
     private LocalDate dataFabricacao;
     @ManyToOne
     @JoinColumn(name = "id_placadevideo")
@@ -23,12 +23,12 @@ public class Lote extends DefaultEntity {
         this.codigo = codigo;
     }
 
-    public Integer getQuantidade() {
-        return quantidade;
+    public Integer getEstoque() {
+        return estoque;
     }
 
-    public void setQuantidade(Integer quantidade) {
-        this.quantidade = quantidade;
+    public void setEstoque(Integer estoque) {
+        this.estoque = estoque;
     }
 
     public LocalDate getDataFabricacao() {

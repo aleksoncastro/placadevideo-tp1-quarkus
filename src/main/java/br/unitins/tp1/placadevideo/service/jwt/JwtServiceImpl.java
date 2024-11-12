@@ -5,9 +5,7 @@ import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
 
-
-
-import br.unitins.tp1.placadevideo.dto.UsuarioResponseDTO;
+import br.unitins.tp1.placadevideo.dto.Response.UsuarioResponseDTO;
 import io.smallrye.jwt.build.Jwt;
 import jakarta.enterprise.context.ApplicationScoped;
 

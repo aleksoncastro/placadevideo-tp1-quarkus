@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import br.unitins.tp1.placadevideo.dto.FornecedorRequestDTO;
-import br.unitins.tp1.placadevideo.dto.TelefoneFornecedorRequestDTO;
+import br.unitins.tp1.placadevideo.dto.Request.FornecedorRequestDTO;
+import br.unitins.tp1.placadevideo.dto.Request.TelefoneFornecedorRequestDTO;
 import br.unitins.tp1.placadevideo.model.Fornecedor;
 import br.unitins.tp1.placadevideo.model.TelefoneFornecedor;
 import br.unitins.tp1.placadevideo.repository.fornecedor.FornecedorRepository;

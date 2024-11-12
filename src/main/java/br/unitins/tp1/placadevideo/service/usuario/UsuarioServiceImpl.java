@@ -2,7 +2,7 @@ package br.unitins.tp1.placadevideo.service.usuario;
 
 import java.util.List;
 
-import br.unitins.tp1.placadevideo.model.Usuario;
+import br.unitins.tp1.placadevideo.model.usuario.Usuario;
 import br.unitins.tp1.placadevideo.repository.usuario.UsuarioRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -33,29 +33,6 @@ public class UsuarioServiceImpl implements UsuarioService {
     public List<Usuario> findAll() {
         return usuarioRepository.findAll().list();
     }
-
-   /*
-    *  @Override
-    @Transactional
-    public Usuario create(UsuarioRequestDTO dto) {
-        Usuario usuario = new Usuario();
-        usuario.setNome(dto.nome());
-        usuario.setSigla(dto.sigla());
-
-        usuarioRepository.persist(usuario);
-        return usuario;
-    }
-
-    @Override
-    @Transactional
-    public Usuario update(Long id, UsuarioRequestDTO dto) {
-        Usuario usuario = usuarioRepository.findById(id);
-        usuario.setNome(dto.nome());
-        usuario.setSigla(dto.sigla());
-
-        return usuario;
-    }
-    */
 
     @Override
     @Transactional

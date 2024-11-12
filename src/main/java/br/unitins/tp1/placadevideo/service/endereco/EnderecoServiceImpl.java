@@ -2,7 +2,7 @@ package br.unitins.tp1.placadevideo.service.endereco;
 
 import java.util.List;
 
-import br.unitins.tp1.placadevideo.dto.EnderecoRequestDTO;
+import br.unitins.tp1.placadevideo.dto.Request.EnderecoRequestDTO;
 import br.unitins.tp1.placadevideo.model.Endereco;
 import br.unitins.tp1.placadevideo.repository.endereco.EnderecoRepository;
 import jakarta.enterprise.context.ApplicationScoped;

@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import br.unitins.tp1.placadevideo.dto.ItemPedidoRequestDTO;
-import br.unitins.tp1.placadevideo.dto.PedidoRequestDTO;
+import br.unitins.tp1.placadevideo.dto.Request.ItemPedidoRequestDTO;
+import br.unitins.tp1.placadevideo.dto.Request.PedidoRequestDTO;
 import br.unitins.tp1.placadevideo.model.ItemPedido;
 import br.unitins.tp1.placadevideo.model.Lote;
 import br.unitins.tp1.placadevideo.model.Pedido;
@@ -37,10 +37,9 @@ public class PedidoServiceImpl implements PedidoService {
 
    @Override
    public List<Pedido> findByUsername(String username) {
-      // buscar pelo username
-      // Usuario usuario = usuarioRepository.findByUsername(String Username)
-      // return pedidoRepository.findByUsuario(idUsuario);
-      return null;
+      //buscar pelo username
+    return pedidoRepository.findByUsername(username);
+
    }
 
    @Override
@@ -57,6 +56,10 @@ public class PedidoServiceImpl implements PedidoService {
 
          Lote lote = loteService.findByIdPlacaDeVideo(itemDTO.idProduto());
          item.setLote(lote);
+         if(itemDTO.preco() != item.getPreco()){
+            throw new IllegalArgumentException("Os preços não coincidem: esperado " 
+            + item.getPreco() + ", mas foi fornecido " + itemDTO.preco());
+         }
          item.setPreco(itemDTO.preco());
          item.setQuantidade(itemDTO.quantidade());
 

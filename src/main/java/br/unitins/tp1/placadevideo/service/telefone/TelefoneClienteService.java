@@ -2,7 +2,7 @@ package br.unitins.tp1.placadevideo.service.telefone;
 
 
 
-import br.unitins.tp1.placadevideo.dto.TelefoneClienteRequestDTO;
+import br.unitins.tp1.placadevideo.dto.Request.TelefoneClienteRequestDTO;
 import br.unitins.tp1.placadevideo.model.TelefoneCliente;
 
 import java.util.List;

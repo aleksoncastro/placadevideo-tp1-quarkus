@@ -1,7 +1,7 @@
 package br.unitins.tp1.placadevideo.resource.cartao;
 
-import br.unitins.tp1.placadevideo.dto.CartaoRequestDTO;
-import br.unitins.tp1.placadevideo.dto.CartaoResponseDTO;
+import br.unitins.tp1.placadevideo.dto.Request.CartaoRequestDTO;
+import br.unitins.tp1.placadevideo.dto.Response.CartaoResponseDTO;
 import br.unitins.tp1.placadevideo.service.cartao.CartaoService;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;

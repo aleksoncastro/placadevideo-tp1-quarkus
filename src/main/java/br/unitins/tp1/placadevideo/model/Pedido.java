@@ -3,6 +3,7 @@ package br.unitins.tp1.placadevideo.model;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import br.unitins.tp1.placadevideo.model.usuario.Usuario;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;

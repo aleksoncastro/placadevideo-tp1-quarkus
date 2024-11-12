@@ -1,8 +1,8 @@
 package br.unitins.tp1.placadevideo.resource.auth;
 
-import br.unitins.tp1.placadevideo.dto.AuthRequestDTO;
-import br.unitins.tp1.placadevideo.dto.UsuarioResponseDTO;
-import br.unitins.tp1.placadevideo.model.Usuario;
+import br.unitins.tp1.placadevideo.dto.Request.AuthRequestDTO;
+import br.unitins.tp1.placadevideo.dto.Response.UsuarioResponseDTO;
+import br.unitins.tp1.placadevideo.model.usuario.Usuario;
 import br.unitins.tp1.placadevideo.service.hash.HashService;
 import br.unitins.tp1.placadevideo.service.jwt.JwtService;
 import br.unitins.tp1.placadevideo.service.usuario.UsuarioService;

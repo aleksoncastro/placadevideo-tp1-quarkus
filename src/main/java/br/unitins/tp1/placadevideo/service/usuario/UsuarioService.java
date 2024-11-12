@@ -3,7 +3,7 @@ package br.unitins.tp1.placadevideo.service.usuario;
 //import br.unitins.tp1.placadevideo.dto.UsuarioRequestDTO;
 import java.util.List;
 
-import br.unitins.tp1.placadevideo.model.Usuario;
+import br.unitins.tp1.placadevideo.model.usuario.Usuario;
 
 public interface UsuarioService {
 

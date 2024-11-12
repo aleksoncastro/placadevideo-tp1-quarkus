@@ -1,7 +1,7 @@
 package br.unitins.tp1.placadevideo.resource.lote;
 
-import br.unitins.tp1.placadevideo.dto.LoteRequestDTO;
-import br.unitins.tp1.placadevideo.dto.LoteResponseDTO;
+import br.unitins.tp1.placadevideo.dto.Request.LoteRequestDTO;
+import br.unitins.tp1.placadevideo.dto.Response.LoteResponseDTO;
 import br.unitins.tp1.placadevideo.service.lote.LoteService;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;

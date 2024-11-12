@@ -2,7 +2,7 @@ package br.unitins.tp1.placadevideo.service.cartao;
 
 import java.util.List;
 
-import br.unitins.tp1.placadevideo.dto.CartaoRequestDTO;
+import br.unitins.tp1.placadevideo.dto.Request.CartaoRequestDTO;
 import br.unitins.tp1.placadevideo.model.Cartao;
 
 public interface CartaoService {

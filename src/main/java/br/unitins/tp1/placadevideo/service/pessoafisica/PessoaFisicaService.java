@@ -1,6 +1,6 @@
 package br.unitins.tp1.placadevideo.service.pessoafisica;
 
-import br.unitins.tp1.placadevideo.dto.PessoaFisicaRequestDTO;
+import br.unitins.tp1.placadevideo.dto.Request.PessoaFisicaRequestDTO;
 import br.unitins.tp1.placadevideo.model.PessoaFisica;
 
 import java.util.List;

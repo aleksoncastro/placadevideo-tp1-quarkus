@@ -2,7 +2,7 @@ package br.unitins.tp1.placadevideo.service.placadevideo;
 
 import java.util.List;
 
-import br.unitins.tp1.placadevideo.dto.PlacaDeVideoRequestDTO;
+import br.unitins.tp1.placadevideo.dto.Request.PlacaDeVideoRequestDTO;
 import br.unitins.tp1.placadevideo.model.Fan;
 import br.unitins.tp1.placadevideo.model.PlacaDeVideo;
 import br.unitins.tp1.placadevideo.repository.placadevideo.PlacaDeVideoRepository;
@@ -37,7 +37,7 @@ public class PlacaDeVideoServiceImpl implements PlacaDeVideoService {
 
     @Override
     public List<PlacaDeVideo> findByModelo(String modelo) {
-        return placaDeVideoRepository.findbyModelo(modelo);
+        return placaDeVideoRepository.findByModelo(modelo);
     }
 
     @Override

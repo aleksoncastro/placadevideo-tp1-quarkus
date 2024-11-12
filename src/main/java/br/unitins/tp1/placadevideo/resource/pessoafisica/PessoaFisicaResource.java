@@ -1,7 +1,7 @@
 package br.unitins.tp1.placadevideo.resource.pessoafisica;
 
-import br.unitins.tp1.placadevideo.dto.PessoaFisicaRequestDTO;
-import br.unitins.tp1.placadevideo.dto.PessoaFisicaResponseDTO;
+import br.unitins.tp1.placadevideo.dto.Request.PessoaFisicaRequestDTO;
+import br.unitins.tp1.placadevideo.dto.Response.PessoaFisicaResponseDTO;
 import br.unitins.tp1.placadevideo.service.pessoafisica.PessoaFisicaService;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;

@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import br.unitins.tp1.placadevideo.dto.ClienteRequestDTO;
-import br.unitins.tp1.placadevideo.dto.EnderecoRequestDTO;
-import br.unitins.tp1.placadevideo.dto.TelefoneClienteRequestDTO;
-import br.unitins.tp1.placadevideo.model.Cliente;
+import br.unitins.tp1.placadevideo.dto.Request.ClienteRequestDTO;
+import br.unitins.tp1.placadevideo.dto.Request.EnderecoRequestDTO;
+import br.unitins.tp1.placadevideo.dto.Request.TelefoneClienteRequestDTO;
 import br.unitins.tp1.placadevideo.model.Endereco;
 import br.unitins.tp1.placadevideo.model.TelefoneCliente;
+import br.unitins.tp1.placadevideo.model.usuario.Cliente;
 import br.unitins.tp1.placadevideo.repository.cliente.ClienteRepository;
 import br.unitins.tp1.placadevideo.repository.endereco.EnderecoRepository;
 import br.unitins.tp1.placadevideo.repository.telefone.TelefoneClienteRepository;

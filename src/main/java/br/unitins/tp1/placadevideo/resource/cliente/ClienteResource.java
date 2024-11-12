@@ -1,9 +1,9 @@
 package br.unitins.tp1.placadevideo.resource.cliente;
 
-import br.unitins.tp1.placadevideo.dto.ClienteRequestDTO;
-import br.unitins.tp1.placadevideo.dto.ClienteResponseDTO;
-import br.unitins.tp1.placadevideo.dto.EnderecoRequestDTO;
-import br.unitins.tp1.placadevideo.dto.TelefoneClienteRequestDTO;
+import br.unitins.tp1.placadevideo.dto.Request.ClienteRequestDTO;
+import br.unitins.tp1.placadevideo.dto.Request.EnderecoRequestDTO;
+import br.unitins.tp1.placadevideo.dto.Request.TelefoneClienteRequestDTO;
+import br.unitins.tp1.placadevideo.dto.Response.ClienteResponseDTO;
 import br.unitins.tp1.placadevideo.service.cliente.ClienteService;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;

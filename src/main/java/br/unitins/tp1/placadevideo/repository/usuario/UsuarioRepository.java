@@ -1,6 +1,6 @@
 package br.unitins.tp1.placadevideo.repository.usuario;
 
-import br.unitins.tp1.placadevideo.model.Usuario;
+import br.unitins.tp1.placadevideo.model.usuario.Usuario;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 

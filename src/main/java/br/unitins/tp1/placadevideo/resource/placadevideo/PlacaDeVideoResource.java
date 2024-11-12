@@ -1,7 +1,7 @@
 package br.unitins.tp1.placadevideo.resource.placadevideo;
 
-import br.unitins.tp1.placadevideo.dto.PlacaDeVideoRequestDTO;
-import br.unitins.tp1.placadevideo.dto.PlacaDeVideoResponseDTO;
+import br.unitins.tp1.placadevideo.dto.Request.PlacaDeVideoRequestDTO;
+import br.unitins.tp1.placadevideo.dto.Response.PlacaDeVideoResponseDTO;
 import br.unitins.tp1.placadevideo.service.placadevideo.PlacaDeVideoService;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
