@@ -1,6 +1,6 @@
 package br.unitins.tp1.placadevideo.model.converterjpa;
 
-import br.unitins.tp1.placadevideo.model.Fan;
+import br.unitins.tp1.placadevideo.model.placadevideo.Fan;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 

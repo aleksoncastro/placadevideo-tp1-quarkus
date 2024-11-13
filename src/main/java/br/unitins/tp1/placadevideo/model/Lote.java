@@ -2,6 +2,7 @@ package br.unitins.tp1.placadevideo.model;
 
 import java.time.LocalDate;
 
+import br.unitins.tp1.placadevideo.model.placadevideo.PlacaDeVideo;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;

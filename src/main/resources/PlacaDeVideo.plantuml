@@ -103,20 +103,54 @@ class TelefoneFornecedor{
     - codigoArea: String
 }
 
+class Funcionario{
+    - nome: String
+    - cpf: String
+    - dataNascimento: LocalDate
+    - email: String
+    - salario: Double
+}
+
+class TelefoneFuncionario{
+    - numero: String
+    - codigoArea: String
+}
+
+class Usuario{
+    - username: String
+    - senha: String
+}
+
+enum StatusFuncionario{
+    + ATIVADO: int
+    + Desativado: int
+}
+
 ' RELACIONAMENTOS
 PlacaDeVideo "*" --> "1" Fornecedor
-PlacaDeVideo "*" --> "1" Tamanho
+PlacaDeVideo "1" --> "1" Tamanho
 PlacaDeVideo "*" --> "1" Fan
 
 Lote "*" --> "1" PlacaDeVideo 
 
-Fornecedor "1" *--> "*" TelefoneFornecedor
+Fornecedor "1" --> "*" TelefoneFornecedor
 
-ItemPedido "*" --> "1" Lote
+Funcionario "1" --> "*" TelefoneFuncionario
+Funcionario  "1" --> "1" Usuario
+Funcionario "*" --> "1" StatusFuncionario
 
-Cliente "1" *--> "*" Endereco
+Cliente "1" --> "*" Endereco
 Cliente "1" --> "*" PlacaDeVideo : listaDesejos
-Cliente "1" *--> "*" TelefoneCliente
+Cliente "1" --> "*" TelefoneCliente
+Cliente "1" --> "1" Usuario
+
+Endereco "*" --> "1" Cliente
+
+TelefoneCliente "*" --> "1" Cliente 
+
+TelefoneFornecedor "*" --> "1" Fornecedor
+
+TelefoneFuncionario "*" --> "1" Funcionario
 
 Pedido "1" --> "1" ItemPedido
 Pedido "1" *--> "1" EnderecoEntrega
@@ -124,6 +158,7 @@ Pedido "*" *--> "1" Cliente
 Pedido "1" --> "1" Pagamento
 Pedido "*" --> "1" StatusPedido
 
+ItemPedido "*" --> "1" Lote
 ' ANOTACOES
 
 note bottom of Tamanho: todas as medidas em mm

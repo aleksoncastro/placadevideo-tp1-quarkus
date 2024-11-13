@@ -1,6 +1,6 @@
 package br.unitins.tp1.placadevideo.dto.Response;
 
-import br.unitins.tp1.placadevideo.model.TelefoneCliente;
+import br.unitins.tp1.placadevideo.model.telefone.TelefoneCliente;
 
 public record TelefoneClienteResponseDTO(
         Long id,

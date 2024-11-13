@@ -2,7 +2,7 @@ package br.unitins.tp1.placadevideo.repository.telefone;
 
 import java.util.List;
 
-import br.unitins.tp1.placadevideo.model.TelefoneFornecedor;
+import br.unitins.tp1.placadevideo.model.telefone.TelefoneFornecedor;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 

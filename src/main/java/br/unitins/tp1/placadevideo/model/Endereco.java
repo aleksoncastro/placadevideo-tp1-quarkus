@@ -12,6 +12,7 @@ public class Endereco extends DefaultEntity {
     private String estado;
     private String bairro;
     private String numero;
+
     @ManyToOne
     @JoinColumn(name = "cliente_id")
     private Cliente cliente;
@@ -56,7 +57,7 @@ public class Endereco extends DefaultEntity {
     public void setEstado(String estado) {
         this.estado = estado;
     }
-
+    
     public Cliente getCliente() {
         return cliente;
     }
@@ -65,5 +66,4 @@ public class Endereco extends DefaultEntity {
         this.cliente = cliente;
     }
 
-    
 }

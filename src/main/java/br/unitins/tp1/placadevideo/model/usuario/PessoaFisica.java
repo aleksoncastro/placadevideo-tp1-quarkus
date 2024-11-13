@@ -1,5 +1,6 @@
-package br.unitins.tp1.placadevideo.model;
+package br.unitins.tp1.placadevideo.model.usuario;
 
+import br.unitins.tp1.placadevideo.model.Sexo;
 import jakarta.persistence.Entity;
 
 @Entity

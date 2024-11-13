@@ -1,5 +1,7 @@
-package br.unitins.tp1.placadevideo.model;
+package br.unitins.tp1.placadevideo.model.telefone;
 
+import br.unitins.tp1.placadevideo.model.DefaultEntity;
+import br.unitins.tp1.placadevideo.model.Fornecedor;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -9,7 +11,6 @@ public class TelefoneFornecedor extends DefaultEntity {
 
     private String codigoArea;
     private String numero;
-
 
     @ManyToOne
     @JoinColumn(name = "fornecedor_id")
@@ -23,11 +24,13 @@ public class TelefoneFornecedor extends DefaultEntity {
         this.fornecedor = fornecedor;
     }
 
+    
     public String getCodigoArea() {
         return codigoArea;
     }
 
     public void setCodigoArea(String codigoArea) {
+
         this.codigoArea = codigoArea;
     }
 

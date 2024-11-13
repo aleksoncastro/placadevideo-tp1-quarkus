@@ -2,6 +2,7 @@ package br.unitins.tp1.placadevideo.model;
 
 import java.util.List;
 
+import br.unitins.tp1.placadevideo.model.telefone.TelefoneFornecedor;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
@@ -11,6 +12,7 @@ public class Fornecedor extends DefaultEntity {
     private String nome;
     private String cnpj;
     private String email;
+    
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<TelefoneFornecedor> telefones;
 

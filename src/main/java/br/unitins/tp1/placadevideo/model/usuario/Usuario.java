@@ -1,7 +1,6 @@
 package br.unitins.tp1.placadevideo.model.usuario;
 
 import br.unitins.tp1.placadevideo.model.DefaultEntity;
-import br.unitins.tp1.placadevideo.model.Perfil;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 

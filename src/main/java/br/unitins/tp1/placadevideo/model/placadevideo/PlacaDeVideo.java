@@ -1,6 +1,10 @@
-package br.unitins.tp1.placadevideo.model;
+package br.unitins.tp1.placadevideo.model.placadevideo;
 
+import br.unitins.tp1.placadevideo.model.DefaultEntity;
+import br.unitins.tp1.placadevideo.model.Fornecedor;
 import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class PlacaDeVideo extends DefaultEntity {
@@ -16,7 +20,9 @@ public class PlacaDeVideo extends DefaultEntity {
     private Double clokBase;
     private Double clockBoost;
     
-    /*private Fornecedor fornecedor; 
+    @ManyToOne
+    @JoinColumn(name = "fornecedor_id")
+    private Fornecedor fornecedor; 
     
     public Fornecedor getFornecedor() {
         return fornecedor;
@@ -24,7 +30,8 @@ public class PlacaDeVideo extends DefaultEntity {
 
     public void setFornecedor(Fornecedor fornecedor) {
         this.fornecedor = fornecedor;
-    } */
+    } 
+    
     public Double getClokBase() {
         return clokBase;
     }

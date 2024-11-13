@@ -3,7 +3,7 @@ package br.unitins.tp1.placadevideo.service.telefone;
 import java.util.List;
 
 import br.unitins.tp1.placadevideo.dto.Request.TelefoneFornecedorRequestDTO;
-import br.unitins.tp1.placadevideo.model.TelefoneFornecedor;
+import br.unitins.tp1.placadevideo.model.telefone.TelefoneFornecedor;
 import br.unitins.tp1.placadevideo.repository.fornecedor.FornecedorRepository;
 import br.unitins.tp1.placadevideo.repository.telefone.TelefoneFornecedorRepository;
 import jakarta.enterprise.context.ApplicationScoped;

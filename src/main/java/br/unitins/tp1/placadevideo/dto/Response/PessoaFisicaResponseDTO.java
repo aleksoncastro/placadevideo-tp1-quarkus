@@ -1,7 +1,7 @@
 package br.unitins.tp1.placadevideo.dto.Response;
 
-import br.unitins.tp1.placadevideo.model.PessoaFisica;
 import br.unitins.tp1.placadevideo.model.Sexo;
+import br.unitins.tp1.placadevideo.model.usuario.PessoaFisica;
 
 public record PessoaFisicaResponseDTO(Long id, String nome, String cpf, Sexo sexo) {
 

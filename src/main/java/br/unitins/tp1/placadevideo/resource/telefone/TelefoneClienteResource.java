@@ -1,4 +1,4 @@
-package br.unitins.tp1.placadevideo.resource.telefonecliente;
+package br.unitins.tp1.placadevideo.resource.telefone;
 
 import br.unitins.tp1.placadevideo.dto.Request.TelefoneClienteRequestDTO;
 import br.unitins.tp1.placadevideo.dto.Response.TelefoneClienteResponseDTO;

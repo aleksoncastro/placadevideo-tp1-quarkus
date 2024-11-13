@@ -8,7 +8,7 @@ import br.unitins.tp1.placadevideo.dto.Request.ClienteRequestDTO;
 import br.unitins.tp1.placadevideo.dto.Request.EnderecoRequestDTO;
 import br.unitins.tp1.placadevideo.dto.Request.TelefoneClienteRequestDTO;
 import br.unitins.tp1.placadevideo.model.Endereco;
-import br.unitins.tp1.placadevideo.model.TelefoneCliente;
+import br.unitins.tp1.placadevideo.model.telefone.TelefoneCliente;
 import br.unitins.tp1.placadevideo.model.usuario.Cliente;
 import br.unitins.tp1.placadevideo.repository.cliente.ClienteRepository;
 import br.unitins.tp1.placadevideo.repository.endereco.EnderecoRepository;
@@ -100,7 +100,6 @@ public class ClienteServiceImpl implements ClienteService {
         }
     
         Endereco endereco = enderecoServiceImpl.create(dto);
-        endereco.setCliente(cliente);
         enderecoRepository.persist(endereco);
         cliente.getEnderecos().add(endereco);
     }
@@ -114,7 +113,7 @@ public class ClienteServiceImpl implements ClienteService {
         }
 
         TelefoneCliente telefone = telefoneClienteServiceImpl.create(dto);
-        telefone.setCliente(cliente);
+        //telefone.setCliente(cliente);
         telefoneClienteRepository.persist(telefone);
         cliente.getTelefones().add(telefone);
 

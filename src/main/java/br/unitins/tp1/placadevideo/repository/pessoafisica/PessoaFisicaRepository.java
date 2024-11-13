@@ -2,7 +2,7 @@ package br.unitins.tp1.placadevideo.repository.pessoafisica;
 
 import java.util.List;
 
-import br.unitins.tp1.placadevideo.model.PessoaFisica;
+import br.unitins.tp1.placadevideo.model.usuario.PessoaFisica;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 

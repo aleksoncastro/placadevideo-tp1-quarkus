@@ -7,7 +7,7 @@ import java.util.NoSuchElementException;
 import br.unitins.tp1.placadevideo.dto.Request.FornecedorRequestDTO;
 import br.unitins.tp1.placadevideo.dto.Request.TelefoneFornecedorRequestDTO;
 import br.unitins.tp1.placadevideo.model.Fornecedor;
-import br.unitins.tp1.placadevideo.model.TelefoneFornecedor;
+import br.unitins.tp1.placadevideo.model.telefone.TelefoneFornecedor;
 import br.unitins.tp1.placadevideo.repository.fornecedor.FornecedorRepository;
 import br.unitins.tp1.placadevideo.repository.telefone.TelefoneFornecedorRepository;
 import br.unitins.tp1.placadevideo.service.telefone.TelefoneFornecedorServiceImpl;
@@ -84,7 +84,6 @@ public class FornecedorServiceImpl implements FornecedorService {
         }
 
         TelefoneFornecedor telefone = telefoneFornecedorServiceImpl.create(dto);
-        telefone.setFornecedor(fornecedor);
         telefoneFornecedorRepository.persist(telefone);
         fornecedor.getTelefones().add(telefone);
 

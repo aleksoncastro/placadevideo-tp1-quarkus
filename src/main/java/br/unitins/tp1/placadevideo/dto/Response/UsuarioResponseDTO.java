@@ -1,6 +1,6 @@
 package br.unitins.tp1.placadevideo.dto.Response;
 
-import br.unitins.tp1.placadevideo.model.Perfil;
+import br.unitins.tp1.placadevideo.model.usuario.Perfil;
 import br.unitins.tp1.placadevideo.model.usuario.Usuario;
 
 public record UsuarioResponseDTO(Long id, String username, String senha, Perfil perfil) {

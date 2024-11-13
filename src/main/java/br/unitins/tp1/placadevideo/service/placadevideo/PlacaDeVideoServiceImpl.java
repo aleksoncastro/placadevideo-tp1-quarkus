@@ -3,8 +3,8 @@ package br.unitins.tp1.placadevideo.service.placadevideo;
 import java.util.List;
 
 import br.unitins.tp1.placadevideo.dto.Request.PlacaDeVideoRequestDTO;
-import br.unitins.tp1.placadevideo.model.Fan;
-import br.unitins.tp1.placadevideo.model.PlacaDeVideo;
+import br.unitins.tp1.placadevideo.model.placadevideo.Fan;
+import br.unitins.tp1.placadevideo.model.placadevideo.PlacaDeVideo;
 import br.unitins.tp1.placadevideo.repository.placadevideo.PlacaDeVideoRepository;
 
 import br.unitins.tp1.placadevideo.service.lote.LoteService;
