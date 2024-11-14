@@ -1,24 +1,37 @@
 package br.unitins.tp1.placadevideo.model.placadevideo;
 
+import java.util.List;
+
 import br.unitins.tp1.placadevideo.model.DefaultEntity;
 import br.unitins.tp1.placadevideo.model.Fornecedor;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 
 @Entity
 public class PlacaDeVideo extends DefaultEntity {
     private String modelo;
     private String categoria;
     private Double preco;
-    private Integer vram;
     private String resolucao;
     private Integer energia;
     private String descricao;
     private Integer compatibilidade;
     private Fan fan;
-    private Double clokBase;
+    private Double clockBase;
     private Double clockBoost;
+    private Boolean suporteRayTracing;
+
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "id_memoria")
+    private Memoria memoria;
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "id_saidavideo")
+    private List<SaidaVideo> saidas;
     
     @ManyToOne
     @JoinColumn(name = "fornecedor_id")
@@ -32,12 +45,12 @@ public class PlacaDeVideo extends DefaultEntity {
         this.fornecedor = fornecedor;
     } 
     
-    public Double getClokBase() {
-        return clokBase;
+    public Double getClockBase() {
+        return clockBase;
     }
 
-    public void setClokBase(Double clokBase) {
-        this.clokBase = clokBase;
+    public void setClockBase(Double clokBase) {
+        this.clockBase = clokBase;
     }
     
     public Double getClockBoost() {
@@ -80,14 +93,6 @@ public class PlacaDeVideo extends DefaultEntity {
         this.preco = preco;
     }
 
-    public Integer getVram() {
-        return vram;
-    }
-
-    public void setVram(Integer vram) {
-        this.vram = vram;
-    }
-
     public String getResolucao() {
         return resolucao;
     }
@@ -119,6 +124,31 @@ public class PlacaDeVideo extends DefaultEntity {
     public void setCompatibilidade(Integer compatibilidade) {
         this.compatibilidade = compatibilidade;
     }
+
+    public Boolean getSuporteRayTracing() {
+        return suporteRayTracing;
+    }
+
+    public void setSuporteRayTracing(Boolean suporteRayTracing) {
+        this.suporteRayTracing = suporteRayTracing;
+    }
+
+    public Memoria getMemoria() {
+        return memoria;
+    }
+
+    public void setMemoria(Memoria memoria) {
+        this.memoria = memoria;
+    }
+
+    public List<SaidaVideo> getSaidas() {
+        return saidas;
+    }
+
+    public void setSaidas(List<SaidaVideo> saidas) {
+        this.saidas = saidas;
+    }
+
 
 
 }

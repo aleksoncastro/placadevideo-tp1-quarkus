@@ -5,6 +5,7 @@ import java.util.List;
 import br.unitins.tp1.placadevideo.model.telefone.TelefoneFornecedor;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.OneToMany;
 
 @Entity
@@ -13,7 +14,7 @@ public class Fornecedor extends DefaultEntity {
     private String cnpj;
     private String email;
     
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<TelefoneFornecedor> telefones;
 
 

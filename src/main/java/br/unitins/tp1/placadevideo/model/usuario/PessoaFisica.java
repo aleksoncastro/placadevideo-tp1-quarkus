@@ -8,6 +8,7 @@ public class PessoaFisica extends  Pessoa {
 
     private String cpf;
     private Sexo sexo;
+    private String nomeImagem;
 
 
     public String getCpf() {
@@ -24,6 +25,14 @@ public class PessoaFisica extends  Pessoa {
 
     public void setSexo(Sexo sexo) {
         this.sexo = sexo;
+    }
+
+    public String getNomeImagem() {
+        return nomeImagem;
+    }
+
+    public void setNomeImagem(String nomeImagem) {
+        this.nomeImagem = nomeImagem;
     }
     
 

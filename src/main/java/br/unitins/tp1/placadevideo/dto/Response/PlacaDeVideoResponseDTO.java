@@ -1,5 +1,8 @@
 package br.unitins.tp1.placadevideo.dto.Response;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import br.unitins.tp1.placadevideo.model.placadevideo.Fan;
 import br.unitins.tp1.placadevideo.model.placadevideo.PlacaDeVideo;
 
@@ -8,33 +11,38 @@ public record PlacaDeVideoResponseDTO(
         String modelo,
         String categoria,
         Double preco,
-        Integer vram,
         String resolucao,
         Integer energia,
         String descricao,
         Integer compatibilidade,
-        Double clokBase,
-        Double clokBoost,
+        Double clockBase,
+        Double clockBoost,
         Fan fan,
+        Boolean suporteRayTracing,
+        MemoriaResponseDTO memoria,
+        List<SaidaVideoResponseDTO> saidas,
         FornecedorResponseDTO fornecedor
-        ) {
+) {
 
-    public static PlacaDeVideoResponseDTO valueOf(PlacaDeVideo placadevideo){
+    public static PlacaDeVideoResponseDTO valueOf(PlacaDeVideo placaDeVideo) {
         return new PlacaDeVideoResponseDTO(
-            placadevideo.getId(),
-            placadevideo.getModelo(),
-            placadevideo.getCategoria(),
-            placadevideo.getPreco(),
-            placadevideo.getVram(),
-            placadevideo.getResolucao(),
-            placadevideo.getEnergia(),
-            placadevideo.getDescricao(),
-            placadevideo.getCompatibilidade(),
-            placadevideo.getClokBase(),
-            placadevideo.getClockBoost(),
-            placadevideo.getFan(),
-            FornecedorResponseDTO.valueOf(placadevideo.getFornecedor())
-            
+            placaDeVideo.getId(),
+            placaDeVideo.getModelo(),
+            placaDeVideo.getCategoria(),
+            placaDeVideo.getPreco(),
+            placaDeVideo.getResolucao(),
+            placaDeVideo.getEnergia(),
+            placaDeVideo.getDescricao(),
+            placaDeVideo.getCompatibilidade(),
+            placaDeVideo.getClockBase(), 
+            placaDeVideo.getClockBoost(), 
+            placaDeVideo.getFan(),
+            placaDeVideo.getSuporteRayTracing(),
+            MemoriaResponseDTO.valueOf(placaDeVideo.getMemoria()),
+            placaDeVideo.getSaidas().stream()
+                .map(SaidaVideoResponseDTO::valueOf)
+                .collect(Collectors.toList()),
+            FornecedorResponseDTO.valueOf(placaDeVideo.getFornecedor())
         );
     }
 }

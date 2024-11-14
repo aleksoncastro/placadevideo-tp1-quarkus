@@ -40,6 +40,11 @@ public class FornecedorServiceImpl implements FornecedorService {
     }
 
     @Override
+    public Fornecedor findByIdComTelefones(Long id) {
+        return fornecedorRepository.findByIdComTelefones(id);
+    }
+
+    @Override
     public List<Fornecedor> findByNome(String nome) {
         return fornecedorRepository.findByNome(nome);
     }
@@ -122,6 +127,8 @@ public class FornecedorServiceImpl implements FornecedorService {
     public void delete(Long id) {
         fornecedorRepository.deleteById(id);
     }
+
+    
 
 
    

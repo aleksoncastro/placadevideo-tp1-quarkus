@@ -19,6 +19,8 @@ public interface PessoaFisicaService {
 
     PessoaFisica update(Long id, PessoaFisicaRequestDTO dto);
 
+    PessoaFisica updateNomeImagem(Long id, String Imagem);
+
     void delete(Long id);
 
 

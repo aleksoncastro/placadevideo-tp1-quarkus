@@ -1,5 +1,7 @@
 package br.unitins.tp1.placadevideo.dto.Request;
 
+import java.util.List;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
@@ -10,8 +12,6 @@ public record PlacaDeVideoRequestDTO(
         String categoria,
         @NotBlank(message = "O campo deve ser informado")
         Double preco,
-        @NotBlank(message = "O campo deve ser informado")
-        Integer vram,
         @NotBlank(message = "O campo deve ser informado")
         String resolucao,
         @NotBlank(message = "O campo deve ser informado")
@@ -27,7 +27,12 @@ public record PlacaDeVideoRequestDTO(
         @NotBlank(message = "O campo deve ser informado")
         Integer idFan,
         @NotNull(message = "O campo deve ser informado")
-        Long idFornecedor
+        Long idFornecedor,
+        @NotNull(message = "O campo deve ser informado")
+        Boolean suporteRayTracing,
+        @NotNull(message = "O campo deve ser informado")
+        MemoriaRequestDTO memoria,
+        List<SaidaVideoRequestDTO> saidas
     ) {
         
     }

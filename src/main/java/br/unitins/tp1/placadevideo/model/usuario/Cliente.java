@@ -9,6 +9,7 @@ import br.unitins.tp1.placadevideo.model.telefone.TelefoneCliente;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
@@ -26,10 +27,10 @@ private LocalDate dataNascimento;
 
 private String email;
 
-@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
 private List<Endereco> enderecos;
 
-@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
 private List<TelefoneCliente> telefones;
 
 @OneToOne

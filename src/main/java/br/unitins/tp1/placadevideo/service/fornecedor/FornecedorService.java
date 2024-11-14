@@ -12,6 +12,8 @@ public interface FornecedorService {
 
     Fornecedor findByCnpj(String cnpj);
 
+    Fornecedor findByIdComTelefones(Long id);
+
     List<Fornecedor> findByNome(String nome);
 
     List<Fornecedor> findAll();

@@ -17,5 +17,9 @@ public class FornecedorRepository implements PanacheRepository<Fornecedor> {
         return find("SELECT f FROM Fornecedor f WHERE f.cnpj = ?1",  cnpj ).firstResult();
     }
 
+    public Fornecedor findByIdComTelefones(Long id) {
+        return find("SELECT f FROM Fornecedor f LEFT JOIN FETCH f.telefones WHERE f.id = ?1", id).firstResult();
+    }
+
 
 }
