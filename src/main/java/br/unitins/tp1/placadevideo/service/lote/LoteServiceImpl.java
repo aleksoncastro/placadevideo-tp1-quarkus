@@ -4,6 +4,7 @@ import java.util.List;
 
 import br.unitins.tp1.placadevideo.dto.Request.LoteRequestDTO;
 import br.unitins.tp1.placadevideo.model.Lote;
+import br.unitins.tp1.placadevideo.model.placadevideo.PlacaDeVideo;
 import br.unitins.tp1.placadevideo.repository.lote.LoteRepository;
 import br.unitins.tp1.placadevideo.repository.placadevideo.PlacaDeVideoRepository;
 import br.unitins.tp1.placadevideo.service.placadevideo.PlacaDeVideoService;
@@ -14,7 +15,7 @@ import jakarta.transaction.Transactional;
 
 @ApplicationScoped
 public class LoteServiceImpl implements LoteService {
-    
+
     @Inject
     public LoteRepository loteRepository;
 
@@ -23,12 +24,12 @@ public class LoteServiceImpl implements LoteService {
 
     @Inject
     public PlacaDeVideoService placaDeVideoService;
-    
+
     @Override
     public Lote findById(Long id) {
         return loteRepository.findById(id);
     }
-    
+
     @Override
     public Lote findByCodigo(String codigo) {
         return loteRepository.findByCodigo(codigo);
@@ -38,12 +39,12 @@ public class LoteServiceImpl implements LoteService {
     public List<Lote> findAll() {
         return loteRepository.findAll().list();
     }
-    
+
     @Override
     public Lote findByIdPlacaDeVideo(Long idPlaca) {
         return loteRepository.findByIdPlacaDeVideo(idPlaca);
     }
-    
+
     @Override
     @Transactional
     public Lote create(LoteRequestDTO dto) {
@@ -51,16 +52,18 @@ public class LoteServiceImpl implements LoteService {
         lote.setCodigo(dto.codigo());
         lote.setEstoque(dto.estoque());
         lote.setDataFabricacao(dto.dataFabricacao());
-        lote.setPlacaDeVideo(placaDeVideoService.findById(dto.idPlacaDeVideo()));
-        
-        //Atualiza o lote no banco
+        PlacaDeVideo placaDeVideo = placaDeVideoService.findById(dto.idPlacaDeVideo());
+        if (placaDeVideo == null) {
+            throw new EntityNotFoundException("Placa de vídeo não encontrada");
+        }
+        lote.setPlacaDeVideo(placaDeVideo);
+
+        // Atualiza o lote no banco
         loteRepository.persist(lote);
 
         return lote;
     }
 
-
-  
     @Override
     @Transactional
     public Lote update(Long id, LoteRequestDTO dto) {
@@ -71,7 +74,11 @@ public class LoteServiceImpl implements LoteService {
         lote.setCodigo(dto.codigo());
         lote.setEstoque(dto.estoque());
         lote.setDataFabricacao(dto.dataFabricacao());
-        lote.setPlacaDeVideo(placaDeVideoService.findById(dto.idPlacaDeVideo()));
+        PlacaDeVideo placaDeVideo = placaDeVideoService.findById(dto.idPlacaDeVideo());
+        if (placaDeVideo == null) {
+            throw new EntityNotFoundException("Placa de vídeo não encontrada");
+        }
+        lote.setPlacaDeVideo(placaDeVideo);
 
         // Persistindo as alterações do lote
         loteRepository.persist(lote);
@@ -83,7 +90,5 @@ public class LoteServiceImpl implements LoteService {
     public void delete(Long id) {
         loteRepository.deleteById(id);
     }
-
-
 
 }

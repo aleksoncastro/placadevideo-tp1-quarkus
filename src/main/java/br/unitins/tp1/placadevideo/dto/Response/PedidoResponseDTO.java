@@ -1,14 +1,15 @@
 package br.unitins.tp1.placadevideo.dto.Response;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import br.unitins.tp1.placadevideo.model.Pedido;
+import br.unitins.tp1.placadevideo.model.pedido.Pedido;
 
 public record PedidoResponseDTO(
     Long id,
     LocalDateTime data, 
-    Double valorTotal,
+    BigDecimal valorTotal,
     List<ItemPedidoResponsetDTO> listaItemPedido) {
 
     public static PedidoResponseDTO valueOf(Pedido pedido){

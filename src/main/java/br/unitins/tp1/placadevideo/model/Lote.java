@@ -3,7 +3,9 @@ package br.unitins.tp1.placadevideo.model;
 import java.time.LocalDate;
 
 import br.unitins.tp1.placadevideo.model.placadevideo.PlacaDeVideo;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
@@ -11,8 +13,10 @@ import jakarta.persistence.ManyToOne;
 public class Lote extends DefaultEntity {
     private String codigo;
     private Integer estoque;
+    @Column(name = "datafabricacao")
     private LocalDate dataFabricacao;
-    @ManyToOne
+
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_placadevideo")
     private PlacaDeVideo placaDeVideo;
 

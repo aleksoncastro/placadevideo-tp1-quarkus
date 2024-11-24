@@ -2,8 +2,8 @@ package br.unitins.tp1.placadevideo.service.pedido;
 
 import java.util.List;
 
-import br.unitins.tp1.placadevideo.model.Pedido;
-import br.unitins.tp1.placadevideo.model.StatusPedido;
+import br.unitins.tp1.placadevideo.model.pedido.Pedido;
+import br.unitins.tp1.placadevideo.model.pedido.StatusPedido;
 
 public interface PedidoGerenciamentoService {
     

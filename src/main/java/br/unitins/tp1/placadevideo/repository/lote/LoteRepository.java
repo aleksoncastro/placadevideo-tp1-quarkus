@@ -13,14 +13,11 @@ public class LoteRepository implements PanacheRepository<Lote> {
 
     public Lote findByIdPlacaDeVideo(Long idPlaca) {
         StringBuffer jpql = new StringBuffer();
-        jpql.append("SELECT  ");
-        jpql.append("l ");
-        jpql.append("FROM  ");
-        jpql.append(" Lote  ");
-        jpql.append("Where ");
-        jpql.append(" l.placadevideo.id LIKE ?1 ");
-        jpql.append("AND l.quantidade > 0  ");
-        jpql.append(" ORDER BY l.datafabricacao DESC  ");
+        jpql.append("SELECT l ");
+        jpql.append("FROM Lote l ");
+        jpql.append("WHERE l.placaDeVideo.id = ?1 ");
+        jpql.append("AND l.estoque > 0 ");
+        jpql.append("ORDER BY l.dataFabricacao DESC ");
 
         return find(jpql.toString(), idPlaca).firstResult();
     }

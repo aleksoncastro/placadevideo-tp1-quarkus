@@ -1,6 +1,6 @@
 package br.unitins.tp1.placadevideo.model.converterjpa;
 
-import br.unitins.tp1.placadevideo.model.StatusPedido;
+import br.unitins.tp1.placadevideo.model.pedido.StatusPedido;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 

@@ -1,12 +1,13 @@
-package br.unitins.tp1.placadevideo.model;
+package br.unitins.tp1.placadevideo.model.pagamento;
+
+import java.time.LocalDate;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 
-import java.time.LocalDate;
-
 @Entity
-public class Cartao extends DefaultEntity {
+public class Cartao extends Pagamento {
+
     @Column(length = 60, nullable = false, unique = true)
     private String numero;
     @Column(length = 60, nullable = false)

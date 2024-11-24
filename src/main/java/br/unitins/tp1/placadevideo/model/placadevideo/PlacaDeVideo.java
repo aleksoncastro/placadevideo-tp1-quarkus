@@ -1,11 +1,13 @@
 package br.unitins.tp1.placadevideo.model.placadevideo;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import br.unitins.tp1.placadevideo.model.DefaultEntity;
 import br.unitins.tp1.placadevideo.model.Fornecedor;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
@@ -15,7 +17,7 @@ import jakarta.persistence.OneToOne;
 public class PlacaDeVideo extends DefaultEntity {
     private String modelo;
     private String categoria;
-    private Double preco;
+    private BigDecimal preco;
     private String resolucao;
     private Integer energia;
     private String descricao;
@@ -29,9 +31,13 @@ public class PlacaDeVideo extends DefaultEntity {
     @JoinColumn(name = "id_memoria")
     private Memoria memoria;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     @JoinColumn(name = "id_saidavideo")
     private List<SaidaVideo> saidas;
+
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "id_tamanho")
+    private Tamanho tamanho;
     
     @ManyToOne
     @JoinColumn(name = "fornecedor_id")
@@ -85,11 +91,11 @@ public class PlacaDeVideo extends DefaultEntity {
         this.categoria = categoria;
     }
 
-    public Double getPreco() {
+    public BigDecimal getPreco() {
         return preco;
     }
 
-    public void setPreco(Double preco) {
+    public void setPreco(BigDecimal preco) {
         this.preco = preco;
     }
 
@@ -147,6 +153,14 @@ public class PlacaDeVideo extends DefaultEntity {
 
     public void setSaidas(List<SaidaVideo> saidas) {
         this.saidas = saidas;
+    }
+
+    public Tamanho getTamanho() {
+        return tamanho;
+    }
+
+    public void setTamanho(Tamanho tamanho) {
+        this.tamanho = tamanho;
     }
 
 

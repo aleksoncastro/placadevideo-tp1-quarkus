@@ -1,9 +1,10 @@
 package br.unitins.tp1.placadevideo.dto.Request;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public record PedidoRequestDTO(
-    Double valorTotal,
+    BigDecimal valorTotal,
     List<ItemPedidoRequestDTO> listaItemPedido
 ) {
 

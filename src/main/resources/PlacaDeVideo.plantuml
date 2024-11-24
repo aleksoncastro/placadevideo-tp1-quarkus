@@ -1,12 +1,27 @@
-class PlacaDeVideo{
+
+class Memoria {
+    - tipoMemoria: String
+    - capacidade: Integer
+    - larguraBanda: Integer
+    - velocidadeMemoria: Integer
+}
+
+class SaidaVideo {
+    - tipo: String
+    - quantidade: Integer
+}
+
+class PlacaDeVideo {
     - modelo: String
     - categoria: String
-    - preco: float
-    - vram: Integer
+    - preco: BigDecimal
     - resolucao: String
     - energia: Integer
     - descricao: String
     - compatibilidade: Integer
+    - clockBase: Double
+    - clockBoost: Double
+    - suporteRayTracing: Boolean
 }
 
 enum Fan{
@@ -52,37 +67,47 @@ class EnderecoEntrega{
 
 class Lote {
     - codigo: String
-    - quantidade: Integer
+    - estoque: Integer
     - dataFabricacao: LocalDate
 }
 
 class ItemPedido{
     - quantidade: Integer
-    - preco: Float
+    - preco: BigDecimal
 }
 
 class Pedido{
-    - valoTotal: Double
+    - valoTotal: BigDecimal
     - data: LocalDate
 }
 
-class Cartao extends Pagamento {
+class Cartao extends Pagamento{
     - numero: String
     - titular: String
     - dataValidade: LocalDate
     - cvv: String
 }
 
-class Pix extends Pagamento {
-    - codigo: String
+class Pix extends Pagamento{
+    - chave: String
 }
 
-class Boleto extends Pagamento {
+class Boleto extends Pagamento  {
     - codigoBarra: String
 }
 
 abstract class Pagamento{
-    - valor: Float
+    - valor: BigDecimal
+}
+
+enum StatusPagamento{
+    + PAGO: int
+    + PENDENTE: int
+    + CANCELADO: int
+}
+
+class UpdateStatusPedido{
+    - dataAtualizacao: LocalDateTime
 }
 
 enum StatusPedido{
@@ -90,7 +115,8 @@ enum StatusPedido{
     + PROCESSANDO: int
     + ENVIADO: int
     + ENTREGUE: int
-    + CANCELADO: int 
+    + CANCELADO: int
+    + DEVOLVIDO: int
 }
 
 class TelefoneCliente{
@@ -123,46 +149,51 @@ class Usuario{
 
 enum StatusFuncionario{
     + ATIVADO: int
-    + Desativado: int
+    + DESATIVADO: int
+}
+
+enum Perfil{
+    + ADM: int
+    + USER: int
 }
 
 ' RELACIONAMENTOS
 PlacaDeVideo "*" --> "1" Fornecedor
-PlacaDeVideo "1" --> "1" Tamanho
-PlacaDeVideo "*" --> "1" Fan
+PlacaDeVideo "1" *--> "1" Tamanho
+PlacaDeVideo "*" *--> "1" Fan
+PlacaDeVideo "1" *--> "1" Memoria
+PlacaDeVideo "1" *--> "*" SaidaVideo
 
 Lote "*" --> "1" PlacaDeVideo 
 
-Fornecedor "1" --> "*" TelefoneFornecedor
+Fornecedor "1" *--> "*" TelefoneFornecedor
 
 Funcionario "1" --> "*" TelefoneFuncionario
 Funcionario  "1" --> "1" Usuario
 Funcionario "*" --> "1" StatusFuncionario
 
-Cliente "1" --> "*" Endereco
+Cliente "1" *--> "*" Endereco
 Cliente "1" --> "*" PlacaDeVideo : listaDesejos
-Cliente "1" --> "*" TelefoneCliente
+Cliente "1" *--> "*" TelefoneCliente
 Cliente "1" --> "1" Usuario
 
-Endereco "*" --> "1" Cliente
+Usuario "*" --> "1" Perfil
 
-TelefoneCliente "*" --> "1" Cliente 
-
-TelefoneFornecedor "*" --> "1" Fornecedor
-
-TelefoneFuncionario "*" --> "1" Funcionario
 
 Pedido "1" --> "1" ItemPedido
 Pedido "1" *--> "1" EnderecoEntrega
 Pedido "*" *--> "1" Cliente
 Pedido "1" --> "1" Pagamento
-Pedido "*" --> "1" StatusPedido
+Pedido "*" *--> "1" UpdateStatusPedido
+UpdateStatusPedido "*" --> "1" StatusPedido
 
 ItemPedido "*" --> "1" Lote
+
+Pagamento "*" --> "1" StatusPagamento
 ' ANOTACOES
 
 note bottom of Tamanho: todas as medidas em mm
-
+note bottom of Memoria: capacidade = GB, velocidade = GBps, largurade banda = bits
 
 
 @enduml

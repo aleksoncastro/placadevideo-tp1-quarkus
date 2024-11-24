@@ -3,7 +3,7 @@ package br.unitins.tp1.placadevideo.service.cartao;
 import java.util.List;
 
 import br.unitins.tp1.placadevideo.dto.Request.CartaoRequestDTO;
-import br.unitins.tp1.placadevideo.model.Cartao;
+import br.unitins.tp1.placadevideo.model.pagamento.Cartao;
 import br.unitins.tp1.placadevideo.repository.cartao.CartaoRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;

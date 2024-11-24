@@ -1,5 +1,9 @@
-package br.unitins.tp1.placadevideo.model;
+package br.unitins.tp1.placadevideo.model.pedido;
 
+import java.math.BigDecimal;
+
+import br.unitins.tp1.placadevideo.model.DefaultEntity;
+import br.unitins.tp1.placadevideo.model.Lote;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -11,7 +15,7 @@ public class ItemPedido extends DefaultEntity {
     @JoinColumn(name = "id_lote")
     private Lote lote;
     private Integer quantidade;
-    private Double preco;
+    private BigDecimal preco;
     
     public Lote getLote() {
         return lote;
@@ -25,10 +29,10 @@ public class ItemPedido extends DefaultEntity {
     public void setQuantidade(Integer quantidade) {
         this.quantidade = quantidade;
     }
-    public Double getPreco() {
+    public BigDecimal getPreco() {
         return preco;
     }
-    public void setPreco(Double preco) {
+    public void setPreco(BigDecimal preco) {
         this.preco = preco;
     }
 

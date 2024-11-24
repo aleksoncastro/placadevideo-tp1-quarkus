@@ -2,7 +2,7 @@ package br.unitins.tp1.placadevideo.dto.Response;
 
 import java.time.LocalDate;
 
-import br.unitins.tp1.placadevideo.model.Cartao;
+import br.unitins.tp1.placadevideo.model.pagamento.Cartao;
 
 public record CartaoResponseDTO(
         Long id,

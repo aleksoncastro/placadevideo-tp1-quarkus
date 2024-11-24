@@ -27,15 +27,16 @@ private LocalDate dataNascimento;
 
 private String email;
 
+@OneToOne
+@JoinColumn(name = "id_usuario", unique = true)
+private Usuario usuario;
+
 @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
 private List<Endereco> enderecos;
 
 @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
 private List<TelefoneCliente> telefones;
 
-@OneToOne
-@JoinColumn(name = "id_usuario", unique = true)
-private Usuario usuario;
 
 
 public List<TelefoneCliente> getTelefones() {

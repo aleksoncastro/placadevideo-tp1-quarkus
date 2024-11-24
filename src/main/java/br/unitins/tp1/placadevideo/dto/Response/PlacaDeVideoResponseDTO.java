@@ -1,5 +1,6 @@
 package br.unitins.tp1.placadevideo.dto.Response;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -10,7 +11,7 @@ public record PlacaDeVideoResponseDTO(
         Long id,
         String modelo,
         String categoria,
-        Double preco,
+        BigDecimal preco,
         String resolucao,
         Integer energia,
         String descricao,
@@ -20,6 +21,7 @@ public record PlacaDeVideoResponseDTO(
         Fan fan,
         Boolean suporteRayTracing,
         MemoriaResponseDTO memoria,
+        TamanhoResponseDTO tamanho,
         List<SaidaVideoResponseDTO> saidas,
         FornecedorResponseDTO fornecedor
 ) {
@@ -39,6 +41,7 @@ public record PlacaDeVideoResponseDTO(
             placaDeVideo.getFan(),
             placaDeVideo.getSuporteRayTracing(),
             MemoriaResponseDTO.valueOf(placaDeVideo.getMemoria()),
+            TamanhoResponseDTO.valueOf(placaDeVideo.getTamanho()),
             placaDeVideo.getSaidas().stream()
                 .map(SaidaVideoResponseDTO::valueOf)
                 .collect(Collectors.toList()),

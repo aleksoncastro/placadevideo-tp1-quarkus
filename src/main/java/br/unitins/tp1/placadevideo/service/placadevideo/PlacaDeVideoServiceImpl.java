@@ -68,15 +68,13 @@ public class PlacaDeVideoServiceImpl implements PlacaDeVideoService {
         placaDeVideo.setFan(Fan.valueOf(dto.idFan()));
         placaDeVideo.setSuporteRayTracing(dto.suporteRayTracing());
         placaDeVideo.setMemoria(dto.memoria().intoEntity());
-
+        placaDeVideo.setTamanho(dto.tamanho().intoEntity());
         // saidasVideo
         List<SaidaVideo> saidas = new ArrayList<>();
-        if (dto.saidas() != null) { // Verifica se a lista não é nula
             saidas = dto.saidas().stream()
                     .map(SaidaVideoRequestDTO::intoEntity)
                     .collect(Collectors.toList());
-        }
-
+      
         placaDeVideo.setSaidas(saidas);
 
         Fornecedor fornecedor = fornecedorService.findByIdComTelefones(dto.idFornecedor());
@@ -108,6 +106,7 @@ public class PlacaDeVideoServiceImpl implements PlacaDeVideoService {
         placaDeVideo.setFan(Fan.valueOf(dto.idFan()));
         placaDeVideo.setSuporteRayTracing(dto.suporteRayTracing());
         placaDeVideo.setMemoria(dto.memoria().intoEntity());
+        placaDeVideo.setTamanho(dto.tamanho().intoEntity());
 
         // saidasVideo
         List<SaidaVideo> saidas = new ArrayList<>();

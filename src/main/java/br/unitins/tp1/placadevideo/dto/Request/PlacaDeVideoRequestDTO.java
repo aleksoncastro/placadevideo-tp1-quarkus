@@ -1,5 +1,6 @@
 package br.unitins.tp1.placadevideo.dto.Request;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import jakarta.validation.constraints.NotBlank;
@@ -11,7 +12,7 @@ public record PlacaDeVideoRequestDTO(
         @NotBlank(message = "O campo deve ser informado")
         String categoria,
         @NotBlank(message = "O campo deve ser informado")
-        Double preco,
+        BigDecimal preco,
         @NotBlank(message = "O campo deve ser informado")
         String resolucao,
         @NotBlank(message = "O campo deve ser informado")
@@ -32,6 +33,7 @@ public record PlacaDeVideoRequestDTO(
         Boolean suporteRayTracing,
         @NotNull(message = "O campo deve ser informado")
         MemoriaRequestDTO memoria,
+        TamanhoRequestDTO tamanho,
         List<SaidaVideoRequestDTO> saidas
     ) {
         

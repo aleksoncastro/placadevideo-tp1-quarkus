@@ -1,8 +1,11 @@
-package br.unitins.tp1.placadevideo.model;
+package br.unitins.tp1.placadevideo.model.pedido;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import br.unitins.tp1.placadevideo.model.DefaultEntity;
+import br.unitins.tp1.placadevideo.model.pagamento.Pagamento;
 import br.unitins.tp1.placadevideo.model.usuario.Usuario;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -10,6 +13,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 
 @Entity
 public class Pedido extends DefaultEntity {
@@ -23,16 +27,15 @@ public class Pedido extends DefaultEntity {
     @JoinColumn(name = "id_pedido")
     private List<ItemPedido> listaItemPedido;
     
-    private Double valorTotal;
-    private StatusPedido statusPedido;
+    private BigDecimal valorTotal;
     
-    public StatusPedido getStatusPedido() {
-        return statusPedido;
-    }
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "id_pedido")
+    private List<UpdateStatusPedido> listaStatus;
 
-    public void setStatusPedido(StatusPedido statusPedido) {
-        this.statusPedido = statusPedido;
-    }
+    @OneToOne
+    private Pagamento pagamento;
+
 
     public LocalDateTime getData() {
         return data;
@@ -58,12 +61,30 @@ public class Pedido extends DefaultEntity {
         this.listaItemPedido = listaItemPedido;
     }
 
-    public Double getValorTotal() {
+    public BigDecimal getValorTotal() {
         return valorTotal;
     }
 
-    public void setValorTotal(Double valorTotal) {
+    public void setValorTotal(BigDecimal valorTotal) {
         this.valorTotal = valorTotal;
     }
+
+    public List<UpdateStatusPedido> getListaStatus() {
+        return listaStatus;
+    }
+
+    public void setListaStatus(List<UpdateStatusPedido> listaStatus) {
+        this.listaStatus = listaStatus;
+    }
+
+    public Pagamento getPagamento() {
+        return pagamento;
+    }
+
+    public void setPagamento(Pagamento pagamento) {
+        this.pagamento = pagamento;
+    }
+
+   
 
 }

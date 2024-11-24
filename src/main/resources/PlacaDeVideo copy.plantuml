@@ -1,0 +1,296 @@
+@startuml uml
+
+class Pedido {
+    - id: Long
+    - data: LocalDateTime
+    - total: Double
+    - prazoPagamento: LocalDateTime
+}
+
+class ItemPedido {
+    - id: Long
+    - preco: Double
+    - quantidade: Integer
+}
+
+enum Status {
+    + AGUARDANDO_PAGAMENTO: int
+    + PAGAMENTO_EXPIRADO: int
+    + PAGAMENTO_AUTORIZADO: int
+    + ENVIADO: int
+    + ENTREGUE: int
+    + DESISTIDO: int
+    + DEVOLVIDO: int
+}
+
+class StatusPedido {
+    - id: Long
+    - dataAtualizacao: LocalDateTime
+}
+
+class Cupom {
+    - id: Long
+    - codigo: String
+    - percentualDesconto: Float
+    - dataValidade: LocalDateTime
+}
+
+abstract Pagamento {
+    - id: Long
+    - valor: Double
+}
+
+class Pix {
+    - chaveDestinatario: String
+    - identificador: String
+}
+
+class Boleto {
+    - codigo: String
+}
+
+class Cartao {
+    - titularCartao: String
+    - cpfCartao: String
+    - numero: String
+    - dataValidade: LocalDate
+    - codigoSeguranca: Integer
+}
+
+enum ModalidadeCartao {
+    + DEBITO: int
+    + CREDITO: int
+}
+
+class Pessoa {
+    - id: Long
+    - nome: String
+    - dataNascimento: LocalDate
+    - cpf: String
+}
+
+class Cliente {
+    - id: Long
+    - aceitaMarketing: boolean
+}
+
+class Funcionario {
+    - id: Long
+    - dataContrato: LocalDate
+    - salario: Double
+}
+
+class Usuario {
+    - id: Long
+    - email: String
+    - senha: String
+}
+
+enum Sexo {
+    + MASCULINO: int
+    + FEMININO: int
+}
+
+class Endereco {
+    - id: Long
+    - cep: String
+    - logradouro: String
+    - bairro: String
+    - numero: int
+    - complemento: String
+}
+
+class Cidade {
+    - id: Long
+    - nome: String
+}
+
+class Estado {
+    - id: Long
+    - nome: String
+}
+
+class Telefone {
+    - id: Long
+    - codigoArea: String
+    - numero: String
+}
+
+class Notebook {
+    - id: Long
+    - descricao: String
+    - linha: String 
+    - serie: String
+    - preco: Double
+    - modelo: String
+    - sistemaOperacional: String
+    - isGamer: Boolean
+    - entradaUsb: Integer
+    - limiteRam: String
+    - estoque: Integer
+} 
+
+' Notebook --> Fornecedor. Se colocasse ao contrário, toda vez que fosse cadastrar o fornecedor, teria que
+' cadastrar os notebooks também.
+class Fornecedor {
+    - id: Long
+    - nome: String
+    - email: String
+    - cnpj: String
+}
+
+enum TipoPlacaVideo {
+    + INTEGRADA: int
+    + DEDICADA: int
+}
+
+class Recurso {
+    - id: Long
+    - nome: String
+}   
+
+class PlacaVideo {
+    - id: Long
+    - modelo: String
+    - memoriaVideo: String
+}
+
+class Processador {
+    - id: Long
+    - modelo: String
+    - velocidade: String
+    - memoriaCache: String
+}
+
+class Armazenamento {
+    - id: Long
+    - nome: String
+    - capacidade: String
+}
+
+class MemoriaRam {
+    - id: Long
+    - capacidade: String
+}
+
+class Tela {
+    - id: Long
+    - tamanho: String
+    - resolucao: String 
+    - taxaAtualizacao: String
+}
+
+' Especificacao. Informação exclusiva do Notebook. Não pode ser reaproveitada. Se tiver que usar dnv, teria que cadastrar outro.
+' Composição: Estou sempre cadastrando se for composição. Deve ser 1 de onde parte a composição
+class Especificacao {
+    - id: Long
+    - altura: String
+    - largura: String
+    - profundidade: String
+    - peso: String
+}
+
+class ConexaoSemFio {
+    - id: Long
+    - nome: String
+}
+
+class EntradaSaida { 
+    - id: Long
+    - nome: String
+}
+
+class FileInfo {
+    - id: Long
+    - fileName: String
+}
+
+Pedido "1" *--> "*" ItemPedido
+Pedido "*" o-right-> "1" Cliente
+Pedido "1" *-left-> "*" StatusPedido
+StatusPedido "*" -up-> "1" Status
+ItemPedido "*" o--> "1" Notebook
+ItemPedido "*" o-right-> "1" Cupom
+Cupom "*" o-right-> "1" Fornecedor
+
+Pedido "1" *-up-> "1" Pagamento
+Pix --|> Pagamento
+Cartao --|> Pagamento
+Boleto --|> Pagamento
+Cartao "*" -up-> "*" ModalidadeCartao
+
+Pessoa "1" *-right-> "*" Endereco
+Pessoa "*" -up-> "1" Sexo
+Pessoa "1" -up-> "1" Usuario
+Pessoa "1" *-down-> "*" Telefone
+
+Cliente "1" -right-> "1" Pessoa
+Funcionario "1" --> "1" Pessoa
+Cliente "*" o--> "*" Notebook: listaDesejo
+
+Endereco "*" o-right-> "1" Cidade
+Cidade "*" o-right-> "1" Estado
+
+Notebook "1" *--> "1" Tela
+Notebook "*" o--> "1" Processador
+Notebook "*" --> "1" TipoPlacaVideo
+Notebook "*" o--> "1" PlacaVideo
+Notebook "*" o--> "*" Armazenamento
+Notebook "*" o--> "*" MemoriaRam
+Notebook "1" *--> "1" Especificacao
+Notebook "*" o--> "*" Recurso
+Notebook "*" o-up-> "1" Fornecedor
+Notebook "*" o--> "*" ConexaoSemFio
+Notebook "*" o--> "*" EntradaSaida
+
+Fornecedor "1" *-right-> "*" Telefone
+
+@enduml
+
+' Reformular processo de compra -> Colocar preço no ItemPedido                        OK
+' Colocar método para adicionar produto aos desejos em clienteResource e remover      OK
+' Colocar um método no Resource para ir atualizando o status do pedido                OK
+' Permissão nos resources e nos testes (fazer cupom e pedido)                       
+' Dar uma olhada geral, todos os models, DTOs
+' Acrescentar Logs e todos os Resources                                               OK
+' Cascata em Pagamento (Olhar) Testar Excluir
+
+' Fecha Pedido (Back) -> Cartao (Pede os dados do cartão e cria uma forma de pagamento e vincula com a compra feita)
+'                     -> Pix / Boleto (Gera o código de cada e mostra. Aí aparece o botão pagar)
+' Vou vincular apenas quando pagar
+
+
+'4) Quando passar parâmetro pelo path param? Pois posso pegar o cliente
+' a partir do subject com o JsonWebToken (getSubject) e a partir daí pegar
+' o cliente: Certo seria conferir se o cliente do token é o mesmo do id que foi passado
+
+'5) Se excluir um cliente, o pedido será excluido também? Como fica a integridade
+' referencial da tabela pedidos ao excluir um cliente?. O certo é ter o status ativado/desativado
+
+'6) Pedido ter um histórico de status de andamento
+
+'7) Funcionário poder ter mais de um perfil (Normal ou Adm)
+
+'8) Várias formas de rodar os testes e encaixar permissão: Passando token no header, usando @TestSecurity
+
+'9) Preciso colocar um objeto inteiro de notebook dentro de listaDesejo?
+
+' Arrumar bean validation. Testar cupom e pedido. Organizar melhor pastas. Organizar melhor sequência de métodos
+' no resource. Colocar validações de banco para pedido e cupom. Implementar lista desejo. 
+' Colocar mais métodos no resource de Cupom. metodo para atualizar o status do pedido
+' Tem problema receber integer no pathParam?
+' E se eu quiser pesquisar pela data? Pois pathparam não aceita LocalDateTime (Apenas tipos primitivos e de referencia?)
+' Colocar as validações de cupom tudo em um método só
+' Arrumar FileService para ser geral
+' Colocar nomeImagem direto no dto, pra na hora de cadastrar já subir imagem
+' Organizar melhor ItemPedidoDTO (idNotebook primeiro - e dps organizar a classe normal)
+' Em vez de devolver o objeto todo de fornecedor, não seria interessante devolver só a marca?
+' No update de venda, atualizar idCliente tbm? Faz sentido?
+
+' Parte de Pagamento: 1°) Posso criar diversos endpoints para fechar o pedido, 1 para cada opção de pagamento
+' 2°) Posso criar um resource para pagamento (com vários endpoints de pagamento) e colocar o id do pedido que quero. Então concluo o pedido e o pagamento fica pendente ate eu o finalizar
+' 3°) Posso criar um resource para pagamento com várias opções para adicionar saldo ao site e assim ter dinheiro no site para pagar a compra
+
+' Opção: Fazer tudo em pedido em um unico endpoint (colocar a opção (cartao, pix, boleto) e colocar os dados de cartao) -> Se não for cartão, ignora os dados. Se for, aplica ele na compra.
+
+' Ou fazer 2 endpoints, um pra compra com cartão (dto de pedido com dados de cartao), e outro pra compra com pix / boleto, etc (dto com opção de geracao)

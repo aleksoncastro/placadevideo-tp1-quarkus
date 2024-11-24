@@ -3,7 +3,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 import br.unitins.tp1.placadevideo.model.DefaultEntity;
-import br.unitins.tp1.placadevideo.model.StatusFuncionario;
 import br.unitins.tp1.placadevideo.model.telefone.TelefoneFuncionario;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;

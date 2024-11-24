@@ -10,9 +10,12 @@ import br.unitins.tp1.placadevideo.dto.Request.TelefoneClienteRequestDTO;
 import br.unitins.tp1.placadevideo.model.Endereco;
 import br.unitins.tp1.placadevideo.model.telefone.TelefoneCliente;
 import br.unitins.tp1.placadevideo.model.usuario.Cliente;
+import br.unitins.tp1.placadevideo.model.usuario.Perfil;
+import br.unitins.tp1.placadevideo.model.usuario.Usuario;
 import br.unitins.tp1.placadevideo.repository.cliente.ClienteRepository;
 import br.unitins.tp1.placadevideo.repository.endereco.EnderecoRepository;
 import br.unitins.tp1.placadevideo.repository.telefone.TelefoneClienteRepository;
+import br.unitins.tp1.placadevideo.repository.usuario.UsuarioRepository;
 import br.unitins.tp1.placadevideo.service.endereco.EnderecoServiceImpl;
 import br.unitins.tp1.placadevideo.service.telefone.TelefoneClienteServiceImpl;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -37,6 +40,9 @@ public class ClienteServiceImpl implements ClienteService {
 
     @Inject
     public TelefoneClienteServiceImpl  telefoneClienteServiceImpl;
+
+    @Inject
+    public UsuarioRepository usuarioRepository;
 
 
     @Override
@@ -67,6 +73,15 @@ public class ClienteServiceImpl implements ClienteService {
         cliente.setCpf(dto.cpf());
         cliente.setDataNascimento(dto.dataNascimento());
         cliente.setEmail(dto.email());
+
+        //Criando um Usuario
+        Usuario usuario = new Usuario();
+        usuario.setUsername(dto.usuario().username());
+        usuario.setSenha(dto.usuario().senha());
+        usuario.setPerfil(Perfil.USER);
+        usuarioRepository.persist(usuario);
+
+        cliente.setUsuario(usuario);
 
         // cria o cliente primeiro
         clienteRepository.persist(cliente);
@@ -132,6 +147,16 @@ public class ClienteServiceImpl implements ClienteService {
         cliente.setCpf(dto.cpf());
         cliente.setDataNascimento(dto.dataNascimento());
         cliente.setEmail(dto.email());
+
+        //Criando um Usuario
+        Usuario usuario = new Usuario();
+        usuario.setUsername(dto.usuario().username());
+        usuario.setSenha(dto.usuario().senha());
+        usuario.setPerfil(Perfil.USER);
+        usuarioRepository.persist(usuario);
+
+        cliente.setUsuario(usuario);
+
        
 
         // Atualiza os endereços do cliente

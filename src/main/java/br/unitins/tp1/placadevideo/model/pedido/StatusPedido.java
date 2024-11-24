@@ -1,4 +1,4 @@
-package br.unitins.tp1.placadevideo.model;
+package br.unitins.tp1.placadevideo.model.pedido;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
