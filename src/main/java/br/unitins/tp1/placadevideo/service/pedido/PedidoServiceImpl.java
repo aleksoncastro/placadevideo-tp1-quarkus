@@ -123,13 +123,13 @@ public class PedidoServiceImpl implements PedidoService {
     }
 
     @Override
-    
+
     public Pedido updateStatusPedido(Long idPedido, StatusPedidoRequestDTO dto) {
         Pedido p = pedidoRepository.findById(idPedido);
 
         List<UpdateStatusPedido> updateStatusPedidos = Arrays.asList(createStatusPedido(dto.idStatus()));
         p.setListaStatus(updateStatusPedidos);
-        
+
         pedidoRepository.persist(p);
 
         return p;
@@ -181,6 +181,8 @@ public class PedidoServiceImpl implements PedidoService {
         boleto.setValor(valor);
         boleto.setCodigo(UUID.randomUUID().toString());
 
+        pagamentoRepository.persist(boleto);
+
         return BoletoResponseDTO.valueOf(boleto);
     }
 
@@ -191,9 +193,12 @@ public class PedidoServiceImpl implements PedidoService {
         if (p != null) {
             p.setPagamento(pagamentoRepository.findById(idPix));
 
-            List<UpdateStatusPedido> updateStatusPedidos = Arrays.asList(createStatusPedido(2));
-            p.setListaStatus(updateStatusPedidos);
-            pedidoRepository.persist(p);
+            p.setPagamento(pagamentoRepository.findById(idPix));
+
+            List<UpdateStatusPedido> novosStatus = Arrays.asList(createStatusPedido(2));
+            p.getListaStatus().clear();
+            p.getListaStatus().addAll(novosStatus);
+
         }
 
     }
@@ -205,9 +210,9 @@ public class PedidoServiceImpl implements PedidoService {
         if (p != null) {
             p.setPagamento(pagamentoRepository.findById(idBoleto));
 
-            List<UpdateStatusPedido> updateStatusPedidos = Arrays.asList(createStatusPedido(2));
-            p.setListaStatus(updateStatusPedidos);
-            pedidoRepository.persist(p);
+            List<UpdateStatusPedido> novosStatus = Arrays.asList(createStatusPedido(2));
+            p.getListaStatus().clear();
+            p.getListaStatus().addAll(novosStatus);
         }
 
     }
@@ -223,9 +228,9 @@ public class PedidoServiceImpl implements PedidoService {
             pagamentoRepository.persist(c);
             p.setPagamento(c);
 
-            List<UpdateStatusPedido> updateStatusPedidos = Arrays.asList(createStatusPedido(2));
-            p.setListaStatus(updateStatusPedidos);
-            pedidoRepository.persist(p);
+            List<UpdateStatusPedido> novosStatus = Arrays.asList(createStatusPedido(2));
+            p.getListaStatus().clear();
+            p.getListaStatus().addAll(novosStatus);
         }
     }
 

@@ -28,7 +28,7 @@ public class PedidoResource {
     public JsonWebToken jwt;
 
     @GET
-    // @RolesAllowed("User")
+    @RolesAllowed("User")
     public Response findByUsername() {
         // buscando o username do hash do jwt
         String username = jwt.getSubject();
