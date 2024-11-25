@@ -1,8 +1,8 @@
-package br.unitins.tp1.placadevideo.model;
+package br.unitins.tp1.placadevideo.model.placadevideo;
 
 import java.time.LocalDate;
 
-import br.unitins.tp1.placadevideo.model.placadevideo.PlacaDeVideo;
+import br.unitins.tp1.placadevideo.model.DefaultEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;

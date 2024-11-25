@@ -3,7 +3,7 @@ package br.unitins.tp1.placadevideo.model.pedido;
 import java.math.BigDecimal;
 
 import br.unitins.tp1.placadevideo.model.DefaultEntity;
-import br.unitins.tp1.placadevideo.model.Lote;
+import br.unitins.tp1.placadevideo.model.placadevideo.Lote;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;

@@ -8,17 +8,20 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import br.unitins.tp1.placadevideo.dto.Response.BoletoResponseDTO;
-import br.unitins.tp1.placadevideo.dto.Response.PixResponseDTO;
 import br.unitins.tp1.placadevideo.dto.Request.ItemPedidoRequestDTO;
 import br.unitins.tp1.placadevideo.dto.Request.PedidoRequestDTO;
-import br.unitins.tp1.placadevideo.model.Lote;
+import br.unitins.tp1.placadevideo.dto.Request.StatusPedidoRequestDTO;
+import br.unitins.tp1.placadevideo.dto.Response.BoletoResponseDTO;
+import br.unitins.tp1.placadevideo.dto.Response.PixResponseDTO;
 import br.unitins.tp1.placadevideo.model.pagamento.Boleto;
+import br.unitins.tp1.placadevideo.model.pagamento.Cartao;
 import br.unitins.tp1.placadevideo.model.pagamento.Pix;
 import br.unitins.tp1.placadevideo.model.pedido.ItemPedido;
 import br.unitins.tp1.placadevideo.model.pedido.Pedido;
 import br.unitins.tp1.placadevideo.model.pedido.StatusPedido;
 import br.unitins.tp1.placadevideo.model.pedido.UpdateStatusPedido;
+import br.unitins.tp1.placadevideo.model.placadevideo.Lote;
+import br.unitins.tp1.placadevideo.repository.cartao.CartaoRepository;
 import br.unitins.tp1.placadevideo.repository.pagamento.PagamentoRepository;
 import br.unitins.tp1.placadevideo.repository.pedido.PedidoRepository;
 import br.unitins.tp1.placadevideo.service.lote.LoteService;
@@ -41,6 +44,9 @@ public class PedidoServiceImpl implements PedidoService {
 
     @Inject
     public PagamentoRepository pagamentoRepository;
+
+    @Inject
+    public CartaoRepository cartaoRepository;
 
     @Override
     public Pedido findById(Long id) {
@@ -117,6 +123,20 @@ public class PedidoServiceImpl implements PedidoService {
     }
 
     @Override
+    
+    public Pedido updateStatusPedido(Long idPedido, StatusPedidoRequestDTO dto) {
+        Pedido p = pedidoRepository.findById(idPedido);
+
+        List<UpdateStatusPedido> updateStatusPedidos = Arrays.asList(createStatusPedido(dto.idStatus()));
+        p.setListaStatus(updateStatusPedidos);
+        
+        pedidoRepository.persist(p);
+
+        return p;
+    }
+
+    @Override
+    @Transactional
     public void cancelarPedido(Long id) {
         Optional<Pedido> pedidoOpt = pedidoRepository.findByIdOptional(id);
 
@@ -138,12 +158,14 @@ public class PedidoServiceImpl implements PedidoService {
     }
 
     @Override
+    @Transactional
     public PixResponseDTO gerarPix(Long idPedido) {
         BigDecimal valor = pedidoRepository.findById(idPedido).getValorTotal();
 
         Pix pix = new Pix();
         pix.setValor(valor);
         pix.setChave("2cbec47f-c5a7-4841-ad92-e0d3021aeab8");
+        pix.setCodigo(UUID.randomUUID().toString());
 
         pagamentoRepository.persist(pix);
 
@@ -151,10 +173,12 @@ public class PedidoServiceImpl implements PedidoService {
     }
 
     @Override
+    @Transactional
     public BoletoResponseDTO gerarBoleto(Long idPedido) {
         BigDecimal valor = pedidoRepository.findById(idPedido).getValorTotal();
 
         Boleto boleto = new Boleto();
+        boleto.setValor(valor);
         boleto.setCodigo(UUID.randomUUID().toString());
 
         return BoletoResponseDTO.valueOf(boleto);
@@ -164,7 +188,13 @@ public class PedidoServiceImpl implements PedidoService {
     @Transactional
     public void registrarPagamentoPix(Long idPedido, Long idPix) {
         Pedido p = pedidoRepository.findById(idPedido);
-        p.setPagamento(pagamentoRepository.findById(idPix));
+        if (p != null) {
+            p.setPagamento(pagamentoRepository.findById(idPix));
+
+            List<UpdateStatusPedido> updateStatusPedidos = Arrays.asList(createStatusPedido(2));
+            p.setListaStatus(updateStatusPedidos);
+            pedidoRepository.persist(p);
+        }
 
     }
 
@@ -180,6 +210,38 @@ public class PedidoServiceImpl implements PedidoService {
             pedidoRepository.persist(p);
         }
 
+    }
+
+    @Override
+    @Transactional
+    public void registrarPagamentoCartao(Long idPedido, Long idCartao) {
+        Pedido p = pedidoRepository.findById(idPedido);
+        if (p != null) {
+            Cartao c = cartaoRepository.findById(idCartao);
+            c.setValor(p.getValorTotal());
+
+            pagamentoRepository.persist(c);
+            p.setPagamento(c);
+
+            List<UpdateStatusPedido> updateStatusPedidos = Arrays.asList(createStatusPedido(2));
+            p.setListaStatus(updateStatusPedidos);
+            pedidoRepository.persist(p);
+        }
+    }
+
+    @Override
+    public List<Pedido> findAll() {
+        return pedidoRepository.findAll().list();
+    }
+
+    @Override
+    public List<Pedido> findByItem(Long idPlacaDeVideo) {
+        return pedidoRepository.findByItem(idPlacaDeVideo);
+    }
+
+    @Override
+    public List<Pedido> findByStatus(int idStatus) {
+        return pedidoRepository.findByStatus(idStatus);
     }
 
 }

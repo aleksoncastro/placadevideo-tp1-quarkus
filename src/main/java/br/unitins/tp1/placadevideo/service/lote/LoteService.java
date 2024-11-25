@@ -3,7 +3,7 @@ package br.unitins.tp1.placadevideo.service.lote;
 import java.util.List;
 
 import br.unitins.tp1.placadevideo.dto.Request.LoteRequestDTO;
-import br.unitins.tp1.placadevideo.model.Lote;
+import br.unitins.tp1.placadevideo.model.placadevideo.Lote;
 
 public interface LoteService {
 

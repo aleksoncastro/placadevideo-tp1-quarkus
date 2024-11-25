@@ -17,6 +17,7 @@ import br.unitins.tp1.placadevideo.repository.endereco.EnderecoRepository;
 import br.unitins.tp1.placadevideo.repository.telefone.TelefoneClienteRepository;
 import br.unitins.tp1.placadevideo.repository.usuario.UsuarioRepository;
 import br.unitins.tp1.placadevideo.service.endereco.EnderecoServiceImpl;
+import br.unitins.tp1.placadevideo.service.hash.HashService;
 import br.unitins.tp1.placadevideo.service.telefone.TelefoneClienteServiceImpl;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -36,14 +37,16 @@ public class ClienteServiceImpl implements ClienteService {
     public EnderecoServiceImpl enderecoServiceImpl;
 
     @Inject
-    public  TelefoneClienteRepository  telefoneClienteRepository;
+    public TelefoneClienteRepository telefoneClienteRepository;
 
     @Inject
-    public TelefoneClienteServiceImpl  telefoneClienteServiceImpl;
+    public TelefoneClienteServiceImpl telefoneClienteServiceImpl;
 
     @Inject
     public UsuarioRepository usuarioRepository;
 
+    @Inject
+    public HashService hashService;
 
     @Override
     public Cliente findById(Long id) {
@@ -55,7 +58,7 @@ public class ClienteServiceImpl implements ClienteService {
         return clienteRepository.findByNome(nome);
     }
 
-     @Override
+    @Override
     public Cliente findByCpf(String cpf) {
         return clienteRepository.findByCpf(cpf);
     }
@@ -74,10 +77,10 @@ public class ClienteServiceImpl implements ClienteService {
         cliente.setDataNascimento(dto.dataNascimento());
         cliente.setEmail(dto.email());
 
-        //Criando um Usuario
+        // Criando um Usuario
         Usuario usuario = new Usuario();
         usuario.setUsername(dto.usuario().username());
-        usuario.setSenha(dto.usuario().senha());
+        usuario.setSenha(hashService.getHashSenha(dto.usuario().senha()));
         usuario.setPerfil(Perfil.USER);
         usuarioRepository.persist(usuario);
 
@@ -99,8 +102,8 @@ public class ClienteServiceImpl implements ClienteService {
             TelefoneCliente telefone = telefoneClienteServiceImpl.create(telefoneDTO);
             cliente.getTelefones().add(telefone);
         }
-        
-        //Atualiza o cliente no banco
+
+        // Atualiza o cliente no banco
         clienteRepository.persist(cliente);
 
         return cliente;
@@ -113,7 +116,7 @@ public class ClienteServiceImpl implements ClienteService {
         if (cliente == null) {
             throw new IllegalArgumentException("Cliente com ID " + clienteId + " não encontrado.");
         }
-    
+
         Endereco endereco = enderecoServiceImpl.create(dto);
         enderecoRepository.persist(endereco);
         cliente.getEnderecos().add(endereco);
@@ -128,7 +131,7 @@ public class ClienteServiceImpl implements ClienteService {
         }
 
         TelefoneCliente telefone = telefoneClienteServiceImpl.create(dto);
-        //telefone.setCliente(cliente);
+        // telefone.setCliente(cliente);
         telefoneClienteRepository.persist(telefone);
         cliente.getTelefones().add(telefone);
 
@@ -148,36 +151,34 @@ public class ClienteServiceImpl implements ClienteService {
         cliente.setDataNascimento(dto.dataNascimento());
         cliente.setEmail(dto.email());
 
-        //Criando um Usuario
+        // Criando um Usuario
         Usuario usuario = new Usuario();
         usuario.setUsername(dto.usuario().username());
-        usuario.setSenha(dto.usuario().senha());
+        usuario.setSenha(hashService.getHashSenha(dto.usuario().senha()));
         usuario.setPerfil(Perfil.USER);
         usuarioRepository.persist(usuario);
 
         cliente.setUsuario(usuario);
 
-       
-
         // Atualiza os endereços do cliente
-    for (EnderecoRequestDTO enderecoDTO : dto.enderecos()) {
-        Endereco enderecoExistente = enderecoRepository.findById(enderecoId);
-        if (enderecoExistente != null) {
-            enderecoServiceImpl.update(enderecoExistente.getId(), enderecoDTO);
-        } else {
-            throw new NoSuchElementException("Não encontrado!");
+        for (EnderecoRequestDTO enderecoDTO : dto.enderecos()) {
+            Endereco enderecoExistente = enderecoRepository.findById(enderecoId);
+            if (enderecoExistente != null) {
+                enderecoServiceImpl.update(enderecoExistente.getId(), enderecoDTO);
+            } else {
+                throw new NoSuchElementException("Não encontrado!");
+            }
         }
-    }
 
-    // Atualiza os telefones do cliente
-    for (TelefoneClienteRequestDTO telefoneDTO : dto.telefones()) {
-        TelefoneCliente telefoneExistente = telefoneClienteRepository.findById(telefoneId);
-        if (telefoneExistente != null) {
-            telefoneClienteServiceImpl.update(telefoneExistente.getId(), telefoneDTO);
-        } else {
-            throw new NoSuchElementException("Não encontrado!");
+        // Atualiza os telefones do cliente
+        for (TelefoneClienteRequestDTO telefoneDTO : dto.telefones()) {
+            TelefoneCliente telefoneExistente = telefoneClienteRepository.findById(telefoneId);
+            if (telefoneExistente != null) {
+                telefoneClienteServiceImpl.update(telefoneExistente.getId(), telefoneDTO);
+            } else {
+                throw new NoSuchElementException("Não encontrado!");
+            }
         }
-    }
 
         clienteRepository.persist(cliente);
         return cliente;
@@ -188,6 +189,5 @@ public class ClienteServiceImpl implements ClienteService {
     public void delete(Long id) {
         clienteRepository.deleteById(id);
     }
-
 
 }

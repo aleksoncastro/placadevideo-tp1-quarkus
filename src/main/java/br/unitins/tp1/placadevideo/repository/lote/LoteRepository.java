@@ -1,6 +1,6 @@
 package br.unitins.tp1.placadevideo.repository.lote;
 
-import br.unitins.tp1.placadevideo.model.Lote;
+import br.unitins.tp1.placadevideo.model.placadevideo.Lote;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 
