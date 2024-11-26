@@ -1,5 +1,7 @@
 package br.unitins.tp1.placadevideo.repository.lote;
 
+import java.util.List;
+
 import br.unitins.tp1.placadevideo.model.placadevideo.Lote;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -29,6 +31,20 @@ public class LoteRepository implements PanacheRepository<Lote> {
         jpql.append("WHERE l.codigo = ?1");
 
         return find(jpql.toString(), codigo).firstResult();
+    }
+
+    public List<Lote> findByIdPlacaDeVideoQtdeTotal(Long idPlacaDeVideo) {
+        StringBuffer jpql = new StringBuffer();
+        jpql.append("SELECT ");
+        jpql.append("l ");
+        jpql.append("FROM ");
+        jpql.append("Lote l ");
+        jpql.append("WHERE ");
+        jpql.append("l.placaDeVideo.id = ?1 ");
+        jpql.append("AND l.estoque > 0 ");
+        jpql.append("ORDER BY l.dataFabricacao ");
+
+        return find(jpql.toString(), idPlacaDeVideo).list();
     }
 
 }

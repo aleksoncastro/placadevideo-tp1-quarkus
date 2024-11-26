@@ -1,11 +1,14 @@
 package br.unitins.tp1.placadevideo.dto.Request;
 
-import java.math.BigDecimal;
 import java.util.List;
 
+import jakarta.validation.Valid;
+
 public record PedidoRequestDTO(
-    BigDecimal valorTotal,
-    List<ItemPedidoRequestDTO> listaItemPedido
+    @Valid
+    List<ItemPedidoRequestDTO> listaItemPedido,
+    @Valid
+    EnderecoEntregaRequestDTO enderecoEntrega
 ) {
 
 }

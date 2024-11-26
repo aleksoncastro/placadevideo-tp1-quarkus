@@ -2,7 +2,7 @@ package br.unitins.tp1.placadevideo.dto.Request;
 
 import jakarta.validation.constraints.NotBlank;
 
-public record EnderecoRequestDTO(
+public record EnderecoEntregaRequestDTO(
         @NotBlank(message = "O campo deve ser informado") 
         String cep,
         @NotBlank(message = "O campo deve ser informado") 

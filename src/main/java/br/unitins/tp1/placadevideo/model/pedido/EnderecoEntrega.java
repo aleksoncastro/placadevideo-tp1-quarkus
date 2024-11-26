@@ -1,9 +1,10 @@
-package br.unitins.tp1.placadevideo.model;
+package br.unitins.tp1.placadevideo.model.pedido;
 
+import br.unitins.tp1.placadevideo.model.DefaultEntity;
 import jakarta.persistence.Entity;
 
 @Entity
-public class Endereco extends DefaultEntity {
+public class EnderecoEntrega extends DefaultEntity {
     private String cep;
     private String cidade;
     private String estado;

@@ -46,6 +46,12 @@ public class LoteServiceImpl implements LoteService {
     }
 
     @Override
+    public List<Lote> findByIdPlacaDeVideoQtdeTotal(Long idPlacaDeVideo) {
+        return loteRepository.findByIdPlacaDeVideoQtdeTotal(idPlacaDeVideo);
+    }
+
+
+    @Override
     @Transactional
     public Lote create(LoteRequestDTO dto) {
         Lote lote = new Lote();

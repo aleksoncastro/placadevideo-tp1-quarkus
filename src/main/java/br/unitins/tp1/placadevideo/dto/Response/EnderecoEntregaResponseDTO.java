@@ -1,8 +1,8 @@
 package br.unitins.tp1.placadevideo.dto.Response;
 
-import br.unitins.tp1.placadevideo.model.Endereco;
+import br.unitins.tp1.placadevideo.model.pedido.EnderecoEntrega;
 
-public record EnderecoResponseDTO(
+public record EnderecoEntregaResponseDTO(
     Long id,
     String cep,
     String cidade,
@@ -11,8 +11,8 @@ public record EnderecoResponseDTO(
     String rua, 
     String numero
 ) {
-    public static EnderecoResponseDTO valueOf(Endereco endereco){
-        return new EnderecoResponseDTO(
+    public static EnderecoEntregaResponseDTO valueOf(EnderecoEntrega endereco){
+        return new EnderecoEntregaResponseDTO(
             endereco.getId(),
             endereco.getCep(),
             endereco.getCidade(),

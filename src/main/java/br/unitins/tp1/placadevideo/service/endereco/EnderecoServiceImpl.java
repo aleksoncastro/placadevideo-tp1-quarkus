@@ -44,6 +44,7 @@ public class EnderecoServiceImpl implements EnderecoService {
         endereco.setCidade(dto.cidade());
         endereco.setEstado(dto.estado());
         endereco.setBairro(dto.bairro());
+        endereco.setRua(dto.rua());
         endereco.setNumero(dto.numero());
 
         enderecoRepository.persist(endereco);
@@ -59,6 +60,7 @@ public class EnderecoServiceImpl implements EnderecoService {
         endereco.setCidade(dto.cidade());
         endereco.setEstado(dto.estado());
         endereco.setBairro(dto.bairro());
+        endereco.setRua(dto.rua());
         endereco.setNumero(dto.numero());
 
         enderecoRepository.persist(endereco);

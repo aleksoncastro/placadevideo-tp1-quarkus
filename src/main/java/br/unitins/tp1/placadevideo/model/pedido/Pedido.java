@@ -33,6 +33,10 @@ public class Pedido extends DefaultEntity {
     @JoinColumn(name = "id_pedido")
     private List<UpdateStatusPedido> listaStatus;
 
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "id_enderecoEntrega")
+    private EnderecoEntrega enderecoEntrega;
+
     @OneToOne
     private Pagamento pagamento;
 
@@ -83,6 +87,14 @@ public class Pedido extends DefaultEntity {
 
     public void setPagamento(Pagamento pagamento) {
         this.pagamento = pagamento;
+    }
+
+    public EnderecoEntrega getEnderecoEntrega() {
+        return enderecoEntrega;
+    }
+
+    public void setEnderecoEntrega(EnderecoEntrega enderecoEntrega) {
+        this.enderecoEntrega = enderecoEntrega;
     }
 
    

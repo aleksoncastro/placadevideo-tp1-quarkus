@@ -15,6 +15,8 @@ public interface LoteService {
 
     List<Lote> findAll();
 
+    List<Lote> findByIdPlacaDeVideoQtdeTotal(Long idPlacaDeVideo);
+
     Lote create(LoteRequestDTO dto);
 
     Lote update(Long id, LoteRequestDTO dto);

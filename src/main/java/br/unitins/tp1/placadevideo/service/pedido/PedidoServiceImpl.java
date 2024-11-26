@@ -26,6 +26,7 @@ import br.unitins.tp1.placadevideo.repository.pagamento.PagamentoRepository;
 import br.unitins.tp1.placadevideo.repository.pedido.PedidoRepository;
 import br.unitins.tp1.placadevideo.service.lote.LoteService;
 import br.unitins.tp1.placadevideo.service.usuario.UsuarioService;
+import br.unitins.tp1.placadevideo.validation.ValidationException;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -70,6 +71,9 @@ public class PedidoServiceImpl implements PedidoService {
         pedido.setListaItemPedido(new ArrayList<ItemPedido>());
         adicionarItens(dto, pedido);
 
+        //EnderecoEntregaRequestDTO = dto.enderecoEntrega();
+        //pedido.setEnderecoEntrega(conve);
+
         BigDecimal valorTotal = calcularTotal(pedido.getListaItemPedido());
 
         pedido.setValorTotal(valorTotal);
@@ -102,15 +106,43 @@ public class PedidoServiceImpl implements PedidoService {
         for (ItemPedidoRequestDTO itemDTO : dto.listaItemPedido()) {
             ItemPedido item = new ItemPedido();
             Lote lote = loteService.findByIdPlacaDeVideo(itemDTO.idProduto());
+            if (lote == null)
+                throw new ValidationException("idProduto", "Por favor informe o id de algum produto valido");
+
+            int quantidadeEstoque = calcularQuantidadeEstoque(itemDTO.idProduto());
+            if (quantidadeEstoque < itemDTO.quantidade())
+                throw new ValidationException("quantidade", "quantidade em estoque insuficiente");
+
+            int quantidadeRestante = itemDTO.quantidade();
+
+            while (quantidadeRestante > 0) {
+                lote = loteService.findByIdPlacaDeVideo(itemDTO.idProduto());
+
+                int quantidadeUsada = Math.min(lote.getEstoque(), quantidadeRestante );
+
+                lote.setEstoque(lote.getEstoque() - quantidadeUsada);
+
+                BigDecimal quantidadeUsadaBD = new BigDecimal(quantidadeUsada);
+
+                item.setPreco(item.getPreco().add(quantidadeUsadaBD.multiply(lote.getPlacaDeVideo().getPreco())));
+
+                quantidadeRestante -= quantidadeUsada;
+            }
             item.setLote(lote);
-            item.setPreco(itemDTO.preco());
+            item.setPreco(lote.getPlacaDeVideo().getPreco());
             item.setQuantidade(itemDTO.quantidade());
 
             // atualizar o estoque
-            lote.setEstoque(lote.getEstoque() - itemDTO.quantidade());
 
             pedido.getListaItemPedido().add(item);
+
         }
+    }
+
+    private int calcularQuantidadeEstoque(Long idProduto) {
+        return loteService.findByIdPlacaDeVideoQtdeTotal(idProduto)
+                .stream()
+                .reduce(0, (subtotal, b) -> subtotal + b.getEstoque(), Integer::sum);
     }
 
     private UpdateStatusPedido createStatusPedido(Integer id) {
