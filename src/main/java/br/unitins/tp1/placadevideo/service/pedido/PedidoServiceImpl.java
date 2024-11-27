@@ -16,6 +16,7 @@ import br.unitins.tp1.placadevideo.dto.Response.PixResponseDTO;
 import br.unitins.tp1.placadevideo.model.pagamento.Boleto;
 import br.unitins.tp1.placadevideo.model.pagamento.Cartao;
 import br.unitins.tp1.placadevideo.model.pagamento.Pix;
+import br.unitins.tp1.placadevideo.model.pedido.EnderecoEntrega;
 import br.unitins.tp1.placadevideo.model.pedido.ItemPedido;
 import br.unitins.tp1.placadevideo.model.pedido.Pedido;
 import br.unitins.tp1.placadevideo.model.pedido.StatusPedido;
@@ -24,12 +25,15 @@ import br.unitins.tp1.placadevideo.model.placadevideo.Lote;
 import br.unitins.tp1.placadevideo.repository.cartao.CartaoRepository;
 import br.unitins.tp1.placadevideo.repository.pagamento.PagamentoRepository;
 import br.unitins.tp1.placadevideo.repository.pedido.PedidoRepository;
+import br.unitins.tp1.placadevideo.service.cliente.ClienteService;
+import br.unitins.tp1.placadevideo.service.endereco.EnderecoService;
 import br.unitins.tp1.placadevideo.service.lote.LoteService;
 import br.unitins.tp1.placadevideo.service.usuario.UsuarioService;
 import br.unitins.tp1.placadevideo.validation.ValidationException;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 
 @ApplicationScoped
 public class PedidoServiceImpl implements PedidoService {
@@ -49,6 +53,12 @@ public class PedidoServiceImpl implements PedidoService {
     @Inject
     public CartaoRepository cartaoRepository;
 
+    @Inject
+    public EnderecoService enderecoService;
+
+    @Inject
+    public ClienteService clienteService;
+
     @Override
     public Pedido findById(Long id) {
         return pedidoRepository.findById(id);
@@ -63,19 +73,29 @@ public class PedidoServiceImpl implements PedidoService {
 
     @Override
     @Transactional
-    public Pedido create(PedidoRequestDTO dto, String username) {
+    public Pedido create(@Valid PedidoRequestDTO dto, String username) {
         Pedido pedido = new Pedido();
         pedido.setData(LocalDateTime.now());
         pedido.setUsuario(usuarioService.findByUsername(username));
 
-        pedido.setListaItemPedido(new ArrayList<ItemPedido>());
+        pedido.setListaItemPedido(new ArrayList<>());
         adicionarItens(dto, pedido);
 
-        //EnderecoEntregaRequestDTO = dto.enderecoEntrega();
-        //pedido.setEnderecoEntrega(conve);
+        if (dto.enderecoEntrega() == null) {
+            throw new ValidationException("enderecoEntrega",
+                    "O campo enderecoEntrega é obrigatório para tipoEndereco.");
+        }
 
-        BigDecimal valorTotal = calcularTotal(pedido.getListaItemPedido());
+        EnderecoEntrega novoEndereco = new EnderecoEntrega();
+        novoEndereco.setCep(dto.enderecoEntrega().cep());
+        novoEndereco.setEstado(dto.enderecoEntrega().estado());
+        novoEndereco.setCidade(dto.enderecoEntrega().cidade());
+        novoEndereco.setRua(dto.enderecoEntrega().rua());
+        novoEndereco.setNumero(dto.enderecoEntrega().numero());
 
+        pedido.setEnderecoEntrega(novoEndereco);
+
+        BigDecimal valorTotal = calcularTotal(pedido);
         pedido.setValorTotal(valorTotal);
 
         List<UpdateStatusPedido> updateStatusPedidos = Arrays.asList(createStatusPedido(1));
@@ -86,25 +106,17 @@ public class PedidoServiceImpl implements PedidoService {
         return pedido;
     }
 
-    private BigDecimal calcularTotal(List<ItemPedido> itensPedidos) {
-        if (itensPedidos == null || itensPedidos.isEmpty()) {
-            return BigDecimal.ZERO;
-        }
-
-        BigDecimal total = BigDecimal.ZERO;
-        for (ItemPedido itemPedido : itensPedidos) {
-            // Converte a quantidade de Integer para BigDecimal
-            BigDecimal quantidade = BigDecimal.valueOf(itemPedido.getQuantidade());
-            // Multiplica o preço pelo quantidade
-            total = total.add(itemPedido.getPreco().multiply(quantidade));
-        }
-
-        return total;
+    private BigDecimal calcularTotal(Pedido pedido) {
+        return pedido.getListaItemPedido()
+            .stream()
+            .map(ItemPedido::getPreco) 
+            .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
-
+    
     private void adicionarItens(PedidoRequestDTO dto, Pedido pedido) {
         for (ItemPedidoRequestDTO itemDTO : dto.listaItemPedido()) {
             ItemPedido item = new ItemPedido();
+            item.setPreco(BigDecimal.ZERO);
             Lote lote = loteService.findByIdPlacaDeVideo(itemDTO.idProduto());
             if (lote == null)
                 throw new ValidationException("idProduto", "Por favor informe o id de algum produto valido");
@@ -113,23 +125,24 @@ public class PedidoServiceImpl implements PedidoService {
             if (quantidadeEstoque < itemDTO.quantidade())
                 throw new ValidationException("quantidade", "quantidade em estoque insuficiente");
 
+            BigDecimal precoTotal = BigDecimal.ZERO;
             int quantidadeRestante = itemDTO.quantidade();
 
             while (quantidadeRestante > 0) {
                 lote = loteService.findByIdPlacaDeVideo(itemDTO.idProduto());
 
-                int quantidadeUsada = Math.min(lote.getEstoque(), quantidadeRestante );
+                int quantidadeUsada = Math.min(lote.getEstoque(), quantidadeRestante);
 
                 lote.setEstoque(lote.getEstoque() - quantidadeUsada);
 
                 BigDecimal quantidadeUsadaBD = new BigDecimal(quantidadeUsada);
 
-                item.setPreco(item.getPreco().add(quantidadeUsadaBD.multiply(lote.getPlacaDeVideo().getPreco())));
+                precoTotal = precoTotal.add(quantidadeUsadaBD.multiply(lote.getPlacaDeVideo().getPreco()));
 
                 quantidadeRestante -= quantidadeUsada;
             }
             item.setLote(lote);
-            item.setPreco(lote.getPlacaDeVideo().getPreco());
+            item.setPreco(precoTotal);
             item.setQuantidade(itemDTO.quantidade());
 
             // atualizar o estoque
@@ -142,7 +155,8 @@ public class PedidoServiceImpl implements PedidoService {
     private int calcularQuantidadeEstoque(Long idProduto) {
         return loteService.findByIdPlacaDeVideoQtdeTotal(idProduto)
                 .stream()
-                .reduce(0, (subtotal, b) -> subtotal + b.getEstoque(), Integer::sum);
+                .mapToInt(Lote::getEstoque)
+                .sum();
     }
 
     private UpdateStatusPedido createStatusPedido(Integer id) {

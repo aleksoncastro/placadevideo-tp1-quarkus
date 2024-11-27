@@ -64,6 +64,11 @@ public class ClienteServiceImpl implements ClienteService {
     }
 
     @Override
+    public Cliente findByUsername(String username) {
+        return clienteRepository.findByUsername(username);
+    }
+
+    @Override
     public List<Cliente> findAll() {
         return clienteRepository.findAll().list();
     }

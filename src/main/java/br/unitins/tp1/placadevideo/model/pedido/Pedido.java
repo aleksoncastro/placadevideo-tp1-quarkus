@@ -40,6 +40,25 @@ public class Pedido extends DefaultEntity {
     @OneToOne
     private Pagamento pagamento;
 
+    private int tipoEndereco;
+    private int idEndereco;
+
+
+    public int getTipoEndereco() {
+        return tipoEndereco;
+    }
+
+    public void setTipoEndereco(int tipoEndereco) {
+        this.tipoEndereco = tipoEndereco;
+    }
+
+    public int getIdEndereco() {
+        return idEndereco;
+    }
+
+    public void setIdEndereco(int idEndereco) {
+        this.idEndereco = idEndereco;
+    }
 
     public LocalDateTime getData() {
         return data;

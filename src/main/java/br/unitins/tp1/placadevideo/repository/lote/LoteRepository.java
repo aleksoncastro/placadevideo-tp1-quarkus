@@ -42,7 +42,7 @@ public class LoteRepository implements PanacheRepository<Lote> {
         jpql.append("WHERE ");
         jpql.append("l.placaDeVideo.id = ?1 ");
         jpql.append("AND l.estoque > 0 ");
-        jpql.append("ORDER BY l.dataFabricacao ");
+        jpql.append("ORDER BY l.dataFabricacao ASC");
 
         return find(jpql.toString(), idPlacaDeVideo).list();
     }

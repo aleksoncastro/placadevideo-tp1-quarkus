@@ -58,8 +58,8 @@ INSERT INTO Fornecedor_TelefoneFornecedor (Fornecedor_id, telefones_id) VALUES (
 INSERT INTO Fornecedor_TelefoneFornecedor (Fornecedor_id, telefones_id) VALUES (2, 2);
 
 -- 17. Inserindo dados na tabela Memoria
-INSERT INTO Memoria (capacidade, larguraBanda, velocidadeMemoria, tipoMemoria) VALUES (8, 256, 1600, 'DDR4');
-INSERT INTO Memoria (capacidade, larguraBanda, velocidadeMemoria, tipoMemoria) VALUES (16, 320, 2400, 'DDR5');
+INSERT INTO Memoria (capacidade, larguraBanda, velocidadeMemoria, tipoMemoria) VALUES (8, 256, 1600, 'GDDR6');
+INSERT INTO Memoria (capacidade, larguraBanda, velocidadeMemoria, tipoMemoria) VALUES (16, 320, 2400, 'GDDR6');
 
 -- 18. Inserindo dados na tabela Tamanho
 INSERT INTO Tamanho (altura, comprimento, largura) VALUES (200, 100, 50);
@@ -75,15 +75,21 @@ VALUES (1.6, 2.1, 2, 120, 3, 1800.00, true, 2, 2, 2, 'Professional', 'Placa prof
 INSERT INTO SaidaVideo (quantidade, id_saidavideo, tipo) VALUES (2, 1, 'HDMI');
 INSERT INTO SaidaVideo (quantidade, id_saidavideo, tipo) VALUES (1, 2, 'DisplayPort');
 
--- 15. Inserindo dados na tabela Lote
--- INSERT INTO Lote (dataFabricacao, estoque, codigo) VALUES ('2024-01-01', 50, 'L123');
--- INSERT INTO Lote (dataFabricacao, estoque, codigo) VALUES ('2024-02-01', 30, 'L456');
+-- Lote associado à PlacaDeVideo com ID 1
+INSERT INTO Lote (datafabricacao, estoque, id_placadevideo, codigo)
+VALUES ('2023-01-15', 50, 1, 'LOTE001');
 
--- 16. Inserindo dados na tabela ItemPedido
--- Inserindo pedidos na tabela Pedido
--- INSERT INTO Pedido (statusPedido, valorTotal, data, id_usuario) VALUES (1, 500.00, NOW(), 1);
--- INSERT INTO Pedido (statusPedido, valorTotal, data, id_usuario) VALUES (2, 300.00, NOW(), 2);
+-- Outro lote associado à PlacaDeVideo com ID 1
+INSERT INTO Lote (datafabricacao, estoque, id_placadevideo, codigo)
+VALUES ('2023-03-10', 30, 1, 'LOTE002');
 
--- Após isso, insira os itens do pedido em ItemPedido
--- INSERT INTO ItemPedido (preco, quantidade, id_lote, id_pedido) VALUES (100.50, 2, 1, 1);
--- INSERT INTO ItemPedido (preco, quantidade, id_lote, id_pedido) VALUES (200.75, 1, 2, 2);
+-- Lote associado à PlacaDeVideo com ID 2
+INSERT INTO Lote (datafabricacao, estoque, id_placadevideo, codigo)
+VALUES ('2023-02-20', 40, 2, 'LOTE003');
+
+-- Outro lote associado à PlacaDeVideo com ID 2
+INSERT INTO Lote (datafabricacao, estoque, id_placadevideo, codigo)
+VALUES ('2023-04-05', 20, 2, 'LOTE004');
+
+
+
