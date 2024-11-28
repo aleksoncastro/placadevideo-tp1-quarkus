@@ -314,7 +314,7 @@ public class PedidoServiceImpl implements PedidoService {
         List<Pedido> pedido = pedidoRepository.findPedidoPagamentoNull();
         
         for (Pedido p : pedido) {
-            if (p.getData().isBefore(LocalDateTime.now().plusSeconds(10))) {
+            if (LocalDateTime.now().isAfter(p.getData().plusMinutes(5))) {
                 updateStatusPedido(p.getId(), 5); // altera o status para cancelado
                 for (ItemPedido item : p.getListaItemPedido()) {
                     Lote l = item.getLote();
