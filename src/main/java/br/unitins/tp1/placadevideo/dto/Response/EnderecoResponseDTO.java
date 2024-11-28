@@ -1,6 +1,6 @@
 package br.unitins.tp1.placadevideo.dto.Response;
 
-import br.unitins.tp1.placadevideo.model.Endereco;
+import br.unitins.tp1.placadevideo.model.usuario.Endereco;
 
 public record EnderecoResponseDTO(
     Long id,

@@ -28,4 +28,8 @@ public class PedidoRepository implements PanacheRepository<Pedido> {
         return find("SELECT p FROM Pedido p JOIN p.listaStatus l WHERE l.status = ?1", StatusPedido.valueOf(idStatus)).list();
     }
 
+    public List<Pedido> findPedidoPagamentoNull() {
+        return find("SELECT p FROM Pedido p WHERE p.pagamento IS NULL").list();
+    }
+
 }

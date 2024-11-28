@@ -36,4 +36,8 @@ public class ClienteRepository implements PanacheRepository<Cliente> {
         return find(jpql.toString(), username).firstResult();
     }
 
+    
+    
+
+
 }

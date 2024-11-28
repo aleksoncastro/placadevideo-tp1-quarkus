@@ -82,8 +82,8 @@ public class PedidoAdministrativoResource {
     @PATCH
     @RolesAllowed({"Adm"})
     @Path("/{id}/status-pedido/{id}")
-    public Response updateStatusPedido(@PathParam("id") Long idPedido, StatusPedidoRequestDTO dto){
-        return Response.ok(pedidoService.updateStatusPedido(idPedido, dto)).build();
+    public Response updateStatusPedido(@PathParam("id") Long idPedido, Integer id){
+        return Response.ok(pedidoService.updateStatusPedido(idPedido, id)).build();
     }
 
     @PATCH
@@ -93,7 +93,7 @@ public class PedidoAdministrativoResource {
         return Response.noContent().build();
     }
 
-    @POST
+    /*@POST
     @RolesAllowed({"User"})
     @Path("/{id}/pagamento/info/boleto")
     public Response gerarBoleto(@PathParam("id") Long id){
@@ -106,7 +106,7 @@ public class PedidoAdministrativoResource {
     public Response gerarPix(@PathParam("id") Long id){
         return Response.status(Status.CREATED).entity(pedidoService.gerarPix(id)).build();
     } 
-
+ */
     @PATCH
     @RolesAllowed({"User"})
     @Path("/{id}/pagamento/boleto")
@@ -123,13 +123,13 @@ public class PedidoAdministrativoResource {
         return Response.noContent().build();
     }
 
-    @PATCH
+    /*@PATCH
     @RolesAllowed({"User"})
     @Path("/{id}/pagamento/cartao")
     public Response registrarPagamentoCartao(@PathParam ("id") Long id, Long idCartao){
         pedidoService.registrarPagamentoCartao(id, idCartao);
         return Response.noContent().build();
-    }
+    } */
 
 
 }

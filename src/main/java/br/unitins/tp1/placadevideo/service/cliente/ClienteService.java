@@ -2,6 +2,7 @@ package br.unitins.tp1.placadevideo.service.cliente;
 
 import java.util.List;
 
+import br.unitins.tp1.placadevideo.dto.Request.CartaoRequestDTO;
 import br.unitins.tp1.placadevideo.dto.Request.ClienteRequestDTO;
 import br.unitins.tp1.placadevideo.dto.Request.EnderecoRequestDTO;
 import br.unitins.tp1.placadevideo.dto.Request.TelefoneClienteRequestDTO;
@@ -24,6 +25,8 @@ public interface ClienteService {
     void addEndereco(Long clienteId, EnderecoRequestDTO dto);
     
     void addTelefone(Long clienteId, TelefoneClienteRequestDTO dto);
+
+    void addCartao(Long clienteId, CartaoRequestDTO dto);
 
     Cliente update(Long idCliente, Long enderecoId, Long telefoneId, ClienteRequestDTO dto);
 

@@ -10,11 +10,10 @@ import java.util.UUID;
 
 import br.unitins.tp1.placadevideo.dto.Request.ItemPedidoRequestDTO;
 import br.unitins.tp1.placadevideo.dto.Request.PedidoRequestDTO;
-import br.unitins.tp1.placadevideo.dto.Request.StatusPedidoRequestDTO;
 import br.unitins.tp1.placadevideo.dto.Response.BoletoResponseDTO;
 import br.unitins.tp1.placadevideo.dto.Response.PixResponseDTO;
 import br.unitins.tp1.placadevideo.model.pagamento.Boleto;
-import br.unitins.tp1.placadevideo.model.pagamento.Cartao;
+import br.unitins.tp1.placadevideo.model.pagamento.CartaoPagamento;
 import br.unitins.tp1.placadevideo.model.pagamento.Pix;
 import br.unitins.tp1.placadevideo.model.pedido.EnderecoEntrega;
 import br.unitins.tp1.placadevideo.model.pedido.ItemPedido;
@@ -22,14 +21,19 @@ import br.unitins.tp1.placadevideo.model.pedido.Pedido;
 import br.unitins.tp1.placadevideo.model.pedido.StatusPedido;
 import br.unitins.tp1.placadevideo.model.pedido.UpdateStatusPedido;
 import br.unitins.tp1.placadevideo.model.placadevideo.Lote;
+import br.unitins.tp1.placadevideo.model.usuario.Cartao;
+import br.unitins.tp1.placadevideo.model.usuario.Cliente;
 import br.unitins.tp1.placadevideo.repository.cartao.CartaoRepository;
+import br.unitins.tp1.placadevideo.repository.cliente.ClienteRepository;
 import br.unitins.tp1.placadevideo.repository.pagamento.PagamentoRepository;
 import br.unitins.tp1.placadevideo.repository.pedido.PedidoRepository;
 import br.unitins.tp1.placadevideo.service.cliente.ClienteService;
 import br.unitins.tp1.placadevideo.service.endereco.EnderecoService;
 import br.unitins.tp1.placadevideo.service.lote.LoteService;
+import br.unitins.tp1.placadevideo.service.placadevideo.PlacaDeVideoService;
 import br.unitins.tp1.placadevideo.service.usuario.UsuarioService;
 import br.unitins.tp1.placadevideo.validation.ValidationException;
+import io.quarkus.scheduler.Scheduled;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -37,6 +41,12 @@ import jakarta.validation.Valid;
 
 @ApplicationScoped
 public class PedidoServiceImpl implements PedidoService {
+
+    @Inject
+    public ClienteRepository clienteRepository;
+
+    @Inject
+    public PlacaDeVideoService placaDeVideoService;
 
     @Inject
     public PedidoRepository pedidoRepository;
@@ -96,23 +106,59 @@ public class PedidoServiceImpl implements PedidoService {
         pedido.setEnderecoEntrega(novoEndereco);
 
         BigDecimal valorTotal = calcularTotal(pedido);
+        if (dto.valorTotal() != valorTotal) {
+            throw new ValidationException("valorTotal", "O valorTotal recebido não corresponde com o valor calculado.");
+        }
+
         pedido.setValorTotal(valorTotal);
 
         List<UpdateStatusPedido> updateStatusPedidos = Arrays.asList(createStatusPedido(1));
         pedido.setListaStatus(updateStatusPedidos);
 
-        pedidoRepository.persist(pedido);
+        if (dto.tipoPagamento() < 1 || dto.tipoPagamento() > 3) {
+            throw new ValidationException("tipoPagamento", "O tipoPagamento é inválido");
+        }
 
+        switch (dto.tipoPagamento()) {
+            case 1:
+                gerarPix(valorTotal);
+                break;
+            case 2:
+                gerarBoleto(valorTotal);
+                break;
+            case 3:
+            Cliente cliente = clienteService.findByUsername(username);
+            if (cliente.getCartoes().isEmpty()) {
+                throw new NullPointerException("O cliente não possue cartoes");
+            }
+
+            Cartao c = cartaoRepository.findFirstCartaoByUsername(username);
+
+            CartaoPagamento cartao = new CartaoPagamento();
+            cartao.setCvv(c.getCvv());
+            cartao.setDataValidade(c.getDataValidade());
+            cartao.setTitular(c.getTitular());
+            cartao.setNumero(c.getNumero());
+            cartao.setValor(valorTotal);
+            
+            updateStatusPedidos.clear();
+            updateStatusPedidos.add(createStatusPedido(2));
+
+                break;
+            default:
+                break;
+        }
+        pedidoRepository.persist(pedido);
         return pedido;
     }
 
     private BigDecimal calcularTotal(Pedido pedido) {
         return pedido.getListaItemPedido()
-            .stream()
-            .map(ItemPedido::getPreco) 
-            .reduce(BigDecimal.ZERO, BigDecimal::add);
+                .stream()
+                .map(ItemPedido::getPreco)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
-    
+
     private void adicionarItens(PedidoRequestDTO dto, Pedido pedido) {
         for (ItemPedidoRequestDTO itemDTO : dto.listaItemPedido()) {
             ItemPedido item = new ItemPedido();
@@ -169,11 +215,11 @@ public class PedidoServiceImpl implements PedidoService {
     }
 
     @Override
-
-    public Pedido updateStatusPedido(Long idPedido, StatusPedidoRequestDTO dto) {
+    @Transactional
+    public Pedido updateStatusPedido(Long idPedido, Integer id) {
         Pedido p = pedidoRepository.findById(idPedido);
 
-        List<UpdateStatusPedido> updateStatusPedidos = Arrays.asList(createStatusPedido(dto.idStatus()));
+        List<UpdateStatusPedido> updateStatusPedidos = Arrays.asList(createStatusPedido(id));
         p.setListaStatus(updateStatusPedidos);
 
         pedidoRepository.persist(p);
@@ -205,8 +251,7 @@ public class PedidoServiceImpl implements PedidoService {
 
     @Override
     @Transactional
-    public PixResponseDTO gerarPix(Long idPedido) {
-        BigDecimal valor = pedidoRepository.findById(idPedido).getValorTotal();
+    public PixResponseDTO gerarPix(BigDecimal valor) {
 
         Pix pix = new Pix();
         pix.setValor(valor);
@@ -220,8 +265,7 @@ public class PedidoServiceImpl implements PedidoService {
 
     @Override
     @Transactional
-    public BoletoResponseDTO gerarBoleto(Long idPedido) {
-        BigDecimal valor = pedidoRepository.findById(idPedido).getValorTotal();
+    public BoletoResponseDTO gerarBoleto(BigDecimal valor) {
 
         Boleto boleto = new Boleto();
         boleto.setValor(valor);
@@ -263,22 +307,28 @@ public class PedidoServiceImpl implements PedidoService {
 
     }
 
-    @Override
+
     @Transactional
-    public void registrarPagamentoCartao(Long idPedido, Long idCartao) {
-        Pedido p = pedidoRepository.findById(idPedido);
-        if (p != null) {
-            Cartao c = cartaoRepository.findById(idCartao);
-            c.setValor(p.getValorTotal());
+    @Scheduled(every = "1m")
+    public void verificarPagamentoNull() {
+        List<Pedido> pedido = pedidoRepository.findPedidoPagamentoNull();
+        
+        for (Pedido p : pedido) {
+            if (p.getData().isBefore(LocalDateTime.now().plusSeconds(10))) {
+                updateStatusPedido(p.getId(), 5); // altera o status para cancelado
+                for (ItemPedido item : p.getListaItemPedido()) {
+                    Lote l = item.getLote();
+                    Integer estoque = l.getEstoque();
 
-            pagamentoRepository.persist(c);
-            p.setPagamento(c);
-
-            List<UpdateStatusPedido> novosStatus = Arrays.asList(createStatusPedido(2));
-            p.getListaStatus().clear();
-            p.getListaStatus().addAll(novosStatus);
+                    l.setEstoque(estoque + item.getQuantidade());
+                }
+            pedidoRepository.delete(p);
+            }
         }
+
     }
+
+    
 
     @Override
     public List<Pedido> findAll() {

@@ -4,25 +4,31 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+import br.unitins.tp1.placadevideo.dto.Request.CartaoRequestDTO;
 import br.unitins.tp1.placadevideo.dto.Request.ClienteRequestDTO;
 import br.unitins.tp1.placadevideo.dto.Request.EnderecoRequestDTO;
 import br.unitins.tp1.placadevideo.dto.Request.TelefoneClienteRequestDTO;
-import br.unitins.tp1.placadevideo.model.Endereco;
 import br.unitins.tp1.placadevideo.model.telefone.TelefoneCliente;
+import br.unitins.tp1.placadevideo.model.usuario.Cartao;
 import br.unitins.tp1.placadevideo.model.usuario.Cliente;
+import br.unitins.tp1.placadevideo.model.usuario.Endereco;
 import br.unitins.tp1.placadevideo.model.usuario.Perfil;
 import br.unitins.tp1.placadevideo.model.usuario.Usuario;
+import br.unitins.tp1.placadevideo.repository.cartao.CartaoRepository;
 import br.unitins.tp1.placadevideo.repository.cliente.ClienteRepository;
 import br.unitins.tp1.placadevideo.repository.endereco.EnderecoRepository;
 import br.unitins.tp1.placadevideo.repository.telefone.TelefoneClienteRepository;
 import br.unitins.tp1.placadevideo.repository.usuario.UsuarioRepository;
-import br.unitins.tp1.placadevideo.service.endereco.EnderecoServiceImpl;
+import br.unitins.tp1.placadevideo.service.cartao.CartaoService;
+import br.unitins.tp1.placadevideo.service.endereco.EnderecoService;
 import br.unitins.tp1.placadevideo.service.hash.HashService;
-import br.unitins.tp1.placadevideo.service.telefone.TelefoneClienteServiceImpl;
+import br.unitins.tp1.placadevideo.service.telefone.TelefoneClienteService;
+import br.unitins.tp1.placadevideo.validation.ValidationException;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 
 @ApplicationScoped
 public class ClienteServiceImpl implements ClienteService {
@@ -34,19 +40,26 @@ public class ClienteServiceImpl implements ClienteService {
     public EnderecoRepository enderecoRepository;
 
     @Inject
-    public EnderecoServiceImpl enderecoServiceImpl;
+    public EnderecoService enderecoService;
 
     @Inject
     public TelefoneClienteRepository telefoneClienteRepository;
 
     @Inject
-    public TelefoneClienteServiceImpl telefoneClienteServiceImpl;
+    public TelefoneClienteService telefoneClienteService;
 
     @Inject
     public UsuarioRepository usuarioRepository;
 
     @Inject
     public HashService hashService;
+
+    @Inject 
+    public CartaoService cartaoService;
+
+    @Inject
+    public CartaoRepository cartaoRepository;
+
 
     @Override
     public Cliente findById(Long id) {
@@ -99,12 +112,12 @@ public class ClienteServiceImpl implements ClienteService {
 
         // endereco e telefone associado a ele
         for (EnderecoRequestDTO enderecoDTO : dto.enderecos()) {
-            Endereco endereco = enderecoServiceImpl.create(enderecoDTO);
+            Endereco endereco = enderecoService.create(enderecoDTO);
             cliente.getEnderecos().add(endereco);
         }
 
         for (TelefoneClienteRequestDTO telefoneDTO : dto.telefones()) {
-            TelefoneCliente telefone = telefoneClienteServiceImpl.create(telefoneDTO);
+            TelefoneCliente telefone = telefoneClienteService.create(telefoneDTO);
             cliente.getTelefones().add(telefone);
         }
 
@@ -122,7 +135,7 @@ public class ClienteServiceImpl implements ClienteService {
             throw new IllegalArgumentException("Cliente com ID " + clienteId + " não encontrado.");
         }
 
-        Endereco endereco = enderecoServiceImpl.create(dto);
+        Endereco endereco = enderecoService.create(dto);
         enderecoRepository.persist(endereco);
         cliente.getEnderecos().add(endereco);
     }
@@ -135,11 +148,24 @@ public class ClienteServiceImpl implements ClienteService {
             throw new IllegalArgumentException("Cliente com ID " + clienteId + " não encontrado.");
         }
 
-        TelefoneCliente telefone = telefoneClienteServiceImpl.create(dto);
+        TelefoneCliente telefone = telefoneClienteService.create(dto);
         // telefone.setCliente(cliente);
         telefoneClienteRepository.persist(telefone);
         cliente.getTelefones().add(telefone);
 
+    }
+
+    @Override
+    @Transactional
+    public void addCartao(@Valid Long clienteId, CartaoRequestDTO dto) {
+        Cliente cliente = clienteRepository.findById(clienteId);
+        if (cliente == null) {
+            throw new ValidationException("idCliente", "idCliente não encontrado");
+        }
+
+        Cartao cartao = cartaoService.create(dto);
+        cartaoRepository.persist(cartao);
+        cliente.getCartoes().add(cartao);
     }
 
     @Override
@@ -169,7 +195,7 @@ public class ClienteServiceImpl implements ClienteService {
         for (EnderecoRequestDTO enderecoDTO : dto.enderecos()) {
             Endereco enderecoExistente = enderecoRepository.findById(enderecoId);
             if (enderecoExistente != null) {
-                enderecoServiceImpl.update(enderecoExistente.getId(), enderecoDTO);
+                enderecoService.update(enderecoExistente.getId(), enderecoDTO);
             } else {
                 throw new NoSuchElementException("Não encontrado!");
             }
@@ -179,7 +205,7 @@ public class ClienteServiceImpl implements ClienteService {
         for (TelefoneClienteRequestDTO telefoneDTO : dto.telefones()) {
             TelefoneCliente telefoneExistente = telefoneClienteRepository.findById(telefoneId);
             if (telefoneExistente != null) {
-                telefoneClienteServiceImpl.update(telefoneExistente.getId(), telefoneDTO);
+                telefoneClienteService.update(telefoneExistente.getId(), telefoneDTO);
             } else {
                 throw new NoSuchElementException("Não encontrado!");
             }

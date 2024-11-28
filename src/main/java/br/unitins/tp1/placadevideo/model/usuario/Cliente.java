@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 import br.unitins.tp1.placadevideo.model.DefaultEntity;
-import br.unitins.tp1.placadevideo.model.Endereco;
 import br.unitins.tp1.placadevideo.model.telefone.TelefoneCliente;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -37,6 +36,8 @@ private List<Endereco> enderecos;
 @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
 private List<TelefoneCliente> telefones;
 
+@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+private List<Cartao> cartoes;
 
 
 public List<TelefoneCliente> getTelefones() {
@@ -93,6 +94,14 @@ public Usuario getUsuario() {
 
 public void setUsuario(Usuario usuario) {
     this.usuario = usuario;
+}
+
+public List<Cartao> getCartoes() {
+    return cartoes;
+}
+
+public void setCartoes(List<Cartao> cartoes) {
+    this.cartoes = cartoes;
 }
 
 

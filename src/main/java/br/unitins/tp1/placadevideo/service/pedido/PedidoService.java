@@ -1,9 +1,9 @@
 package br.unitins.tp1.placadevideo.service.pedido;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import br.unitins.tp1.placadevideo.dto.Request.PedidoRequestDTO;
-import br.unitins.tp1.placadevideo.dto.Request.StatusPedidoRequestDTO;
 import br.unitins.tp1.placadevideo.dto.Response.BoletoResponseDTO;
 import br.unitins.tp1.placadevideo.dto.Response.PixResponseDTO;
 import br.unitins.tp1.placadevideo.model.pedido.Pedido;
@@ -24,16 +24,14 @@ public interface PedidoService {
 
     void cancelarPedido(Long id);
 
-    PixResponseDTO gerarPix(Long idPedido);
+    PixResponseDTO gerarPix(BigDecimal valor);
 
-    BoletoResponseDTO gerarBoleto(Long idPedido);
+    BoletoResponseDTO gerarBoleto(BigDecimal valor);
 
     void registrarPagamentoPix(Long idPedido, Long idPix);
 
     void registrarPagamentoBoleto(Long idPedido, Long idBoleto);
 
-    void registrarPagamentoCartao(Long idPedido, Long idCartao);
-
-    Pedido updateStatusPedido(Long idPedido, StatusPedidoRequestDTO dto);
+    Pedido updateStatusPedido(Long idPedido, Integer id);
 
 }

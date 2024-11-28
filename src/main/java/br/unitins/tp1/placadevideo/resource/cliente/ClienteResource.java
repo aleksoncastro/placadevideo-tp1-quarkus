@@ -1,5 +1,6 @@
 package br.unitins.tp1.placadevideo.resource.cliente;
 
+import br.unitins.tp1.placadevideo.dto.Request.CartaoRequestDTO;
 import br.unitins.tp1.placadevideo.dto.Request.ClienteRequestDTO;
 import br.unitins.tp1.placadevideo.dto.Request.EnderecoRequestDTO;
 import br.unitins.tp1.placadevideo.dto.Request.TelefoneClienteRequestDTO;
@@ -65,9 +66,15 @@ public class ClienteResource {
 
     @POST
     @Path("/{id}/telefones")
-    public Response addEndereco(@PathParam("id") Long clienteId, @Valid TelefoneClienteRequestDTO telefoneDTO) {
+    public Response addTelefone(@PathParam("id") Long clienteId, @Valid TelefoneClienteRequestDTO telefoneDTO) {
         clienteService.addTelefone(clienteId, telefoneDTO);
-        ;
+        return Response.status(Status.CREATED).build();
+    }
+
+    @POST
+    @Path("/{id}/telefones")
+    public Response addCartao(@PathParam("id") Long clienteId, @Valid CartaoRequestDTO cartaoDTO) {
+        clienteService.addCartao(clienteId, cartaoDTO);
         return Response.status(Status.CREATED).build();
     }
 
