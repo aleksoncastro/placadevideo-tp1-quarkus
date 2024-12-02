@@ -2,7 +2,7 @@ package br.unitins.tp1.placadevideo.service.municipio;
 
 import java.util.List;
 
-import br.unitins.tp1.placadevideo.dto.Request.MunicipioRequestDTO;
+import br.unitins.tp1.placadevideo.dto.request.MunicipioRequestDTO;
 import br.unitins.tp1.placadevideo.model.Municipio;
 import br.unitins.tp1.placadevideo.repository.municipio.MunicipioRepository;
 import br.unitins.tp1.placadevideo.service.estado.EstadoService;

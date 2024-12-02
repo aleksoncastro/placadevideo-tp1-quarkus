@@ -1,7 +1,7 @@
 package br.unitins.tp1.placadevideo.resource.endereco;
 
-import br.unitins.tp1.placadevideo.dto.Request.EnderecoRequestDTO;
-import br.unitins.tp1.placadevideo.dto.Response.EnderecoResponseDTO;
+import br.unitins.tp1.placadevideo.dto.request.EnderecoRequestDTO;
+import br.unitins.tp1.placadevideo.dto.response.EnderecoResponseDTO;
 import br.unitins.tp1.placadevideo.service.endereco.EnderecoService;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;

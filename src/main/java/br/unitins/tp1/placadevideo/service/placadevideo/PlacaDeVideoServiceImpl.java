@@ -4,9 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import br.unitins.tp1.placadevideo.dto.Request.PlacaDeVideoRequestDTO;
-import br.unitins.tp1.placadevideo.dto.Request.SaidaVideoRequestDTO;
-
+import br.unitins.tp1.placadevideo.dto.request.PlacaDeVideoRequestDTO;
+import br.unitins.tp1.placadevideo.dto.request.SaidaVideoRequestDTO;
 import br.unitins.tp1.placadevideo.model.Fornecedor;
 import br.unitins.tp1.placadevideo.model.placadevideo.Fan;
 import br.unitins.tp1.placadevideo.model.placadevideo.PlacaDeVideo;

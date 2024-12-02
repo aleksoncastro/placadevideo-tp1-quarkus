@@ -81,15 +81,25 @@ class Pedido{
     - data: LocalDate
 }
 
-class Cartao extends Pagamento{
+class CartaoPagamento extends Pagamento{
     - numero: String
     - titular: String
     - dataValidade: LocalDate
     - cvv: String
+    - cpf: String
+}
+
+class Cartao{
+    - numero: String
+    - titular: String
+    - dataValidade: LocalDate
+    - cvv: String
+    - cpf: String
 }
 
 class Pix extends Pagamento{
     - chave: String
+    - codigo: String
 }
 
 class Boleto extends Pagamento  {
@@ -176,6 +186,7 @@ Cliente "1" *--> "*" Endereco
 Cliente "1" --> "*" PlacaDeVideo : listaDesejos
 Cliente "1" *--> "*" TelefoneCliente
 Cliente "1" --> "1" Usuario
+Cliente "1"*--> "1" Cartao
 
 Usuario "*" --> "1" Perfil
 

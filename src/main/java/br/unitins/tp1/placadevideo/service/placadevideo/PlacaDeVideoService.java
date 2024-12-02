@@ -2,7 +2,7 @@ package br.unitins.tp1.placadevideo.service.placadevideo;
 
 import java.util.List;
 
-import br.unitins.tp1.placadevideo.dto.Request.PlacaDeVideoRequestDTO;
+import br.unitins.tp1.placadevideo.dto.request.PlacaDeVideoRequestDTO;
 import br.unitins.tp1.placadevideo.model.placadevideo.PlacaDeVideo;
 
 public interface PlacaDeVideoService {

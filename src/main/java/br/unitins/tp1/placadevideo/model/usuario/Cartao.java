@@ -15,6 +15,9 @@ public class Cartao extends DefaultEntity {
     private String titular;
     private LocalDate dataValidade;
     private String cvv;
+    private String cpf;
+
+    
 
     public String getNumero() {
         return numero;
@@ -46,6 +49,14 @@ public class Cartao extends DefaultEntity {
 
     public void setCvv(String cvv) {
         this.cvv = cvv;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
     }
 
 }

@@ -2,7 +2,7 @@
 
 import java.util.List;
 
-import br.unitins.tp1.placadevideo.dto.Request.TelefoneFuncionarioRequestDTO;
+import br.unitins.tp1.placadevideo.dto.request.TelefoneFuncionarioRequestDTO;
 import br.unitins.tp1.placadevideo.model.telefone.TelefoneFuncionario;
 import br.unitins.tp1.placadevideo.repository.funcionario.FuncionarioRepository;
 import br.unitins.tp1.placadevideo.repository.telefone.TelefoneFuncionarioRepository;

@@ -1,4 +1,4 @@
-package br.unitins.tp1.placadevideo.dto.Response;
+package br.unitins.tp1.placadevideo.dto.response;
 
 import java.time.LocalDate;
 
@@ -9,14 +9,16 @@ public record CartaoResponseDTO(
         String numero,
         String titular,
         LocalDate dataValidade,
-        String cvv) {
+        String cvv,
+        String cpf) {
     public static CartaoResponseDTO valueOf(Cartao cartao) {
         return new CartaoResponseDTO(
                 cartao.getId(),
                 cartao.getNumero(),
                 cartao.getTitular(),
                 cartao.getDataValidade(),
-                cartao.getCvv()
-            );
+                cartao.getCvv(),
+                cartao.getCpf()
+                );
     }
 }

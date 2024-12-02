@@ -8,12 +8,13 @@ import jakarta.persistence.Entity;
 @Entity
 public class CartaoPagamento extends Pagamento {
 
-    @Column(length = 60, nullable = false, unique = true)
+    @Column(length = 60, nullable = false)
     private String numero;
     @Column(length = 60, nullable = false)
     private String titular;
     private LocalDate dataValidade;
     private String cvv;
+    private String cpf;
 
     public String getNumero() {
         return numero;
@@ -45,6 +46,14 @@ public class CartaoPagamento extends Pagamento {
 
     public void setCvv(String cvv) {
         this.cvv = cvv;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
     }
 
 }

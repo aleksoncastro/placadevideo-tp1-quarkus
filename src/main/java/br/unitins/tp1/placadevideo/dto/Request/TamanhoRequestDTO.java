@@ -1,4 +1,4 @@
-package br.unitins.tp1.placadevideo.dto.Request;
+package br.unitins.tp1.placadevideo.dto.request;
 
 import br.unitins.tp1.placadevideo.model.placadevideo.Tamanho;
 

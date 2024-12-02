@@ -6,7 +6,7 @@ import java.util.List;
 
 import br.unitins.tp1.placadevideo.model.DefaultEntity;
 import br.unitins.tp1.placadevideo.model.pagamento.Pagamento;
-import br.unitins.tp1.placadevideo.model.usuario.Usuario;
+import br.unitins.tp1.placadevideo.model.usuario.Cliente;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -20,8 +20,8 @@ public class Pedido extends DefaultEntity {
 
     private LocalDateTime data;
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_usuario")
-    private Usuario usuario;
+    @JoinColumn(name = "id_cliente")
+    private Cliente cliente;
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_pedido")
@@ -50,12 +50,12 @@ public class Pedido extends DefaultEntity {
         this.data = data;
     }
 
-    public Usuario getUsuario() {
-        return usuario;
+    public Cliente getCliente() {
+        return cliente;
     }
 
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
 
     public List<ItemPedido> getListaItemPedido() {

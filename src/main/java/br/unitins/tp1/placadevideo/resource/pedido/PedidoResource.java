@@ -2,8 +2,8 @@ package br.unitins.tp1.placadevideo.resource.pedido;
 
 import org.eclipse.microprofile.jwt.JsonWebToken;
 
-import br.unitins.tp1.placadevideo.dto.Request.PedidoRequestDTO;
-import br.unitins.tp1.placadevideo.dto.Response.PedidoResponseDTO;
+import br.unitins.tp1.placadevideo.dto.request.PedidoRequestDTO;
+import br.unitins.tp1.placadevideo.dto.response.PedidoResponseDTO;
 import br.unitins.tp1.placadevideo.service.pedido.PedidoService;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
@@ -12,6 +12,7 @@ import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -38,7 +39,7 @@ public class PedidoResource {
     }
 
     @POST
-    @RolesAllowed({"User", "Adm"})
+    @RolesAllowed({ "User", "Adm" })
     public Response create(@Valid PedidoRequestDTO dto) {
         // buscando o username do hash do jwt
         String username = jwt.getSubject();

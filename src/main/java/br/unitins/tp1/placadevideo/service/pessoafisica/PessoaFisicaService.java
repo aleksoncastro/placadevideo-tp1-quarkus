@@ -2,7 +2,7 @@ package br.unitins.tp1.placadevideo.service.pessoafisica;
 
 import java.util.List;
 
-import br.unitins.tp1.placadevideo.dto.Request.PessoaFisicaRequestDTO;
+import br.unitins.tp1.placadevideo.dto.request.PessoaFisicaRequestDTO;
 import br.unitins.tp1.placadevideo.model.usuario.PessoaFisica;
 
 public interface PessoaFisicaService {

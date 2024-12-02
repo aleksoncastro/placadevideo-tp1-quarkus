@@ -1,4 +1,4 @@
-package br.unitins.tp1.placadevideo.dto.Request;
+package br.unitins.tp1.placadevideo.dto.request;
 
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;

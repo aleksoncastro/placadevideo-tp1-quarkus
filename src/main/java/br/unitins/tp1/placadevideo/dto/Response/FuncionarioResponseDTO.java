@@ -1,4 +1,4 @@
-package br.unitins.tp1.placadevideo.dto.Response;
+package br.unitins.tp1.placadevideo.dto.response;
 
 import java.time.LocalDate;
 import  java.util.List;
@@ -13,6 +13,7 @@ public record FuncionarioResponseDTO(
     LocalDate dataNascimento,
     String email, 
     Double salario,
+    UsuarioResponseDTO usuario, 
     List<TelefoneFuncionarioResponseDTO> telefones
 ) {
 
@@ -24,6 +25,7 @@ public record FuncionarioResponseDTO(
             funcionario.getDataNascimento(),
             funcionario.getEmail(),
             funcionario.getSalario(),
+            UsuarioResponseDTO.valueOf(funcionario.getUsuario()),
             funcionario.getTelefones().stream()
             .map(TelefoneFuncionarioResponseDTO::valueOf)
             .collect(Collectors.toList())

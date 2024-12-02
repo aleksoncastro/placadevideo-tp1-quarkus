@@ -2,7 +2,7 @@ package br.unitins.tp1.placadevideo.service.cartao;
 
 import java.util.List;
 
-import br.unitins.tp1.placadevideo.dto.Request.CartaoRequestDTO;
+import br.unitins.tp1.placadevideo.dto.request.CartaoRequestDTO;
 import br.unitins.tp1.placadevideo.model.usuario.Cartao;
 import br.unitins.tp1.placadevideo.repository.cartao.CartaoRepository;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -39,6 +39,7 @@ public class CartaoServiceImpl implements CartaoService {
         cartao.setTitular(dto.titular());
         cartao.setDataValidade(dto.dataValidade());
         cartao.setCvv(dto.cvv());
+        cartao.setCpf(dto.cpf());
 
         //Atualiza o cartao no banco
         cartaoRepository.persist(cartao);
@@ -59,6 +60,7 @@ public class CartaoServiceImpl implements CartaoService {
         cartao.setTitular(dto.titular());
         cartao.setDataValidade(dto.dataValidade());
         cartao.setCvv(dto.cvv());
+        cartao.setCpf(dto.cpf());
 
         // Persistindo as alterações do cartao
         cartaoRepository.persist(cartao);

@@ -2,8 +2,8 @@ package br.unitins.tp1.placadevideo.resource.pessoafisica;
 
 import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 
-import br.unitins.tp1.placadevideo.dto.Request.PessoaFisicaRequestDTO;
-import br.unitins.tp1.placadevideo.dto.Response.PessoaFisicaResponseDTO;
+import br.unitins.tp1.placadevideo.dto.request.PessoaFisicaRequestDTO;
+import br.unitins.tp1.placadevideo.dto.response.PessoaFisicaResponseDTO;
 import br.unitins.tp1.placadevideo.form.PessoaFisicaImageForm;
 import br.unitins.tp1.placadevideo.service.pessoafisica.PessoaFisicaService;
 import br.unitins.tp1.placadevideo.service.fileservice.FileService;

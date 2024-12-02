@@ -2,12 +2,14 @@ package br.unitins.tp1.placadevideo.service.estado;
 
 import java.util.List;
 
-import br.unitins.tp1.placadevideo.dto.Request.EstadoRequestDTO;
+import br.unitins.tp1.placadevideo.dto.request.EstadoRequestDTO;
 import br.unitins.tp1.placadevideo.model.Estado;
 import br.unitins.tp1.placadevideo.repository.estado.EstadoRepository;
+import br.unitins.tp1.placadevideo.validation.ValidationException;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 
 @ApplicationScoped
 public class EstadoServiceImpl implements EstadoService {
@@ -32,13 +34,21 @@ public class EstadoServiceImpl implements EstadoService {
 
     @Override
     @Transactional
-    public Estado create(EstadoRequestDTO dto) {
+    public Estado create(@Valid EstadoRequestDTO dto) {
         Estado estado = new Estado();
         estado.setNome(dto.nome());
         estado.setSigla(dto.sigla());
 
+        validarSigla(dto.sigla());
+
         estadoRepository.persist(estado);
         return estado;
+    }
+
+    private void validarSigla(String sigla) {
+        Estado estado = estadoRepository.findBySigla(sigla);
+        if (estado != null)
+            throw new ValidationException("sigla", "Esta sigla já foi utilizada por outro estado.");
     }
 
     @Override

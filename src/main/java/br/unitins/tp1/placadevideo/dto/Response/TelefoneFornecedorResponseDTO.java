@@ -1,4 +1,4 @@
-package br.unitins.tp1.placadevideo.dto.Response;
+package br.unitins.tp1.placadevideo.dto.response;
 
 import br.unitins.tp1.placadevideo.model.telefone.TelefoneFornecedor;
 

@@ -1,4 +1,4 @@
-package br.unitins.tp1.placadevideo.dto.Request;
+package br.unitins.tp1.placadevideo.dto.request;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -16,6 +16,7 @@ public record FuncionarioRequestDTO(
     String email, 
     @NotBlank(message = "O campo deve ser informado")
     Double salario,
+    UsuarioRequestDTO usuario,
     List<TelefoneFuncionarioRequestDTO> telefones
     
     

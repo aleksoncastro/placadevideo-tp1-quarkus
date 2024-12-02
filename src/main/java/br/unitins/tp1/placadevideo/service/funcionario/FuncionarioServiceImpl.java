@@ -4,14 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import br.unitins.tp1.placadevideo.dto.Request.FuncionarioRequestDTO;
-import br.unitins.tp1.placadevideo.dto.Request.TelefoneFuncionarioRequestDTO;
+import br.unitins.tp1.placadevideo.dto.request.FuncionarioRequestDTO;
+import br.unitins.tp1.placadevideo.dto.request.TelefoneFuncionarioRequestDTO;
 import br.unitins.tp1.placadevideo.model.telefone.TelefoneFuncionario;
 import br.unitins.tp1.placadevideo.model.usuario.Funcionario;
+import br.unitins.tp1.placadevideo.model.usuario.Usuario;
 import br.unitins.tp1.placadevideo.repository.endereco.EnderecoRepository;
 import br.unitins.tp1.placadevideo.repository.funcionario.FuncionarioRepository;
 import br.unitins.tp1.placadevideo.repository.telefone.TelefoneFuncionarioRepository;
+import br.unitins.tp1.placadevideo.repository.usuario.UsuarioRepository;
 import br.unitins.tp1.placadevideo.service.endereco.EnderecoServiceImpl;
+import br.unitins.tp1.placadevideo.service.hash.HashService;
 import br.unitins.tp1.placadevideo.service.telefone.TelefoneFuncionarioServiceImpl;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -35,6 +38,12 @@ public class FuncionarioServiceImpl implements FuncionarioService {
 
     @Inject
     public TelefoneFuncionarioServiceImpl  telefoneFuncionarioServiceImpl;
+
+    @Inject
+    public UsuarioRepository usuarioRepository;
+
+    @Inject
+    public HashService hashService;
 
 
     @Override
@@ -65,6 +74,14 @@ public class FuncionarioServiceImpl implements FuncionarioService {
         funcionario.setCpf(dto.cpf());
         funcionario.setDataNascimento(dto.dataNascimento());
         funcionario.setEmail(dto.email());
+
+        Usuario usuario = new Usuario();
+        usuario.setUsername(dto.usuario().username());
+        usuario.setSenha(hashService.getHashSenha(dto.usuario().senha()));
+        usuario.setPerfil(dto.usuario().perfil());
+        usuarioRepository.persist(usuario);
+
+        funcionario.setUsuario(usuario);
 
         // cria o funcionario primeiro
         funcionarioRepository.persist(funcionario);

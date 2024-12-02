@@ -1,4 +1,4 @@
-package br.unitins.tp1.placadevideo.dto.Response;
+package br.unitins.tp1.placadevideo.dto.response;
 
 import java.math.BigDecimal;
 

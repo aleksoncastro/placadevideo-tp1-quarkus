@@ -1,7 +1,7 @@
 package br.unitins.tp1.placadevideo.resource.municipio;
 
-import br.unitins.tp1.placadevideo.dto.Request.MunicipioRequestDTO;
-import br.unitins.tp1.placadevideo.dto.Response.MunicipioResponseDTO;
+import br.unitins.tp1.placadevideo.dto.request.MunicipioRequestDTO;
+import br.unitins.tp1.placadevideo.dto.response.MunicipioResponseDTO;
 import br.unitins.tp1.placadevideo.service.municipio.MunicipioService;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;

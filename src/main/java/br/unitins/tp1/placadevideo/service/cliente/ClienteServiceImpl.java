@@ -4,10 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import br.unitins.tp1.placadevideo.dto.Request.CartaoRequestDTO;
-import br.unitins.tp1.placadevideo.dto.Request.ClienteRequestDTO;
-import br.unitins.tp1.placadevideo.dto.Request.EnderecoRequestDTO;
-import br.unitins.tp1.placadevideo.dto.Request.TelefoneClienteRequestDTO;
+import br.unitins.tp1.placadevideo.dto.request.CartaoRequestDTO;
+import br.unitins.tp1.placadevideo.dto.request.ClienteRequestDTO;
+import br.unitins.tp1.placadevideo.dto.request.EnderecoRequestDTO;
+import br.unitins.tp1.placadevideo.dto.request.TelefoneClienteRequestDTO;
+import br.unitins.tp1.placadevideo.model.placadevideo.PlacaDeVideo;
 import br.unitins.tp1.placadevideo.model.telefone.TelefoneCliente;
 import br.unitins.tp1.placadevideo.model.usuario.Cartao;
 import br.unitins.tp1.placadevideo.model.usuario.Cliente;
@@ -22,6 +23,7 @@ import br.unitins.tp1.placadevideo.repository.usuario.UsuarioRepository;
 import br.unitins.tp1.placadevideo.service.cartao.CartaoService;
 import br.unitins.tp1.placadevideo.service.endereco.EnderecoService;
 import br.unitins.tp1.placadevideo.service.hash.HashService;
+import br.unitins.tp1.placadevideo.service.placadevideo.PlacaDeVideoService;
 import br.unitins.tp1.placadevideo.service.telefone.TelefoneClienteService;
 import br.unitins.tp1.placadevideo.validation.ValidationException;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -54,12 +56,14 @@ public class ClienteServiceImpl implements ClienteService {
     @Inject
     public HashService hashService;
 
-    @Inject 
+    @Inject
     public CartaoService cartaoService;
 
     @Inject
     public CartaoRepository cartaoRepository;
 
+    @Inject
+    public PlacaDeVideoService placaDeVideoService;
 
     @Override
     public Cliente findById(Long id) {
@@ -219,6 +223,42 @@ public class ClienteServiceImpl implements ClienteService {
     @Transactional
     public void delete(Long id) {
         clienteRepository.deleteById(id);
+    }
+
+    @Override
+    @Transactional
+    public void adicionarProdutoListaDesejo(String username, Long idProduto) {
+        Cliente cliente = clienteRepository.findByUsername(username);
+        if (cliente.getListaDesejos() == null)
+            cliente.setListaDesejos(new ArrayList<>());
+        PlacaDeVideo placadevideo = placaDeVideoService.findById(idProduto);
+        if (placadevideo == null)
+            throw new ValidationException("idProduto", "PlacaDeVideo nao encontrado");
+
+        cliente.getListaDesejos().add(placadevideo);
+    }
+
+    @Override
+    @Transactional
+    public void removerProdutoListaDesejo(String username, Long idProduto) {
+        Cliente cliente = clienteRepository.findByUsername(username);
+        List<PlacaDeVideo> listaDesejos = cliente.getListaDesejos();
+        if (listaDesejos == null)
+            throw new ValidationException("listaDesejos", "Voce nao possui uma lista de desejos");
+
+        PlacaDeVideo placadevideo = placaDeVideoService.findById(idProduto);
+        if (placadevideo == null)
+            throw new ValidationException("idProduto", "PlacaDeVideo nao encontrado");
+
+        if (!listaDesejos.contains(placadevideo))
+            throw new ValidationException("idProduto", "O produto nao esta na lista de desejos");
+        listaDesejos.remove(placadevideo);
+    }
+
+    @Override
+    public List<PlacaDeVideo> getListaDesejos(String username) {
+        Cliente cliente = clienteRepository.findByUsername(username);
+        return cliente.getListaDesejos();
     }
 
 }

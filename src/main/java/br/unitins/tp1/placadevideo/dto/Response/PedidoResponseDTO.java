@@ -1,11 +1,10 @@
-package br.unitins.tp1.placadevideo.dto.Response;
+package br.unitins.tp1.placadevideo.dto.response;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import br.unitins.tp1.placadevideo.model.pagamento.Pagamento;
 import br.unitins.tp1.placadevideo.model.pedido.Pedido;
 
 public record PedidoResponseDTO(
@@ -15,7 +14,8 @@ public record PedidoResponseDTO(
     List<ItemPedidoResponsetDTO> listaItemPedido,
     EnderecoEntregaResponseDTO enderecoEntrega,
     List<UpdateSatusPedidoResponseDTO> statusPedido,
-    Pagamento pagamento
+    PagamentoResponseDTO pagamento
+
     ) {
 
     public static PedidoResponseDTO valueOf(Pedido pedido){
@@ -28,7 +28,8 @@ public record PedidoResponseDTO(
             pedido.getListaStatus().stream()
             .map(UpdateSatusPedidoResponseDTO::valueOf)
             .collect(Collectors.toList()),
-            pedido.getPagamento()
+            PagamentoResponseDTO.valueOf(pedido.getPagamento())
+            
         );
     }
 

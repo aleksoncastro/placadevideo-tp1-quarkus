@@ -1,7 +1,7 @@
 package br.unitins.tp1.placadevideo.resource.telefone;
 
-import br.unitins.tp1.placadevideo.dto.Request.TelefoneFornecedorRequestDTO;
-import br.unitins.tp1.placadevideo.dto.Response.TelefoneFornecedorResponseDTO;
+import br.unitins.tp1.placadevideo.dto.request.TelefoneFornecedorRequestDTO;
+import br.unitins.tp1.placadevideo.dto.response.TelefoneFornecedorResponseDTO;
 import br.unitins.tp1.placadevideo.service.telefone.TelefoneFornecedorService;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;

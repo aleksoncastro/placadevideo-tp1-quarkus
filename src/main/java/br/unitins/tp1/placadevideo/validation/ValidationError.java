@@ -3,22 +3,25 @@ package br.unitins.tp1.placadevideo.validation;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ValidationError extends Error{
-    record FieldError(String fieldName, String message) {};
+public class ValidationError extends Error {
+    private record FieldError(String fieldName, String message) {
+    };
 
     private List<FieldError> errors = null;
 
-    public ValidationError(String code, String message){
+    public ValidationError(String code, String message) {
         super(code, message);
     }
 
-    public List<FieldError> getErrors(){
+    public List<FieldError> getErrors() {
         return errors;
     }
 
-    public void addFieldError(String fieldName, String message){
-        if(errors == null)
+    public void addFieldError(String fildName, String message) {
+        if (errors == null)
             errors = new ArrayList<FieldError>();
-        errors.add(new FieldError(fieldName, message));
+
+        errors.add(new FieldError(fildName, message));
     }
+
 }

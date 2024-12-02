@@ -1,4 +1,4 @@
-package br.unitins.tp1.placadevideo.dto.Request;
+package br.unitins.tp1.placadevideo.dto.request;
 
 public record AuthRequestDTO(
     String username,
