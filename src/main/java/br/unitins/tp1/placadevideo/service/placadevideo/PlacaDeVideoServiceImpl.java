@@ -13,6 +13,7 @@ import br.unitins.tp1.placadevideo.model.placadevideo.SaidaVideo;
 import br.unitins.tp1.placadevideo.repository.placadevideo.PlacaDeVideoRepository;
 import br.unitins.tp1.placadevideo.service.fornecedor.FornecedorService;
 import br.unitins.tp1.placadevideo.service.lote.LoteService;
+import br.unitins.tp1.placadevideo.validation.ValidationException;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityNotFoundException;
@@ -129,6 +130,20 @@ public class PlacaDeVideoServiceImpl implements PlacaDeVideoService {
     @Transactional
     public void delete(Long id) {
         placaDeVideoRepository.deleteById(id);
+    }
+
+    @Override
+    @Transactional
+    public PlacaDeVideo updateNomeImagem(Long id, String nomeImagem) {
+        PlacaDeVideo placaDeVideo = placaDeVideoRepository.findById(id);
+        if (placaDeVideo == null)
+            throw new ValidationException("idPlacaDeVideo", "PlacaDeVideo nao encontrado");
+
+        if (placaDeVideo.getListaImagem() == null)
+            placaDeVideo.setListaImagem(new ArrayList<>());
+
+        placaDeVideo.getListaImagem().add(nomeImagem);
+        return placaDeVideo;
     }
 
 }

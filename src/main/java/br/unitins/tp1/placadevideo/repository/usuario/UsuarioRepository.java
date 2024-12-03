@@ -15,4 +15,8 @@ public class UsuarioRepository implements PanacheRepository<Usuario> {
         return find("SELECT usuario FROM Usuario usuario Where usuario.username LIKE ?1", username).firstResult();
     }
 
+    public Usuario findByEmail (String email) {
+        return find("SELECT u FROM Usuario u WHERE u.email =?1", email).firstResult();
+    }
+
 }

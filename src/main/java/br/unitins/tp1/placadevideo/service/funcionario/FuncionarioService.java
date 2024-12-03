@@ -16,7 +16,7 @@ public interface FuncionarioService {
 
     List<Funcionario> findAll();
 
-    Funcionario create(FuncionarioRequestDTO dto);
+    Funcionario create(String Username, FuncionarioRequestDTO dto) ;
 
     void addTelefone(Long funcionarioId, TelefoneFuncionarioRequestDTO dto);
 

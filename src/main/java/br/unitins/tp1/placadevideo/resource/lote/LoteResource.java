@@ -3,6 +3,7 @@ package br.unitins.tp1.placadevideo.resource.lote;
 import br.unitins.tp1.placadevideo.dto.request.LoteRequestDTO;
 import br.unitins.tp1.placadevideo.dto.response.LoteResponseDTO;
 import br.unitins.tp1.placadevideo.service.lote.LoteService;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.Consumes;
@@ -16,6 +17,7 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
+import org.jboss.logging.Logger;
 
 @Path("/lotes")
 @Produces(MediaType.APPLICATION_JSON)
@@ -25,40 +27,53 @@ public class LoteResource {
     @Inject
     public LoteService loteService;
 
+    private static final Logger LOG = Logger.getLogger(LoteResource.class);
+
     @GET
     @Path("/{id}")
+    @RolesAllowed({"ADM"})
     public Response findById(@PathParam("id") Long id) {
+        LOG.infof("Buscando lote com id %d", id);
         return Response.ok(LoteResponseDTO.valueOf(loteService.findById(id))).build();
     }
 
     @GET
     @Path("/search/codigo/{codigo}")
-    public Response findById(@PathParam("codigo") String codigo) {
+    @RolesAllowed({"ADM"})
+    public Response findByCodigo(@PathParam("codigo") String codigo) {
+        LOG.infof("Buscando lote pelo código %s", codigo);
         return Response.ok(LoteResponseDTO.valueOf(loteService.findByCodigo(codigo))).build();
     }
 
     @GET
+    @RolesAllowed({"ADM"})
     public Response findAll() {
+        LOG.info("Buscando todos os lotes");
         return Response.ok(loteService.findAll().stream().map(o -> LoteResponseDTO.valueOf(o)).toList()).build();
     }
 
     @POST
+    @RolesAllowed({"ADM"})
     public Response create(@Valid LoteRequestDTO dto) {
+        LOG.info("Criando novo lote");
         return Response.status(Status.CREATED).entity(LoteResponseDTO.valueOf(loteService.create(dto))).build();
     }
 
     @PUT
     @Path("/{id}")
+    @RolesAllowed({"ADM"})
     public Response update(@PathParam("id") Long id, @Valid LoteRequestDTO dto) {
+        LOG.infof("Atualizando lote com id %d", id);
         loteService.update(id, dto);
         return Response.noContent().build();
     }
 
     @DELETE
     @Path("/{id}")
+    @RolesAllowed({"ADM"})
     public Response delete(@PathParam("id") Long id) {
+        LOG.infof("Deletando lote com id %d", id);
         loteService.delete(id);
         return Response.noContent().build();
     }
-
 }

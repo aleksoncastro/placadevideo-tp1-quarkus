@@ -40,17 +40,6 @@ public class PedidoAdministrativoResource {
                 .build();
     }
 
-    /*
-     * @POST
-    @RolesAllowed("User")
-    public Response create(@Valid PedidoRequestDTO dto) {
-        // buscando o username do hash do jwt
-        String username = jwt.getSubject();
-        return Response.status(Status.CREATED).entity(
-                PedidoResponseDTO.valueOf(pedidoService.create(dto, username))).build();
-
-    }
-     */
 
     @GET
     @Path("/{id}")
@@ -99,20 +88,7 @@ public class PedidoAdministrativoResource {
         return Response.noContent().build();
     }
 
-    /*@POST
-    @RolesAllowed({"User"})
-    @Path("/{id}/pagamento/info/boleto")
-    public Response gerarBoleto(@PathParam("id") Long id){
-        return Response.status(Status.CREATED).entity(pedidoService.gerarBoleto(id)).build();
-    }
     
-    @POST
-    @RolesAllowed({"User"})
-    @Path("/{id}/pagamento/info/pix")
-    public Response gerarPix(@PathParam("id") Long id){
-        return Response.status(Status.CREATED).entity(pedidoService.gerarPix(id)).build();
-    } 
- */
     @PATCH
     @RolesAllowed({"User"})
     @Path("/{id}/pagamento/{id-boleto}")
@@ -130,14 +106,6 @@ public class PedidoAdministrativoResource {
         pedidoService.registrarPagamentoPix(id, idPix);
         return Response.noContent().build();
     }
-
-    /*@PATCH
-    @RolesAllowed({"User"})
-    @Path("/{id}/pagamento/cartao")
-    public Response registrarPagamentoCartao(@PathParam ("id") Long id, Long idCartao){
-        pedidoService.registrarPagamentoCartao(id, idCartao);
-        return Response.noContent().build();
-    } */
 
 
 }

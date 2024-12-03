@@ -92,20 +92,14 @@ public class ClienteServiceImpl implements ClienteService {
 
     @Override
     @Transactional
-    public Cliente create(ClienteRequestDTO dto) {
+    public Cliente create(String username, ClienteRequestDTO dto) {
         Cliente cliente = new Cliente();
         cliente.setNome(dto.nome());
         cliente.setCpf(dto.cpf());
         cliente.setDataNascimento(dto.dataNascimento());
-        cliente.setEmail(dto.email());
 
         // Criando um Usuario
-        Usuario usuario = new Usuario();
-        usuario.setUsername(dto.usuario().username());
-        usuario.setSenha(hashService.getHashSenha(dto.usuario().senha()));
-        usuario.setPerfil(Perfil.USER);
-        usuarioRepository.persist(usuario);
-
+        Usuario usuario = usuarioRepository.findByUsername(username);
         cliente.setUsuario(usuario);
 
         // cria o cliente primeiro
@@ -184,7 +178,6 @@ public class ClienteServiceImpl implements ClienteService {
         cliente.setNome(dto.nome());
         cliente.setCpf(dto.cpf());
         cliente.setDataNascimento(dto.dataNascimento());
-        cliente.setEmail(dto.email());
 
         // Criando um Usuario
         Usuario usuario = new Usuario();

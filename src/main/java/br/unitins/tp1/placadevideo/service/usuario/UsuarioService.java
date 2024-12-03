@@ -3,6 +3,9 @@ package br.unitins.tp1.placadevideo.service.usuario;
 //import br.unitins.tp1.placadevideo.dto.UsuarioRequestDTO;
 import java.util.List;
 
+import br.unitins.tp1.placadevideo.dto.request.EmailPatchRequestDTO;
+import br.unitins.tp1.placadevideo.dto.request.SenhaPatchRequestDTO;
+import br.unitins.tp1.placadevideo.dto.request.UsuarioRequestDTO;
 import br.unitins.tp1.placadevideo.model.usuario.Usuario;
 
 public interface UsuarioService {
@@ -15,7 +18,13 @@ public interface UsuarioService {
 
     List<Usuario> findAll();
 
-   // Usuario create(UsuarioRequestDTO dto);
+    Usuario createCliente(UsuarioRequestDTO dto);
+
+    Usuario createFuncionario(UsuarioRequestDTO dto);
+
+    void updateEmail(String email, EmailPatchRequestDTO dto);
+
+    void updateSenha(String email, SenhaPatchRequestDTO dto);
 
     //Usuario update(Long id, UsuarioRequestDTO dto);
 

@@ -68,18 +68,14 @@ public class FuncionarioServiceImpl implements FuncionarioService {
 
     @Override
     @Transactional
-    public Funcionario create(FuncionarioRequestDTO dto) {
+    public Funcionario create(String Username, FuncionarioRequestDTO dto) {
         Funcionario funcionario = new Funcionario();
         funcionario.setNome(dto.nome());
         funcionario.setCpf(dto.cpf());
         funcionario.setDataNascimento(dto.dataNascimento());
         funcionario.setEmail(dto.email());
 
-        Usuario usuario = new Usuario();
-        usuario.setUsername(dto.usuario().username());
-        usuario.setSenha(hashService.getHashSenha(dto.usuario().senha()));
-        usuario.setPerfil(dto.usuario().perfil());
-        usuarioRepository.persist(usuario);
+        Usuario usuario = usuarioRepository.findByUsername(Username);
 
         funcionario.setUsuario(usuario);
 

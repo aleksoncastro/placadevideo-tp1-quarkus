@@ -9,6 +9,7 @@ public class Usuario extends DefaultEntity {
     @Column(unique = true)
     private String username;
     private String senha;
+    private String email;
     private Perfil perfil;
 
     public String getSenha() {
@@ -33,6 +34,14 @@ public class Usuario extends DefaultEntity {
 
     public void setPerfil(Perfil perfil) {
         this.perfil = perfil;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
 }

@@ -6,6 +6,8 @@ import java.util.List;
 import br.unitins.tp1.placadevideo.model.DefaultEntity;
 import br.unitins.tp1.placadevideo.model.Fornecedor;
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.CollectionTable;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
@@ -42,6 +44,10 @@ public class PlacaDeVideo extends DefaultEntity {
     @ManyToOne
     @JoinColumn(name = "fornecedor_id")
     private Fornecedor fornecedor; 
+
+    @ElementCollection
+    @CollectionTable(name = "imagem_roteador", joinColumns = @JoinColumn(name = "id_roteador"))
+    private List<String> listaImagem;
     
     public Fornecedor getFornecedor() {
         return fornecedor;
@@ -161,6 +167,14 @@ public class PlacaDeVideo extends DefaultEntity {
 
     public void setTamanho(Tamanho tamanho) {
         this.tamanho = tamanho;
+    }
+
+    public List<String> getListaImagem() {
+        return listaImagem;
+    }
+
+    public void setListaImagem(List<String> listaImagem) {
+        this.listaImagem = listaImagem;
     }
 
 

@@ -21,7 +21,7 @@ public interface ClienteService {
 
     Cliente findByUsername(String username);
 
-    Cliente create(ClienteRequestDTO dto);
+    Cliente create(String username, ClienteRequestDTO dto);
 
     void addEndereco(Long clienteId, EnderecoRequestDTO dto);
 

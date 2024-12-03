@@ -27,8 +27,6 @@ public class Cliente extends DefaultEntity {
 
     private LocalDate dataNascimento;
 
-    private String email;
-
     @OneToOne
     @JoinColumn(name = "id_usuario", unique = true)
     private Usuario usuario;
@@ -45,7 +43,6 @@ public class Cliente extends DefaultEntity {
     @ManyToMany
     @JoinTable(name = "lista_desejo", joinColumns = @JoinColumn(name = "id_cliente"), inverseJoinColumns = @JoinColumn(name = "id_roteador"))
     private List<PlacaDeVideo> listaDesejos;
-    
 
     public List<TelefoneCliente> getTelefones() {
         return telefones;
@@ -77,14 +74,6 @@ public class Cliente extends DefaultEntity {
 
     public void setDataNascimento(LocalDate dataNascimento) {
         this.dataNascimento = dataNascimento;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public List<Endereco> getEnderecos() {

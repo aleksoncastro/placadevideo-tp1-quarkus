@@ -1,18 +1,14 @@
 package br.unitins.tp1.placadevideo.resource.pessoafisica;
 
-import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
-
 import br.unitins.tp1.placadevideo.dto.request.PessoaFisicaRequestDTO;
 import br.unitins.tp1.placadevideo.dto.response.PessoaFisicaResponseDTO;
-import br.unitins.tp1.placadevideo.form.PessoaFisicaImageForm;
-import br.unitins.tp1.placadevideo.service.pessoafisica.PessoaFisicaService;
 import br.unitins.tp1.placadevideo.service.fileservice.FileService;
+import br.unitins.tp1.placadevideo.service.pessoafisica.PessoaFisicaService;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
-import jakarta.ws.rs.PATCH;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
@@ -20,7 +16,6 @@ import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import jakarta.ws.rs.core.Response.ResponseBuilder;
 import jakarta.ws.rs.core.Response.Status;
 
 @Path("/pessoasfisicas")
@@ -78,7 +73,8 @@ public class PessoaFisicaResource {
         return Response.noContent().build();
     }
 
-    @PATCH
+   /*
+    *  @PATCH
     @Path("/{id}/upload/imagem")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     public Response uploadImagem(@PathParam("id") Long id, @MultipartForm PessoaFisicaImageForm form){
@@ -102,5 +98,6 @@ public class PessoaFisicaResource {
 
         return response.build();
     }
+    */
 
 }

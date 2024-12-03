@@ -11,7 +11,6 @@ public record ClienteResponseDTO(
         String nome,
         String cpf,
         LocalDate dataNascimento,
-        String email,
         UsuarioResponseDTO usuario,
         List<EnderecoResponseDTO> enderecos,
         List<TelefoneClienteResponseDTO> telefones,
@@ -23,7 +22,6 @@ public record ClienteResponseDTO(
                 cliente.getNome(),
                 cliente.getCpf(),
                 cliente.getDataNascimento(),
-                cliente.getEmail(),
                 UsuarioResponseDTO.valueOf(cliente.getUsuario()),
                 cliente.getEnderecos().stream()
                         .map(EnderecoResponseDTO::valueOf)

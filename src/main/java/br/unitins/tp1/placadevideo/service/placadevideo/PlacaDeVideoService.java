@@ -19,6 +19,8 @@ public interface PlacaDeVideoService {
 
     PlacaDeVideo update(Long id, PlacaDeVideoRequestDTO dto);
 
+    PlacaDeVideo updateNomeImagem(Long id, String nomeImagem);
+
     void delete(Long id);
 
 

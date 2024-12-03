@@ -91,5 +91,8 @@ VALUES ('2023-02-20', 40, 2, 'LOTE003');
 INSERT INTO Lote (datafabricacao, estoque, id_placadevideo, codigo)
 VALUES ('2023-04-05', 20, 2, 'LOTE004');
 
+INSERT INTO Usuario (username, senha, email, perfil)
+VALUES ('admin', '12345', 'admin@gmail.com', '1');
+
 
 
