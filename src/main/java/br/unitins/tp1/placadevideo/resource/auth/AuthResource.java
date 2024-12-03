@@ -33,6 +33,7 @@ public class AuthResource {
     @POST
     @Produces(MediaType.TEXT_PLAIN)
     public Response login(@Valid AuthRequestDTO authDTO) {
+        
         String hash = hashService.getHashSenha(authDTO.senha());
 
         Usuario usuario = usuarioService.findByUsernameAndSenha(authDTO.username(), hash);

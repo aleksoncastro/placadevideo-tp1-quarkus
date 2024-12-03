@@ -32,4 +32,7 @@ public class PedidoRepository implements PanacheRepository<Pedido> {
         return find("SELECT p FROM Pedido p WHERE p.pagamento IS NULL").list();
     }
 
+    
+
+
 }

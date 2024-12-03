@@ -21,7 +21,7 @@ import jakarta.ws.rs.core.Response;
 @Consumes(MediaType.APPLICATION_JSON)
 public class PedidoAdministrativoResource {
 
-    private static final Logger LOG = Logger.getLogger(PedidoResource.class.getName());
+    private static final Logger LOG = Logger.getLogger(PedidoResourceCliente.class.getName());
 
     @Inject
     public PedidoService pedidoService;
@@ -30,10 +30,9 @@ public class PedidoAdministrativoResource {
     public JsonWebToken jwt;
 
     @GET
-    @RolesAllowed({"Adm", "User"})
-    public Response findByUsername() {
+    @RolesAllowed({"Adm"})
+    public Response findByUsername(String username) {
         // buscando o username do hash do jwt
-        String username = jwt.getSubject();
         LOG.infof("Buscando pedidos pelo cliente com id %d", username);
         return Response
                 .ok(pedidoService.findByUsername(username).stream().map(o -> PedidoResponseDTO.valueOf(o)).toList())

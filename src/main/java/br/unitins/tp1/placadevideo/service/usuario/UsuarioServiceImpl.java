@@ -77,8 +77,8 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     @Transactional
-    public void updateSenha(String email, SenhaPatchRequestDTO dto) {
-        Usuario usuario = usuarioRepository.findByEmail(email);
+    public void updateSenha(String username, SenhaPatchRequestDTO dto) {
+        Usuario usuario = usuarioRepository.findByUsername(username);
         if (usuario == null)
             throw new ValidationException("email", "usuario nao encontrado");
 
@@ -93,17 +93,17 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     @Transactional
-    public void updateEmail(String email, EmailPatchRequestDTO dto) {
-        Usuario usuario = usuarioRepository.findByEmail(email);
+    public void updateEmail(String username, EmailPatchRequestDTO dto) {
+        Usuario usuario = usuarioRepository.findByUsername(username);
         if (usuario == null)
             throw new ValidationException("email", "usuario nao encontrado");
 
         if (dto.novoEmail().equals(usuario.getEmail()))
             throw new ValidationException("email", "O novo email nao pode ser igual ao atual");
 
-        if (usuarioRepository.findByEmail(dto.novoEmail()) != null && (!dto.novoEmail().equals(usuario.getEmail())))
+        if (usuarioRepository.findByEmail(dto.novoEmail()) != null && (!dto.novoEmail().equals(usuario.getEmail()))) 
             throw new ValidationException("novoEmail", "Email ja cadastrado");
-
+        
         usuario.setEmail(dto.novoEmail());
     }
 

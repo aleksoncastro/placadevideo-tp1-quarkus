@@ -22,9 +22,9 @@ public interface UsuarioService {
 
     Usuario createFuncionario(UsuarioRequestDTO dto);
 
-    void updateEmail(String email, EmailPatchRequestDTO dto);
+    void updateEmail(String username, EmailPatchRequestDTO dto);
 
-    void updateSenha(String email, SenhaPatchRequestDTO dto);
+    void updateSenha(String username, SenhaPatchRequestDTO dto);
 
     //Usuario update(Long id, UsuarioRequestDTO dto);
 

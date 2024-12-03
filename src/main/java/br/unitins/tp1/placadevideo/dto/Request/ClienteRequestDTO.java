@@ -9,7 +9,6 @@ public record ClienteRequestDTO(
         @NotBlank(message = "O campo deve ser informado") String nome,
         @NotBlank(message = "O campo deve ser informado") String cpf,
         @NotBlank(message = "O campo deve ser informado") LocalDate dataNascimento,
-        UsuarioRequestDTO usuario,
         List<EnderecoRequestDTO> enderecos,
         List<TelefoneClienteRequestDTO> telefones) {
 

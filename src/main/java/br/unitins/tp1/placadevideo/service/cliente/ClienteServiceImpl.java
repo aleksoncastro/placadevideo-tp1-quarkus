@@ -13,7 +13,6 @@ import br.unitins.tp1.placadevideo.model.telefone.TelefoneCliente;
 import br.unitins.tp1.placadevideo.model.usuario.Cartao;
 import br.unitins.tp1.placadevideo.model.usuario.Cliente;
 import br.unitins.tp1.placadevideo.model.usuario.Endereco;
-import br.unitins.tp1.placadevideo.model.usuario.Perfil;
 import br.unitins.tp1.placadevideo.model.usuario.Usuario;
 import br.unitins.tp1.placadevideo.repository.cartao.CartaoRepository;
 import br.unitins.tp1.placadevideo.repository.cliente.ClienteRepository;
@@ -178,16 +177,7 @@ public class ClienteServiceImpl implements ClienteService {
         cliente.setNome(dto.nome());
         cliente.setCpf(dto.cpf());
         cliente.setDataNascimento(dto.dataNascimento());
-
-        // Criando um Usuario
-        Usuario usuario = new Usuario();
-        usuario.setUsername(dto.usuario().username());
-        usuario.setSenha(hashService.getHashSenha(dto.usuario().senha()));
-        usuario.setPerfil(Perfil.USER);
-        usuarioRepository.persist(usuario);
-
-        cliente.setUsuario(usuario);
-
+        
         // Atualiza os endereços do cliente
         for (EnderecoRequestDTO enderecoDTO : dto.enderecos()) {
             Endereco enderecoExistente = enderecoRepository.findById(enderecoId);

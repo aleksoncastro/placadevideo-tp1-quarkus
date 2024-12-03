@@ -13,9 +13,11 @@ import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.GET;
 import jakarta.ws.rs.PATCH;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -34,6 +36,12 @@ public class UsuarioResource {
     @Inject
     public JsonWebToken jsonWebToken;
 
+    @GET
+    @Path("/{id}")
+    public Response findById(@PathParam("id") Long id) {
+        return Response.ok(UsuarioResponseDTO.valueOf(usuarioService.findById(id))).build();
+    }
+
     @POST
     @Path("/clientes")
     public Response registrarCliente(@Valid UsuarioRequestDTO dto) {
@@ -51,24 +59,24 @@ public class UsuarioResource {
     }
 
     @PATCH
-    @RolesAllowed({"User"})
+    @RolesAllowed({"User", "Adm"})
     @Path("/update/email")
     public Response updateEmail(EmailPatchRequestDTO dto) {
         LOG.info("Execucao do metodo updateEmail");
-        String email = jsonWebToken.getSubject();
+        String username = jsonWebToken.getSubject();
 
-        usuarioService.updateEmail(email, dto);
+        usuarioService.updateEmail(username, dto);
         return Response.noContent().build();
     }
 
     @PATCH
-    @RolesAllowed({"User"})
+    @RolesAllowed({"User", "Adm"})
     @Path("/update/senha")
     public Response updateSenha(SenhaPatchRequestDTO dto) {
         LOG.info("Execucao do metodo updateSenha");
-        String email = jsonWebToken.getSubject();
+        String username = jsonWebToken.getSubject();
 
-        usuarioService.updateSenha(email, dto);
+        usuarioService.updateSenha(username, dto);
         return Response.noContent().build();
     }
 }

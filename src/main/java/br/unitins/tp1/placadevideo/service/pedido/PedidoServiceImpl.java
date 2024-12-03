@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import br.unitins.tp1.placadevideo.dto.request.EnderecoEntregaRequestDTO;
 import br.unitins.tp1.placadevideo.dto.request.ItemPedidoRequestDTO;
 import br.unitins.tp1.placadevideo.dto.request.PedidoRequestDTO;
 import br.unitins.tp1.placadevideo.model.pagamento.Boleto;
@@ -23,7 +24,9 @@ import br.unitins.tp1.placadevideo.model.usuario.Cliente;
 import br.unitins.tp1.placadevideo.model.usuario.Endereco;
 import br.unitins.tp1.placadevideo.repository.cartao.CartaoRepository;
 import br.unitins.tp1.placadevideo.repository.cliente.ClienteRepository;
+import br.unitins.tp1.placadevideo.repository.endereco.EnderecoEntregaRepository;
 import br.unitins.tp1.placadevideo.repository.pagamento.PagamentoRepository;
+import br.unitins.tp1.placadevideo.repository.pedido.ItemPedidoRepository;
 import br.unitins.tp1.placadevideo.repository.pedido.PedidoRepository;
 import br.unitins.tp1.placadevideo.service.cartao.CartaoService;
 import br.unitins.tp1.placadevideo.service.cliente.ClienteService;
@@ -40,6 +43,9 @@ import jakarta.validation.Valid;
 
 @ApplicationScoped
 public class PedidoServiceImpl implements PedidoService {
+
+    @Inject
+    public ItemPedidoRepository itemPedidoRepository;
 
     @Inject
     public ClienteRepository clienteRepository;
@@ -70,6 +76,9 @@ public class PedidoServiceImpl implements PedidoService {
 
     @Inject
     public CartaoService cartaoService;
+
+    @Inject
+    public EnderecoEntregaRepository entregaRepository;
 
     @Override
     public Pedido findById(Long id) {
@@ -135,6 +144,29 @@ public class PedidoServiceImpl implements PedidoService {
         pedidoRepository.persist(pedido);
         return pedido;
     }
+
+    
+   @Override
+   @Transactional
+   public EnderecoEntrega editEnderecoEntrega(Long idPedido, EnderecoEntregaRequestDTO dto) {
+       Pedido pedido = pedidoRepository.findById(idPedido);
+       EnderecoEntrega edit = entregaRepository.findById(pedido.getEnderecoEntrega().getId());
+
+       if(pedido == null || edit == null ){
+           throw new ValidationException("idPedido", "Informe um idPedido válido");
+       }
+
+       edit.setEstado(dto.estado());
+       edit.setCidade(dto.cidade());
+       edit.setCep(dto.cep());
+       edit.setBairro(dto.bairro());
+       edit.setRua(dto.rua());
+       edit.setNumero(dto.numero());
+
+       pedido.setEnderecoEntrega(edit);
+       
+       return edit;
+   }
 
     private EnderecoEntrega getEnderecoEntrega(Cliente cliente, Long idEndereco) {
         Endereco endereco = cliente.getEnderecos()
@@ -367,5 +399,11 @@ public class PedidoServiceImpl implements PedidoService {
     public List<Pedido> findByStatus(int idStatus) {
         return pedidoRepository.findByStatus(idStatus);
     }
+
+    @Override
+    public List<ItemPedido> findByPedidoId(Long idPedido){
+        return itemPedidoRepository.findByPedidoId(idPedido);
+    }
+
 
 }

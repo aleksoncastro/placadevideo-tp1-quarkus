@@ -42,7 +42,7 @@ public class PlacaDeVideoResource {
 
     @GET
     @Path("/{id}")
-    @RolesAllowed("ADM")
+    @RolesAllowed("Adm")
     public Response findById(@PathParam("id") Long id) {
         LOG.infof("Buscando placa de vídeo com id %d", id);
         return Response.ok(PlacaDeVideoResponseDTO.valueOf(placaDeVideoService.findById(id))).build();
@@ -50,7 +50,7 @@ public class PlacaDeVideoResource {
 
     @GET
     @Path("/search/descricao/{descricao}")
-    @RolesAllowed("ADM")
+    @RolesAllowed("Adm")
     public Response findByDescricao(@PathParam("descricao") String descricao) {
         LOG.infof("Buscando placa de vídeo pela descrição: %s", descricao);
         return Response.ok(PlacaDeVideoResponseDTO.valueOf(placaDeVideoService.findByDescricao(descricao))).build();
@@ -58,7 +58,7 @@ public class PlacaDeVideoResource {
 
     @GET
     @Path("/search/{modelo}")
-    @RolesAllowed("ADM")
+    @RolesAllowed("Adm")
     public Response findByNome(@PathParam("modelo") String modelo) {
         LOG.infof("Buscando placas de vídeo pelo modelo: %s", modelo);
         return Response
@@ -68,7 +68,7 @@ public class PlacaDeVideoResource {
     }
 
     @GET
-    @RolesAllowed("ADM")
+    @RolesAllowed("Adm")
     public Response findAll() {
         LOG.info("Buscando todas as placas de vídeo");
         return Response.ok(placaDeVideoService.findAll().stream().map(o -> PlacaDeVideoResponseDTO.valueOf(o)).toList())
@@ -76,7 +76,7 @@ public class PlacaDeVideoResource {
     }
 
     @POST
-    @RolesAllowed("ADM")
+    @RolesAllowed("Adm")
     public Response create(@Valid PlacaDeVideoRequestDTO dto) {
         LOG.info("Criando nova placa de vídeo");
         return Response.status(Status.CREATED).entity(PlacaDeVideoResponseDTO.valueOf(placaDeVideoService.create(dto)))
@@ -85,7 +85,7 @@ public class PlacaDeVideoResource {
 
     @PUT
     @Path("/{id}")
-    @RolesAllowed("ADM")
+    @RolesAllowed("Adm")
     public Response update(@PathParam("id") Long id, @Valid PlacaDeVideoRequestDTO dto) {
         LOG.infof("Atualizando placa de vídeo com id %d", id);
         placaDeVideoService.update(id, dto);
@@ -94,7 +94,7 @@ public class PlacaDeVideoResource {
 
     @DELETE
     @Path("/{id}")
-    @RolesAllowed("ADM")
+    @RolesAllowed("Adm")
     public Response delete(@PathParam("id") Long id) {
         LOG.infof("Deletando placa de vídeo com id %d", id);
         placaDeVideoService.delete(id);

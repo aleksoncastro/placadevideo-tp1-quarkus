@@ -32,7 +32,7 @@ public class FornecedorResource {
 
     @GET
     @Path("/{id}")
-    @RolesAllowed({"ADM"})
+    @RolesAllowed({"Adm"})
     public Response findById(@PathParam("id") Long id) {
         LOG.infof("Buscando fornecedor com id %d", id);
         return Response.ok(FornecedorResponseDTO.valueOf(fornecedorService.findById(id))).build();
@@ -40,7 +40,7 @@ public class FornecedorResource {
 
     @GET
     @Path("/search/{nome}")
-    @RolesAllowed({"ADM"})
+    @RolesAllowed({"Adm"})
     public Response findByNome(@PathParam("nome") String nome) {
         LOG.infof("Buscando fornecedor pelo nome %s", nome);
         return Response.ok(fornecedorService.findByNome(nome).stream().map(o -> FornecedorResponseDTO.valueOf(o)).toList())
@@ -49,21 +49,21 @@ public class FornecedorResource {
 
     @GET
     @Path("/search/{cnpj}")
-    @RolesAllowed({"ADM"})
+    @RolesAllowed({"Adm"})
     public Response findByCnpj(@PathParam("cnpj") String cnpj) {
         LOG.infof("Buscando fornecedor com o CNPJ %s", cnpj);
         return Response.ok(FornecedorResponseDTO.valueOf(fornecedorService.findByCnpj(cnpj))).build();
     }
 
     @GET
-    @RolesAllowed({"ADM"})
+    @RolesAllowed({"Adm"})
     public Response findAll() {
         LOG.info("Buscando todos os fornecedores");
         return Response.ok(fornecedorService.findAll().stream().map(o -> FornecedorResponseDTO.valueOf(o)).toList()).build();
     }
 
     @POST
-    @RolesAllowed({"ADM"})
+    @RolesAllowed({"Adm"})
     public Response create(@Valid FornecedorRequestDTO dto) {
         LOG.info("Criando novo fornecedor");
         return Response.status(Status.CREATED).entity(FornecedorResponseDTO.valueOf(fornecedorService.create(dto))).build();
@@ -71,7 +71,7 @@ public class FornecedorResource {
 
     @POST
     @Path("/{id}/telefones")
-    @RolesAllowed({"ADM"})
+    @RolesAllowed({"Adm"})
     public Response addTelefone(@PathParam("id") Long fornecedorId, @Valid TelefoneFornecedorRequestDTO telefoneDTO) {
         LOG.infof("Adicionando telefone para fornecedor com id %d", fornecedorId);
         fornecedorService.addTelefone(fornecedorId, telefoneDTO);
@@ -80,7 +80,7 @@ public class FornecedorResource {
 
     @PUT
     @Path("/{id}/telefone/{telefoneId}")
-    @RolesAllowed({"ADM"})
+    @RolesAllowed({"Adm"})
     public Response update(
             @PathParam("id") Long id,
             @PathParam("telefoneId") Long telefoneId,
@@ -92,7 +92,7 @@ public class FornecedorResource {
 
     @DELETE
     @Path("/{id}")
-    @RolesAllowed({"ADM"})
+    @RolesAllowed({"Adm"})
     public Response delete(@PathParam("id") Long id) {
         LOG.infof("Deletando fornecedor com id %d", id);
         fornecedorService.delete(id);

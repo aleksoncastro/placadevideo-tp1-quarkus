@@ -31,7 +31,7 @@ public class LoteResource {
 
     @GET
     @Path("/{id}")
-    @RolesAllowed({"ADM"})
+    @RolesAllowed({"Adm"})
     public Response findById(@PathParam("id") Long id) {
         LOG.infof("Buscando lote com id %d", id);
         return Response.ok(LoteResponseDTO.valueOf(loteService.findById(id))).build();
@@ -39,21 +39,21 @@ public class LoteResource {
 
     @GET
     @Path("/search/codigo/{codigo}")
-    @RolesAllowed({"ADM"})
+    @RolesAllowed({"Adm"})
     public Response findByCodigo(@PathParam("codigo") String codigo) {
         LOG.infof("Buscando lote pelo código %s", codigo);
         return Response.ok(LoteResponseDTO.valueOf(loteService.findByCodigo(codigo))).build();
     }
 
     @GET
-    @RolesAllowed({"ADM"})
+    @RolesAllowed({"Adm"})
     public Response findAll() {
         LOG.info("Buscando todos os lotes");
         return Response.ok(loteService.findAll().stream().map(o -> LoteResponseDTO.valueOf(o)).toList()).build();
     }
 
     @POST
-    @RolesAllowed({"ADM"})
+    @RolesAllowed({"Adm"})
     public Response create(@Valid LoteRequestDTO dto) {
         LOG.info("Criando novo lote");
         return Response.status(Status.CREATED).entity(LoteResponseDTO.valueOf(loteService.create(dto))).build();
@@ -61,7 +61,7 @@ public class LoteResource {
 
     @PUT
     @Path("/{id}")
-    @RolesAllowed({"ADM"})
+    @RolesAllowed({"Adm"})
     public Response update(@PathParam("id") Long id, @Valid LoteRequestDTO dto) {
         LOG.infof("Atualizando lote com id %d", id);
         loteService.update(id, dto);
@@ -70,7 +70,7 @@ public class LoteResource {
 
     @DELETE
     @Path("/{id}")
-    @RolesAllowed({"ADM"})
+    @RolesAllowed({"Adm"})
     public Response delete(@PathParam("id") Long id) {
         LOG.infof("Deletando lote com id %d", id);
         loteService.delete(id);
