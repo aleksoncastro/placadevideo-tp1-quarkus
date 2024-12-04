@@ -28,10 +28,10 @@ INSERT INTO Funcionario (dataNascimento, salario, statusFuncionario, id_usuario,
 VALUES ('1985-02-02', 4200.75, 2, 2, '98765432109', 'Funcionario 2', 'funcionario2@example.com');
 
 -- 6. Inserindo dados na tabela Cliente
-INSERT INTO Cliente (dataNascimento, id_usuario, cpf, nome, email)
-VALUES ('1992-03-03', 1, '11122233344', 'Cliente 1', 'cliente1@example.com');
-INSERT INTO Cliente (dataNascimento, id_usuario, cpf, nome, email)
-VALUES ('1994-04-04', 2, '55566677788', 'Cliente 2', 'cliente2@example.com');
+INSERT INTO Cliente (dataNascimento, id_usuario, cpf, nome)
+VALUES ('1992-03-03', 1, '11122233344', 'Cliente 1');
+INSERT INTO Cliente (dataNascimento, id_usuario, cpf, nome)
+VALUES ('1994-04-04', 2, '55566677788', 'Cliente 2');
 
 -- 7. Inserindo dados na tabela Endereco
 INSERT INTO Endereco (bairro, cep, cidade, estado, numero) VALUES ('Centro', '12345-678', 'São Paulo', 'SP', '100');

@@ -58,7 +58,7 @@ public class TelefoneClienteResource {
 
     @POST
     @Path("/{idCliente}")
-    public Response create(@PathParam("id") Long id, @Valid TelefoneClienteRequestDTO dto) {
+    public Response create(@Valid TelefoneClienteRequestDTO dto) {
         return Response.status(Status.CREATED).entity(TelefoneClienteResponseDTO.valueOf(telefoneclienteService.create(dto))
         ).build();
     }

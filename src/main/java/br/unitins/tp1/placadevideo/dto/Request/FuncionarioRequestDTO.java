@@ -3,6 +3,7 @@ package br.unitins.tp1.placadevideo.dto.request;
 import java.time.LocalDate;
 import java.util.List;
 
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 
 public record FuncionarioRequestDTO(
@@ -16,7 +17,7 @@ public record FuncionarioRequestDTO(
     String email, 
     @NotBlank(message = "O campo deve ser informado")
     Double salario,
-    UsuarioRequestDTO usuario,
+    @Valid
     List<TelefoneFuncionarioRequestDTO> telefones
     
     

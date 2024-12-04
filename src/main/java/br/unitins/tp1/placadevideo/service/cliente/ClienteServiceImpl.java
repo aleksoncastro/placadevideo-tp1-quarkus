@@ -2,7 +2,6 @@ package br.unitins.tp1.placadevideo.service.cliente;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 import br.unitins.tp1.placadevideo.dto.request.CartaoRequestDTO;
 import br.unitins.tp1.placadevideo.dto.request.ClienteRequestDTO;
@@ -66,22 +65,46 @@ public class ClienteServiceImpl implements ClienteService {
 
     @Override
     public Cliente findById(Long id) {
-        return clienteRepository.findById(id);
+        if (id == null || id <= 0) {
+            throw new ValidationException("id", "O ID deve ser um valor positivo e válido.");
+        }
+        Cliente cliente = clienteRepository.findById(id);
+        if (cliente == null) {
+            throw new EntityNotFoundException("Cliente não encontrado.");
+        }
+        return cliente;
     }
 
     @Override
     public List<Cliente> findByNome(String nome) {
+        if (nome == null || nome.trim().isEmpty()) {
+            throw new ValidationException("nome", "O nome não pode estar vazio.");
+        }
         return clienteRepository.findByNome(nome);
     }
 
     @Override
     public Cliente findByCpf(String cpf) {
-        return clienteRepository.findByCpf(cpf);
+        if (cpf == null || !cpf.matches("\\d{11}")) {
+            throw new ValidationException("cpf", "CPF inválido. Deve conter 11 dígitos numéricos.");
+        }
+        Cliente cliente = clienteRepository.findByCpf(cpf);
+        if (cliente == null) {
+            throw new EntityNotFoundException("Cliente não encontrado com o CPF informado.");
+        }
+        return cliente;
     }
 
     @Override
     public Cliente findByUsername(String username) {
-        return clienteRepository.findByUsername(username);
+        if (username == null || username.trim().isEmpty()) {
+            throw new ValidationException("username", "O username não pode estar vazio.");
+        }
+        Cliente cliente = clienteRepository.findByUsername(username);
+        if (cliente == null) {
+            throw new EntityNotFoundException("Cliente não encontrado com o username informado.");
+        }
+        return cliente;
     }
 
     @Override
@@ -92,22 +115,28 @@ public class ClienteServiceImpl implements ClienteService {
     @Override
     @Transactional
     public Cliente create(String username, ClienteRequestDTO dto) {
+        if (dto == null) {
+            throw new ValidationException("clienteRequestDTO", "O objeto DTO não pode ser nulo.");
+        }
+        if (username == null || username.trim().isEmpty()) {
+            throw new ValidationException("username", "O username não pode estar vazio.");
+        }
+
+        Usuario usuario = usuarioRepository.findByUsername(username);
+        if (usuario == null) {
+            throw new ValidationException("username", "Usuário não encontrado.");
+        }
+
         Cliente cliente = new Cliente();
         cliente.setNome(dto.nome());
         cliente.setCpf(dto.cpf());
         cliente.setDataNascimento(dto.dataNascimento());
-
-        // Criando um Usuario
-        Usuario usuario = usuarioRepository.findByUsername(username);
         cliente.setUsuario(usuario);
 
-        // cria o cliente primeiro
         clienteRepository.persist(cliente);
-
         cliente.setEnderecos(new ArrayList<>());
         cliente.setTelefones(new ArrayList<>());
 
-        // endereco e telefone associado a ele
         for (EnderecoRequestDTO enderecoDTO : dto.enderecos()) {
             Endereco endereco = enderecoService.create(enderecoDTO);
             cliente.getEnderecos().add(endereco);
@@ -118,84 +147,49 @@ public class ClienteServiceImpl implements ClienteService {
             cliente.getTelefones().add(telefone);
         }
 
-        // Atualiza o cliente no banco
         clienteRepository.persist(cliente);
-
         return cliente;
     }
 
     @Override
     @Transactional
     public void addEndereco(Long clienteId, EnderecoRequestDTO dto) {
-        Cliente cliente = clienteRepository.findById(clienteId);
-        if (cliente == null) {
-            throw new IllegalArgumentException("Cliente com ID " + clienteId + " não encontrado.");
-        }
-
+        Cliente cliente = findById(clienteId);
         Endereco endereco = enderecoService.create(dto);
-        enderecoRepository.persist(endereco);
         cliente.getEnderecos().add(endereco);
     }
 
+    
     @Override
     @Transactional
     public void addTelefone(Long clienteId, TelefoneClienteRequestDTO dto) {
-        Cliente cliente = clienteRepository.findById(clienteId);
-        if (cliente == null) {
-            throw new IllegalArgumentException("Cliente com ID " + clienteId + " não encontrado.");
-        }
-
+        Cliente cliente = findById(clienteId);
         TelefoneCliente telefone = telefoneClienteService.create(dto);
-        // telefone.setCliente(cliente);
-        telefoneClienteRepository.persist(telefone);
         cliente.getTelefones().add(telefone);
-
     }
 
     @Override
     @Transactional
     public void addCartao(@Valid Long clienteId, CartaoRequestDTO dto) {
-        Cliente cliente = clienteRepository.findById(clienteId);
-        if (cliente == null) {
-            throw new ValidationException("idCliente", "idCliente não encontrado");
-        }
-
+        Cliente cliente = findById(clienteId);
         Cartao cartao = cartaoService.create(dto);
-        cartaoRepository.persist(cartao);
         cliente.getCartoes().add(cartao);
     }
 
     @Override
     @Transactional
     public Cliente update(Long idCliente, Long enderecoId, Long telefoneId, ClienteRequestDTO dto) {
-        Cliente cliente = clienteRepository.findById(idCliente);
-        if (cliente == null) {
-            throw new EntityNotFoundException("Cliente não encontrado");
-        }
-
-        // Atualiza os dados do cliente
+        Cliente cliente = findById(idCliente);
         cliente.setNome(dto.nome());
         cliente.setCpf(dto.cpf());
         cliente.setDataNascimento(dto.dataNascimento());
-        
-        // Atualiza os endereços do cliente
+
         for (EnderecoRequestDTO enderecoDTO : dto.enderecos()) {
-            Endereco enderecoExistente = enderecoRepository.findById(enderecoId);
-            if (enderecoExistente != null) {
-                enderecoService.update(enderecoExistente.getId(), enderecoDTO);
-            } else {
-                throw new NoSuchElementException("Não encontrado!");
-            }
+            enderecoService.update(enderecoId, enderecoDTO);
         }
 
-        // Atualiza os telefones do cliente
         for (TelefoneClienteRequestDTO telefoneDTO : dto.telefones()) {
-            TelefoneCliente telefoneExistente = telefoneClienteRepository.findById(telefoneId);
-            if (telefoneExistente != null) {
-                telefoneClienteService.update(telefoneExistente.getId(), telefoneDTO);
-            } else {
-                throw new NoSuchElementException("Não encontrado!");
-            }
+            telefoneClienteService.update(telefoneId, telefoneDTO);
         }
 
         clienteRepository.persist(cliente);
@@ -205,43 +199,47 @@ public class ClienteServiceImpl implements ClienteService {
     @Override
     @Transactional
     public void delete(Long id) {
-        clienteRepository.deleteById(id);
+        if (id == null || id <= 0) {
+            throw new ValidationException("id", "O ID deve ser um valor positivo e válido.");
+        }
+        if (!clienteRepository.deleteById(id)) {
+            throw new EntityNotFoundException("Cliente não encontrado.");
+        }
     }
 
     @Override
     @Transactional
     public void adicionarProdutoListaDesejo(String username, Long idProduto) {
-        Cliente cliente = clienteRepository.findByUsername(username);
-        if (cliente.getListaDesejos() == null)
+        Cliente cliente = findByUsername(username);
+        if (cliente.getListaDesejos() == null) {
             cliente.setListaDesejos(new ArrayList<>());
+        }
         PlacaDeVideo placadevideo = placaDeVideoService.findById(idProduto);
-        if (placadevideo == null)
-            throw new ValidationException("idProduto", "PlacaDeVideo nao encontrado");
-
+        if (placadevideo == null) {
+            throw new ValidationException("idProduto", "Placa de vídeo não encontrada.");
+        }
         cliente.getListaDesejos().add(placadevideo);
     }
 
     @Override
     @Transactional
     public void removerProdutoListaDesejo(String username, Long idProduto) {
-        Cliente cliente = clienteRepository.findByUsername(username);
+        Cliente cliente = findByUsername(username);
         List<PlacaDeVideo> listaDesejos = cliente.getListaDesejos();
-        if (listaDesejos == null)
-            throw new ValidationException("listaDesejos", "Voce nao possui uma lista de desejos");
+        if (listaDesejos == null || listaDesejos.isEmpty()) {
+            throw new ValidationException("listaDesejos", "Você não possui uma lista de desejos.");
+        }
 
         PlacaDeVideo placadevideo = placaDeVideoService.findById(idProduto);
-        if (placadevideo == null)
-            throw new ValidationException("idProduto", "PlacaDeVideo nao encontrado");
-
-        if (!listaDesejos.contains(placadevideo))
-            throw new ValidationException("idProduto", "O produto nao esta na lista de desejos");
+        if (placadevideo == null || !listaDesejos.contains(placadevideo)) {
+            throw new ValidationException("idProduto", "O produto não está na lista de desejos.");
+        }
         listaDesejos.remove(placadevideo);
     }
 
     @Override
     public List<PlacaDeVideo> getListaDesejos(String username) {
-        Cliente cliente = clienteRepository.findByUsername(username);
+        Cliente cliente = findByUsername(username);
         return cliente.getListaDesejos();
     }
-
 }

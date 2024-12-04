@@ -118,7 +118,7 @@ public class ClienteResource {
 
     @DELETE
     @Path("/{id}")
-    @RolesAllowed({"Adm", "User"})
+    @RolesAllowed({"Adm"})
     public Response delete(@PathParam("id") Long id) {
         LOG.infof("Deletetando cliente com id %d", id);
         clienteService.delete(id);

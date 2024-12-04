@@ -18,6 +18,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 
 @ApplicationScoped
 public class PlacaDeVideoServiceImpl implements PlacaDeVideoService {
@@ -53,7 +54,7 @@ public class PlacaDeVideoServiceImpl implements PlacaDeVideoService {
 
     @Override
     @Transactional
-    public PlacaDeVideo create(PlacaDeVideoRequestDTO dto) {
+    public PlacaDeVideo create(@Valid PlacaDeVideoRequestDTO dto) {
         PlacaDeVideo placaDeVideo = new PlacaDeVideo();
 
         placaDeVideo.setModelo(dto.modelo());
@@ -70,16 +71,19 @@ public class PlacaDeVideoServiceImpl implements PlacaDeVideoService {
         placaDeVideo.setMemoria(dto.memoria().intoEntity());
         placaDeVideo.setTamanho(dto.tamanho().intoEntity());
         // saidasVideo
-        List<SaidaVideo> saidas = new ArrayList<>();
-            saidas = dto.saidas().stream()
-                    .map(SaidaVideoRequestDTO::intoEntity)
-                    .collect(Collectors.toList());
-      
+        List<SaidaVideo> saidas = dto.saidas().stream()
+                .map(SaidaVideoRequestDTO::intoEntity)
+                .collect(Collectors.toList());
+
         placaDeVideo.setSaidas(saidas);
 
         Fornecedor fornecedor = fornecedorService.findByIdComTelefones(dto.idFornecedor());
+        if (fornecedor == null) {
+            throw new ValidationException("idFornecedor", "Fornecedor não encontrado");
+        }
         fornecedor.getTelefones().size();
         placaDeVideo.setFornecedor(fornecedor);
+
         // Atualiza o placadevideo no banco
         placaDeVideoRepository.persist(placaDeVideo);
 
@@ -88,12 +92,13 @@ public class PlacaDeVideoServiceImpl implements PlacaDeVideoService {
 
     @Override
     @Transactional
-    public PlacaDeVideo update(Long id, PlacaDeVideoRequestDTO dto) {
+    public PlacaDeVideo update(Long id, @Valid PlacaDeVideoRequestDTO dto) {
         PlacaDeVideo placaDeVideo = placaDeVideoRepository.findById(id);
         if (placaDeVideo == null) {
             throw new EntityNotFoundException("PlacaDeVideo não encontrado");
         }
 
+        // Atualiza os campos básicos
         placaDeVideo.setModelo(dto.modelo());
         placaDeVideo.setCategoria(dto.categoria());
         placaDeVideo.setPreco(dto.preco());
@@ -108,20 +113,22 @@ public class PlacaDeVideoServiceImpl implements PlacaDeVideoService {
         placaDeVideo.setMemoria(dto.memoria().intoEntity());
         placaDeVideo.setTamanho(dto.tamanho().intoEntity());
 
-        // saidasVideo
-        List<SaidaVideo> saidas = new ArrayList<>();
-            saidas = dto.saidas().stream()
-                    .map(SaidaVideoRequestDTO::intoEntity)
-                    .collect(Collectors.toList());
-        
+        // Atualização da lista de `saidas`
+        List<SaidaVideo> novasSaidas = dto.saidas().stream()
+                .map(SaidaVideoRequestDTO::intoEntity)
+                .collect(Collectors.toList());
+        placaDeVideo.getSaidas().clear(); // Limpa a lista atual
+        placaDeVideo.getSaidas().addAll(novasSaidas); // Adiciona os novos itens
 
-        placaDeVideo.setSaidas(saidas);
-
+        // Atualiza o fornecedor
         Fornecedor fornecedor = fornecedorService.findByIdComTelefones(dto.idFornecedor());
-        fornecedor.getTelefones().size();
+        if (fornecedor == null) {
+            throw new ValidationException("idFornecedor", "Fornecedor não encontrado");
+        }
+        fornecedor.getTelefones().size(); // Garante que telefones estão inicializados
         placaDeVideo.setFornecedor(fornecedor);
-    
-        // Persistindo as alterações do placadevideo
+
+        // Persiste as alterações
         placaDeVideoRepository.persist(placaDeVideo);
         return placaDeVideo;
     }
@@ -136,11 +143,13 @@ public class PlacaDeVideoServiceImpl implements PlacaDeVideoService {
     @Transactional
     public PlacaDeVideo updateNomeImagem(Long id, String nomeImagem) {
         PlacaDeVideo placaDeVideo = placaDeVideoRepository.findById(id);
-        if (placaDeVideo == null)
-            throw new ValidationException("idPlacaDeVideo", "PlacaDeVideo nao encontrado");
+        if (placaDeVideo == null) {
+            throw new ValidationException("idPlacaDeVideo", "PlacaDeVideo não encontrado");
+        }
 
-        if (placaDeVideo.getListaImagem() == null)
+        if (placaDeVideo.getListaImagem() == null) {
             placaDeVideo.setListaImagem(new ArrayList<>());
+        }
 
         placaDeVideo.getListaImagem().add(nomeImagem);
         return placaDeVideo;

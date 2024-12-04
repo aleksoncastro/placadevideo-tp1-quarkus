@@ -8,10 +8,12 @@ import br.unitins.tp1.placadevideo.model.placadevideo.PlacaDeVideo;
 import br.unitins.tp1.placadevideo.repository.lote.LoteRepository;
 import br.unitins.tp1.placadevideo.repository.placadevideo.PlacaDeVideoRepository;
 import br.unitins.tp1.placadevideo.service.placadevideo.PlacaDeVideoService;
+import br.unitins.tp1.placadevideo.validation.ValidationException;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 
 @ApplicationScoped
 public class LoteServiceImpl implements LoteService {
@@ -50,14 +52,25 @@ public class LoteServiceImpl implements LoteService {
         return loteRepository.findByIdPlacaDeVideoQtdeTotal(idPlacaDeVideo);
     }
 
-
     @Override
     @Transactional
-    public Lote create(LoteRequestDTO dto) {
+    public Lote create(@Valid LoteRequestDTO dto) {
+        // Validações de campos
+        if (dto.codigo() == null || dto.codigo().isEmpty()) {
+            throw new ValidationException("codigo", "O código do lote é obrigatório.");
+        }
+        if (dto.estoque() <= 0) {
+            throw new ValidationException("estoque", "O estoque do lote deve ser maior que zero.");
+        }
+        if (dto.dataFabricacao() == null) {
+            throw new ValidationException("dataFabricacao", "A data de fabricação é obrigatória.");
+        }
+
         Lote lote = new Lote();
         lote.setCodigo(dto.codigo());
         lote.setEstoque(dto.estoque());
         lote.setDataFabricacao(dto.dataFabricacao());
+
         PlacaDeVideo placaDeVideo = placaDeVideoService.findById(dto.idPlacaDeVideo());
         if (placaDeVideo == null) {
             throw new EntityNotFoundException("Placa de vídeo não encontrada");
@@ -72,14 +85,27 @@ public class LoteServiceImpl implements LoteService {
 
     @Override
     @Transactional
-    public Lote update(Long id, LoteRequestDTO dto) {
+    public Lote update(Long id, @Valid LoteRequestDTO dto) {
         Lote lote = loteRepository.findById(id);
         if (lote == null) {
             throw new EntityNotFoundException("Lote não encontrado");
         }
+
+        // Validações de campos
+        if (dto.codigo() == null || dto.codigo().isEmpty()) {
+            throw new ValidationException("codigo", "O código do lote é obrigatório.");
+        }
+        if (dto.estoque() <= 0) {
+            throw new ValidationException("estoque", "O estoque do lote deve ser maior que zero.");
+        }
+        if (dto.dataFabricacao() == null) {
+            throw new ValidationException("dataFabricacao", "A data de fabricação é obrigatória.");
+        }
+
         lote.setCodigo(dto.codigo());
         lote.setEstoque(dto.estoque());
         lote.setDataFabricacao(dto.dataFabricacao());
+
         PlacaDeVideo placaDeVideo = placaDeVideoService.findById(dto.idPlacaDeVideo());
         if (placaDeVideo == null) {
             throw new EntityNotFoundException("Placa de vídeo não encontrada");
