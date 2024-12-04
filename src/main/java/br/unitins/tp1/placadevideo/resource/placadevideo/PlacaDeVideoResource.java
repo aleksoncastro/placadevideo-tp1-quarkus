@@ -1,5 +1,6 @@
 package br.unitins.tp1.placadevideo.resource.placadevideo;
 
+import java.io.File;
 import java.io.IOException;
 
 import org.jboss.logging.Logger;
@@ -10,6 +11,7 @@ import br.unitins.tp1.placadevideo.dto.response.PlacaDeVideoResponseDTO;
 import br.unitins.tp1.placadevideo.form.ImageForm;
 import br.unitins.tp1.placadevideo.service.placadevideo.PlacaDeVideoFileServiceImpl;
 import br.unitins.tp1.placadevideo.service.placadevideo.PlacaDeVideoService;
+import br.unitins.tp1.placadevideo.validation.ValidationException;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
@@ -106,15 +108,19 @@ public class PlacaDeVideoResource {
     @Path("/{idPlacaDeVideo}/upload/imagem")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     public Response uploadImage(@PathParam("idPlacaDeVideo") Long id, @MultipartForm ImageForm form) {
-        LOG.info("Execucao do uploadImage. Id do placaDeVideo: " + id);
+        LOG.info("Execução do uploadImage. Id da placaDeVideo: " + id);
+        LOG.info("Nome do arquivo recebido para upload: " + form.getNomeImagem());
 
         try {
             String nomeImagem = placaDeVideoFileService.save(form.getNomeImagem(), form.getImagem());
-
+            LOG.info("Arquivo salvo com sucesso. Novo nome: " + nomeImagem);
             placaDeVideoService.updateNomeImagem(id, nomeImagem);
+            LOG.info("Nome da imagem atualizado no banco de dados.");
         } catch (IOException e) {
-            Response.status(500).build();
+            LOG.error("Erro ao salvar o arquivo. Detalhes: " + e.getMessage(), e);
+            return Response.status(500).entity("Erro ao salvar o arquivo.").build();
         }
+
         return Response.noContent().build();
     }
 
@@ -123,9 +129,25 @@ public class PlacaDeVideoResource {
     @Path("/download/imagem/{nomeImagem}")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     public Response downloadImage(@PathParam("nomeImagem") String nomeImagem) {
-        LOG.info("Execucao do metodo downloadImage.");
-        ResponseBuilder response = Response.ok(placaDeVideoFileService.find(nomeImagem));
-        response.header("Content-Disposition", "attachment; filename=" + nomeImagem);
-        return response.build();
+        LOG.info("Execução do método downloadImage.");
+        LOG.info("Nome da imagem solicitado para download: " + nomeImagem);
+
+        try {
+            // Busca o arquivo pelo nome
+            File arquivo = placaDeVideoFileService.find(nomeImagem);
+            LOG.info("Arquivo localizado com sucesso: " + arquivo.getAbsolutePath());
+
+            // Retorna o arquivo como resposta
+            ResponseBuilder response = Response.ok(arquivo);
+            response.header("Content-Disposition", "attachment; filename=" + nomeImagem);
+            return response.build();
+        } catch (ValidationException e) {
+            LOG.error("Erro na validação: " + e.getMessage());
+            return Response.status(404).entity("Arquivo não encontrado.").build();
+        } catch (Exception e) {
+            LOG.error("Erro ao realizar o download: " + e.getMessage(), e);
+            return Response.status(500).entity("Erro interno no servidor.").build();
+        }
     }
+
 }
