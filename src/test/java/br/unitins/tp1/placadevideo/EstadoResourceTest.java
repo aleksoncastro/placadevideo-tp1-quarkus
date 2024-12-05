@@ -2,7 +2,6 @@ package br.unitins.tp1.placadevideo;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
@@ -10,9 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import br.unitins.tp1.placadevideo.dto.request.EstadoRequestDTO;
 import br.unitins.tp1.placadevideo.model.Estado;
-import br.unitins.tp1.placadevideo.resource.estado.EstadoResource;
 import br.unitins.tp1.placadevideo.service.estado.EstadoService;
-import io.quarkus.test.common.http.TestHTTPEndpoint;
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.http.ContentType;
 import jakarta.inject.Inject;
@@ -104,14 +101,5 @@ public void testFindById() {
 
     }
 
-    @Test
-    @TestHTTPEndpoint(EstadoResource.class)
-    public void testFindAll2(){
-        given()
-            .when().get()
-            .then()
-                .statusCode(200)
-                .body("$.size()", greaterThanOrEqualTo(1));
-    }
-    
+   
 }

@@ -16,6 +16,8 @@ public interface UsuarioService {
 
     Usuario findByUsername(String nome);
 
+    Usuario findByCpf(String cpf);
+
     List<Usuario> findAll();
 
     Usuario createCliente(UsuarioRequestDTO dto);

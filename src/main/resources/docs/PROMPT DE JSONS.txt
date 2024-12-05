@@ -1,0 +1,66 @@
+PROMPT DE JSONS 
+================
+AUTH:
+
+{
+  "username": "admin_user",
+  "senha": "senhaadm"
+}
+
+eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJ1bml0aW5zLWp3dCIsInN1YiI6ImFkbWluX3VzZXIiLCJncm91cHMiOlsiQWRtIl0sImV4cCI6MTczMzQzOTk2NiwiaWF0IjoxNzMzMzUzNTY2LCJqdGkiOiI1OTNjM2JlZS03YmQwLTRlM2YtOGQ2Yi1mMzE2NzI3NWFjZWEifQ.PqYhrXm2WXXhciQFqoNKKENZ-oEkkLMhhVdnksICN73_bA9ol_DJJ3Y6bpGilwPf6uGmOAb4n6HpAWeV0BWBtaKzcxBlHQN843fTllPZSvR2XI82twqiWEsidqK2W9hFvx5yM49pt8zVjyacCeVF87CYcgXtBkZeIA8xNr_aCt2Tff-elEr0nImRwFqf7ubLS891p40_1FAxsGTC5wHGtX3WyHZEuUMJamVvjGu-NeoiGSgTOUc-7eJNnXV3xY4QnSAxsEmTYuWZNWUbWXEwC2YOm-VJ59O-58bHDo8k76ae2Q_WxmGNqc9_r4bFKbApF28LCbzpwi-VSpZUS8X3UA 
+
+=====================
+POST DE USUARIO CLIENTE
+
+{
+  "username": "CanetaAzul",
+  "senha": "123456",
+  "email": "canetaazul@gmail.com",
+  "cpf": "01478024712",
+  "idPerfil": 0
+}
+
+token: 
+
+{
+  "username": "CanetaAzul",
+  "senha": "123456"
+}
+
+eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJ1bml0aW5zLWp3dCIsInN1YiI6IkNhbmV0YUF6dWwiLCJncm91cHMiOlsiVXNlciJdLCJleHAiOjE3MzM0NDAyMjUsImlhdCI6MTczMzM1MzgyNSwianRpIjoiYTQzNWI1MzAtOTMwMS00YjA0LTlhZGYtN2RlMzg5MjAyYWQ1In0.hqVJtE4g6MQwQBHiU5jjqQc2n3lbh-HlI5wpLAjih-59yaGahTvF2XK2SGAjlBj-XkMSsoo0cyCt-Xo2NT9n97PLJID3KOqafWkKkHByQmnq-vxA0-acVNNRI725UYV2Z6KAPtttN1Nm_bVtTs08mfoyxgrv0y-F5X87VuKoD4FC6X4AzTDip0Zzm7jdwGG57njrYx0_biPkjdX9B5aQHaopVJ4KN_7qD5ldtssavHK1TVeQEWteLQZnC1TWzMWUbM7ki0_W7AVIfke3u0-W3S_b_73tgmsJHb-SMT6x9zvwfHxeca4I4pwRGvK7m-v_5NBjJ9W3NehsgG4bQ0Cklw 
+
+====================
+POST CLIENTE
+
+{
+  "nome": "Manoel Gomes",
+  "dataNascimento": "1012-05-12",
+  "enderecos": [
+    {
+      "cep": "77100",
+      "cidade": "Codó",
+      "estado": "Maranhão",
+      "bairro": "Invasão do DB",
+      "rua": "PHP é Vida",
+      "numero": "1212"
+    }
+  ],
+  "telefones": [
+    {
+      "codigoArea": "63",
+      "numero": "4002892212"
+    }
+  ]
+}
+=================
+POST CARTAO
+
+{
+  "numero": "1232148999",
+  "titular": "Manoel Gomes",
+  "dataValidade": "3000-03-30",
+  "cvv": "321",
+  "cpf": "01478024712"
+}
+
+==================

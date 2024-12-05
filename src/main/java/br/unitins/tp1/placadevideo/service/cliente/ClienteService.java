@@ -15,9 +15,9 @@ public interface ClienteService {
 
     List<Cliente> findByNome(String nome);
 
-    Cliente findByCpf(String cpf);
-
     List<Cliente> findAll();
+
+    Cliente findByMe(String username);
 
     Cliente findByUsername(String username);
 

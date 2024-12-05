@@ -30,7 +30,7 @@ public class PedidoAdministrativoResource {
     public JsonWebToken jwt;
 
     @GET
-    @RolesAllowed({"Adm"})
+    @RolesAllowed({ "Adm" })
     public Response findByUsername(String username) {
         // buscando o username do hash do jwt
         LOG.infof("Buscando pedidos pelo cliente com id %d", username);
@@ -38,7 +38,6 @@ public class PedidoAdministrativoResource {
                 .ok(pedidoService.findByUsername(username).stream().map(o -> PedidoResponseDTO.valueOf(o)).toList())
                 .build();
     }
-
 
     @GET
     @Path("/{id}")
@@ -49,14 +48,14 @@ public class PedidoAdministrativoResource {
     }
 
     @GET
-    @RolesAllowed({"Adm"})
+    @RolesAllowed({ "Adm" })
     public Response findAll() {
         LOG.info("Buscando todos os pedidos");
         return Response.ok(pedidoService.findAll().stream().map(o -> PedidoResponseDTO.valueOf(o)).toList()).build();
     }
 
     @GET
-    @RolesAllowed({"Adm"})
+    @RolesAllowed({ "Adm" })
     @Path("/search/item/{id}")
     public Response findByItem(@PathParam("id") Long idPlacaDeVideo) {
         LOG.infof("Buscando pedidos pelo item com id %d", idPlacaDeVideo);
@@ -64,7 +63,7 @@ public class PedidoAdministrativoResource {
     }
 
     @GET
-    @RolesAllowed({"Adm"})
+    @RolesAllowed({ "Adm" })
     @Path("/search/status/{id}")
     public Response findByStatus(@PathParam("id") int idStatus) {
         LOG.infof("Buscando pedidos pelo status com id %d", idStatus);
@@ -72,9 +71,9 @@ public class PedidoAdministrativoResource {
     }
 
     @PATCH
-    @RolesAllowed({"Adm"})
+    @RolesAllowed({ "Adm" })
     @Path("/{id}/status-pedido/{id}")
-    public Response updateStatusPedido(@PathParam("id") Long idPedido, Integer id){
+    public Response updateStatusPedido(@PathParam("id") Long idPedido, Integer id) {
         LOG.infof("Atualizando status do pedido com id %d para status %d", idPedido, id);
         return Response.ok(pedidoService.updateStatusPedido(idPedido, id)).build();
     }
@@ -83,28 +82,9 @@ public class PedidoAdministrativoResource {
     @Path("/{id}")
     public Response cancelarPedido(@PathParam("id") Long id) {
         LOG.infof("Buscando pedidos pelo status com id %d", id);
-        pedidoService.cancelarPedido(id);;
+        pedidoService.cancelarPedido(id);
+        ;
         return Response.noContent().build();
     }
-
-    
-    @PATCH
-    @RolesAllowed({"User"})
-    @Path("/{id}/pagamento/{id-boleto}")
-    public Response registrarPagamentoBoleto(@PathParam ("id") Long id, @PathParam("id-boleto") Long idBoleto){
-        LOG.infof("Registrando pagamento boleto para pedido com id %d e id boleto %d", id, idBoleto);
-        pedidoService.registrarPagamentoBoleto(id, idBoleto);
-        return Response.noContent().build();
-    }
-
-    @PATCH
-    @RolesAllowed({"User"})
-    @Path("/{id}/pagamento/{id-pix}")
-    public Response registrarPagamentoPix(@PathParam ("id") Long id, @PathParam("id-pix") Long idPix){
-        LOG.infof("Registrando pagamento PIX para pedido com id %d e id PIX %d", id, idPix);
-        pedidoService.registrarPagamentoPix(id, idPix);
-        return Response.noContent().build();
-    }
-
 
 }

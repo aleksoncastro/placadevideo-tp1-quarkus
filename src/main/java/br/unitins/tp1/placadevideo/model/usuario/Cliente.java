@@ -22,9 +22,6 @@ public class Cliente extends DefaultEntity {
     @Column(length = 60, nullable = false)
     private String nome;
 
-    @Column(length = 60, nullable = false, unique = true)
-    private String cpf;
-
     private LocalDate dataNascimento;
 
     @OneToOne
@@ -41,7 +38,7 @@ public class Cliente extends DefaultEntity {
     private List<Cartao> cartoes;
 
     @ManyToMany
-    @JoinTable(name = "lista_desejo", joinColumns = @JoinColumn(name = "id_cliente"), inverseJoinColumns = @JoinColumn(name = "id_roteador"))
+    @JoinTable(name = "lista_desejo", joinColumns = @JoinColumn(name = "id_cliente"), inverseJoinColumns = @JoinColumn(name = "id_placadevideo"))
     private List<PlacaDeVideo> listaDesejos;
 
     public List<TelefoneCliente> getTelefones() {
@@ -58,14 +55,6 @@ public class Cliente extends DefaultEntity {
 
     public void setNome(String nome) {
         this.nome = nome;
-    }
-
-    public String getCpf() {
-        return cpf;
-    }
-
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
     }
 
     public LocalDate getDataNascimento() {
@@ -107,5 +96,6 @@ public class Cliente extends DefaultEntity {
     public void setListaDesejos(List<PlacaDeVideo> listaDesejos) {
         this.listaDesejos = listaDesejos;
     }
+
 
 }

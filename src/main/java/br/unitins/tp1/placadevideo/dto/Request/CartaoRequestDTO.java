@@ -8,6 +8,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 public record CartaoRequestDTO(
+    @NotBlank(message = "O campo nome do titular deve ser informado.")
     String numero,
     @NotBlank(message = "O campo nome do titular deve ser informado.")
     String titular,

@@ -9,7 +9,6 @@ import br.unitins.tp1.placadevideo.model.usuario.Cliente;
 public record ClienteResponseDTO(
         Long id,
         String nome,
-        String cpf,
         LocalDate dataNascimento,
         UsuarioResponseDTO usuario,
         List<EnderecoResponseDTO> enderecos,
@@ -20,7 +19,6 @@ public record ClienteResponseDTO(
         return new ClienteResponseDTO(
                 cliente.getId(),
                 cliente.getNome(),
-                cliente.getCpf(),
                 cliente.getDataNascimento(),
                 UsuarioResponseDTO.valueOf(cliente.getUsuario()),
                 cliente.getEnderecos().stream()

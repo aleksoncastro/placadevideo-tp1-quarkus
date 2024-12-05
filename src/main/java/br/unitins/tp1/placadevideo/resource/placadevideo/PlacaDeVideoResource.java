@@ -52,7 +52,7 @@ public class PlacaDeVideoResource {
 
     @GET
     @Path("/search/descricao/{descricao}")
-    @RolesAllowed("Adm")
+    @RolesAllowed({ "Adm", "User" })
     public Response findByDescricao(@PathParam("descricao") String descricao) {
         LOG.infof("Buscando placa de vídeo pela descrição: %s", descricao);
         return Response.ok(PlacaDeVideoResponseDTO.valueOf(placaDeVideoService.findByDescricao(descricao))).build();
@@ -60,7 +60,7 @@ public class PlacaDeVideoResource {
 
     @GET
     @Path("/search/{modelo}")
-    @RolesAllowed("Adm")
+    @RolesAllowed({ "Adm", "User" })
     public Response findByNome(@PathParam("modelo") String modelo) {
         LOG.infof("Buscando placas de vídeo pelo modelo: %s", modelo);
         return Response
@@ -70,7 +70,7 @@ public class PlacaDeVideoResource {
     }
 
     @GET
-    @RolesAllowed("Adm")
+    @RolesAllowed({ "Adm", "User" })
     public Response findAll() {
         LOG.info("Buscando todas as placas de vídeo");
         return Response.ok(placaDeVideoService.findAll().stream().map(o -> PlacaDeVideoResponseDTO.valueOf(o)).toList())

@@ -18,15 +18,6 @@ public class ClienteRepository implements PanacheRepository<Cliente> {
         return find(jpql.toString(), "%" + nome + "%").list();
     }
     
-    public Cliente findByCpf(String cpf) {
-        StringBuffer jpql = new StringBuffer();
-        jpql.append("SELECT p ");
-        jpql.append("FROM Cliente p ");
-        jpql.append("WHERE p.cpf = ?1 ");
-    
-        return find(jpql.toString(), cpf).firstResult();
-    }
-
     public Cliente findByUsername(String username) {
         StringBuffer jpql = new StringBuffer();
         jpql.append("SELECT c ");

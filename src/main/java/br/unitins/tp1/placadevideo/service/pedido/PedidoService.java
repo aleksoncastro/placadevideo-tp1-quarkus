@@ -9,7 +9,6 @@ import br.unitins.tp1.placadevideo.model.pagamento.Boleto;
 import br.unitins.tp1.placadevideo.model.pagamento.CartaoPagamento;
 import br.unitins.tp1.placadevideo.model.pagamento.Pix;
 import br.unitins.tp1.placadevideo.model.pedido.EnderecoEntrega;
-import br.unitins.tp1.placadevideo.model.pedido.ItemPedido;
 import br.unitins.tp1.placadevideo.model.pedido.Pedido;
 
 public interface PedidoService {
@@ -23,8 +22,6 @@ public interface PedidoService {
     List<Pedido> findByStatus(int idStatus);
     
     List<Pedido> findByUsername(String username);
-
-    List<ItemPedido> findByPedidoId(Long idPedido);
 
     Pedido create(PedidoRequestDTO dto, String cpf);
 

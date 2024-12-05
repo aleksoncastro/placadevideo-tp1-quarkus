@@ -9,9 +9,11 @@ import jakarta.enterprise.context.ApplicationScoped;
 @ApplicationScoped
 public class ItemPedidoRepository implements PanacheRepository<ItemPedido> {
 
-    public List<ItemPedido> findByPedidoId(Long idPedido) {
-        return find("SELECT i FROM ItemPedido i WHERE i.lote.id IN (SELECT l.id FROM Pedido p JOIN p.listaItemPedido l WHERE p.id = ?1)", idPedido).list();
+    public List<ItemPedido> findByPedidoId(Long pedidoId) {
+        String jpql = "SELECT i FROM ItemPedido i WHERE i.pedido.id = ?1";
+        return find(jpql, pedidoId).list();
     }
+    
     
 
     

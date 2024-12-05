@@ -1,4 +1,4 @@
-package br.unitins.tp1.placadevideo.resource.estado;
+package br.unitins.tp1.placadevideo.resource.classesdeteste;
 
 import java.util.List;
 

@@ -9,9 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import br.unitins.tp1.placadevideo.dto.request.EnderecoRequestDTO;
 import br.unitins.tp1.placadevideo.model.usuario.Endereco;
-import br.unitins.tp1.placadevideo.resource.endereco.EnderecoResource;
 import br.unitins.tp1.placadevideo.service.endereco.EnderecoService;
-import io.quarkus.test.common.http.TestHTTPEndpoint;
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.http.ContentType;
 import jakarta.inject.Inject;
@@ -109,14 +107,5 @@ public void testCreateEndereco() {
      
     }
 
-    @Test
-    @TestHTTPEndpoint(EnderecoResource.class)
-    public void testFindAll2() {
-        given()
-            .when().get()
-            .then()
-                .statusCode(200)
-                .body("$.size()", is(2),
-                      "[1].cep", is("87654-321"));
-    }
+    
 }

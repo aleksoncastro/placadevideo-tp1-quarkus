@@ -6,7 +6,7 @@ import org.jboss.logging.Logger;
 import br.unitins.tp1.placadevideo.dto.request.EnderecoEntregaRequestDTO;
 import br.unitins.tp1.placadevideo.dto.request.PedidoRequestDTO;
 import br.unitins.tp1.placadevideo.dto.response.EnderecoEntregaResponseDTO;
-import br.unitins.tp1.placadevideo.dto.response.ItemPedidoResponsetDTO;
+import br.unitins.tp1.placadevideo.dto.response.PedidoGeralResponseDTO;
 import br.unitins.tp1.placadevideo.dto.response.PedidoResponseDTO;
 import br.unitins.tp1.placadevideo.service.pedido.PedidoService;
 import jakarta.annotation.security.RolesAllowed;
@@ -42,7 +42,8 @@ public class PedidoResourceCliente {
         // buscando o username do hash do jwt
         String username = jwt.getSubject();
         return Response
-                .ok(pedidoService.findByUsername(username).stream().map(o -> PedidoResponseDTO.valueOf(o)).toList())
+                .ok(pedidoService.findByUsername(username).stream().map(o -> PedidoGeralResponseDTO.valueOf(o))
+                        .toList())
                 .build();
     }
 
@@ -53,8 +54,7 @@ public class PedidoResourceCliente {
         String username = jwt.getSubject();
         LOG.infof("Buscando itensPedido para o usuário: %s", username);
         return Response
-                .ok(pedidoService.findByPedidoId(idPedido).stream().map(o -> ItemPedidoResponsetDTO.valueOf(o))
-                        .toList())
+                .ok(pedidoService.findByUsername(username).stream().map(o -> PedidoResponseDTO.valueOf(o)).toList())
                 .build();
     }
 
@@ -76,4 +76,23 @@ public class PedidoResourceCliente {
         return Response.status(Status.CREATED).entity(
                 EnderecoEntregaResponseDTO.valueOf(pedidoService.editEnderecoEntrega(idPedido, dto))).build();
     }
+
+    @PATCH
+    @RolesAllowed({ "User" })
+    @Path("/{id-pedido}/pagamento/{id-boleto}")
+    public Response registrarPagamentoBoleto(@PathParam("id-pedido") Long id, @PathParam("id-boleto") Long idBoleto) {
+        LOG.infof("Registrando pagamento boleto para pedido com id %d e id boleto %d", id, idBoleto);
+        pedidoService.registrarPagamentoBoleto(id, idBoleto);
+        return Response.noContent().build();
+    }
+
+    @PATCH
+    @RolesAllowed({ "User" })
+    @Path("/{id-pedido}/pagamento/{id-pix}")
+    public Response registrarPagamentoPix(@PathParam("id-pedido") Long id, @PathParam("id-pix") Long idPix) {
+        LOG.infof("Registrando pagamento PIX para pedido com id %d e id PIX %d", id, idPix);
+        pedidoService.registrarPagamentoPix(id, idPix);
+        return Response.noContent().build();
+    }
+
 }

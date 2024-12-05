@@ -38,6 +38,7 @@ public class UsuarioResource {
 
     @GET
     @Path("/{id}")
+    @RolesAllowed("Adm")
     public Response findById(@PathParam("id") Long id) {
         return Response.ok(UsuarioResponseDTO.valueOf(usuarioService.findById(id))).build();
     }
@@ -52,6 +53,7 @@ public class UsuarioResource {
 
     @POST
     @Path("/usuarios")
+    @RolesAllowed("Adm")
     public Response registrarFuncionario(@Valid UsuarioRequestDTO dto) {
         LOG.info("Registrando funcionario no metodo registrarFuncionario");
         return Response.status(Status.CREATED).entity(UsuarioResponseDTO.valueOf(usuarioService.createFuncionario(dto)))
@@ -78,6 +80,14 @@ public class UsuarioResource {
 
         usuarioService.updateSenha(username, dto);
         return Response.noContent().build();
+    }
+
+     @GET
+    @Path("/search/{cpf}")
+    @RolesAllowed({"Adm"})
+    public Response findByCpf(@PathParam("cpf") String cpf) {
+        LOG.infof("Buscando cliente com o cpf %s", cpf);
+        return Response.ok(UsuarioResponseDTO.valueOf(usuarioService.findByCpf(cpf))).build();
     }
 }
 

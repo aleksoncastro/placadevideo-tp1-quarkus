@@ -10,8 +10,8 @@ import jakarta.enterprise.context.ApplicationScoped;
 @ApplicationScoped
 public class PedidoRepository implements PanacheRepository<Pedido> {
 
-    public List<Pedido> findByUsuario(Long idUsuario) {
-        return find("SELECT p FROM Pedido p WHERE p.usuario.id =?1", idUsuario).list();
+    public List<Pedido> findByCliente(Long idCliente) {
+        return find("SELECT p FROM Pedido p WHERE p.cliente.id =?1", idCliente).list();
     }
 
     public List<Pedido> findByUsername(String username) {

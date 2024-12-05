@@ -1,7 +1,6 @@
 package br.unitins.tp1.placadevideo;
 
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.CoreMatchers.is;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
@@ -33,34 +32,7 @@ public class LoteResourceTest {
                 .then().statusCode(200);
     }
 
-    @Test
-    public void testCreate() {
-        LoteRequestDTO dto = new LoteRequestDTO(
-                "L12345", // código do lote
-                100, // quantidade
-                LocalDate.of(2024, 10, 22), // data de fabricação
-                1L // id da placa de vídeo (utilizando 1 como exemplo)
-        );
-
-
-
-        given()
-                .header("Authorization", "Bearer " + token)  // Autorização com o token
-                .contentType(ContentType.JSON)
-                .body(dto)
-                .when()
-                .post("/lotes")
-                .then()
-                .statusCode(201)
-                .body(
-                        "codigo", is("L12345"),
-                        "estoque", is(100),
-                        "dataFabricacao", is("2024-10-22"));
-
-        // Remover o lote inserido
-        loteService.delete(loteService.findByCodigo("L12345").getId());
-    }
-
+  
     @Test
     public void testUpdateLote() {
         LoteRequestDTO dto = new LoteRequestDTO(

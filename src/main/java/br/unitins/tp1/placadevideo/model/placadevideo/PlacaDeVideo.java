@@ -46,7 +46,7 @@ public class PlacaDeVideo extends DefaultEntity {
     private Fornecedor fornecedor; 
 
     @ElementCollection
-    @CollectionTable(name = "imagem_roteador", joinColumns = @JoinColumn(name = "id_roteador"))
+    @CollectionTable(name = "imagem_placadevideo", joinColumns = @JoinColumn(name = "id_placadevideo"))
     private List<String> listaImagem;
     
     public Fornecedor getFornecedor() {

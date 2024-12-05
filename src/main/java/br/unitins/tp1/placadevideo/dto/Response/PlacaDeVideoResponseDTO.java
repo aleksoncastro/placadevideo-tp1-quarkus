@@ -23,29 +23,29 @@ public record PlacaDeVideoResponseDTO(
         MemoriaResponseDTO memoria,
         TamanhoResponseDTO tamanho,
         List<SaidaVideoResponseDTO> saidas,
-        FornecedorResponseDTO fornecedor
-) {
+        FornecedorResponseDTO fornecedor,
+        List<String> listaImagem) {
 
     public static PlacaDeVideoResponseDTO valueOf(PlacaDeVideo placaDeVideo) {
         return new PlacaDeVideoResponseDTO(
-            placaDeVideo.getId(),
-            placaDeVideo.getModelo(),
-            placaDeVideo.getCategoria(),
-            placaDeVideo.getPreco(),
-            placaDeVideo.getResolucao(),
-            placaDeVideo.getEnergia(),
-            placaDeVideo.getDescricao(),
-            placaDeVideo.getCompatibilidade(),
-            placaDeVideo.getClockBase(), 
-            placaDeVideo.getClockBoost(), 
-            placaDeVideo.getFan(),
-            placaDeVideo.getSuporteRayTracing(),
-            MemoriaResponseDTO.valueOf(placaDeVideo.getMemoria()),
-            TamanhoResponseDTO.valueOf(placaDeVideo.getTamanho()),
-            placaDeVideo.getSaidas().stream()
-                .map(SaidaVideoResponseDTO::valueOf)
-                .collect(Collectors.toList()),
-            FornecedorResponseDTO.valueOf(placaDeVideo.getFornecedor())
-        );
+                placaDeVideo.getId(),
+                placaDeVideo.getModelo(),
+                placaDeVideo.getCategoria(),
+                placaDeVideo.getPreco(),
+                placaDeVideo.getResolucao(),
+                placaDeVideo.getEnergia(),
+                placaDeVideo.getDescricao(),
+                placaDeVideo.getCompatibilidade(),
+                placaDeVideo.getClockBase(),
+                placaDeVideo.getClockBoost(),
+                placaDeVideo.getFan(),
+                placaDeVideo.getSuporteRayTracing(),
+                MemoriaResponseDTO.valueOf(placaDeVideo.getMemoria()),
+                TamanhoResponseDTO.valueOf(placaDeVideo.getTamanho()),
+                placaDeVideo.getSaidas().stream()
+                        .map(SaidaVideoResponseDTO::valueOf)
+                        .collect(Collectors.toList()),
+                FornecedorResponseDTO.valueOf(placaDeVideo.getFornecedor()),
+                placaDeVideo.getListaImagem());
     }
 }

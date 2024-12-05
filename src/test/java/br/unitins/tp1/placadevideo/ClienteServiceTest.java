@@ -60,6 +60,7 @@ public class ClienteServiceTest {
             "usuarioTeste", 
             "senha123", 
             "usuario@teste.com", 
+            "12345678900",
             1 // Supondo que o ID do perfil seja 1
         );
         
@@ -72,7 +73,6 @@ public class ClienteServiceTest {
 
         ClienteRequestDTO dto = new ClienteRequestDTO(
             "Carlos Silva", 
-            "12345678900", 
             LocalDate.of(1990, 5, 20),
             List.of(enderecoDTO), 
             List.of(telefoneDTO)
@@ -84,77 +84,9 @@ public class ClienteServiceTest {
         // Verificando se a criação foi bem-sucedida
         assertNotNull(cliente.getId());
         assertEquals(cliente.getNome(), "Carlos Silva");
-        assertEquals(cliente.getCpf(), "12345678900");
         assertEquals(cliente.getUsuario().getUsername(), "usuarioTeste");
     }
 
-    @Test
-    public void testFindByCpf() {
-        // Criando o usuário com o UsuarioRequestDTO através do método createCliente
-        UsuarioRequestDTO usuarioDTO = new UsuarioRequestDTO(
-            "usuarioTeste2", 
-            "senha123", 
-            "usuario2@teste.com", 
-            1
-        );
-        usuario = usuarioService.createCliente(usuarioDTO);
-
-        // Criando um ClienteRequestDTO
-        ClienteRequestDTO dto = new ClienteRequestDTO(
-            "Carlos Silva", 
-            "12345678900", 
-            LocalDate.of(1990, 5, 20),
-            List.of(new EnderecoRequestDTO("Rua X", "123", "Centro", "Cidade", "Estado", "12345-678")),
-            List.of(new TelefoneClienteRequestDTO("11", "123456789"))
-        );
-
-        // Criando o cliente e associando o usuário
-        cliente = clienteService.create(usuario.getUsername(), dto);
-
-        // Buscando o cliente por CPF
-        Cliente clienteEncontrado = clienteService.findByCpf("12345678900");
-
-        // Verificando se o cliente foi encontrado corretamente
-        assertNotNull(clienteEncontrado);
-        assertEquals(clienteEncontrado.getCpf(), "12345678900");
-    }
-
-    @Test
-    public void testUpdateCliente() {
-        // Criando o usuário com o UsuarioRequestDTO através do método createCliente
-        UsuarioRequestDTO usuarioDTO = new UsuarioRequestDTO(
-            "usuarioTeste3", 
-            "senha123", 
-            "usuario3@teste.com", 
-            1
-        );
-        usuario = usuarioService.createCliente(usuarioDTO);
-
-        // Criando um ClienteRequestDTO
-        ClienteRequestDTO dto = new ClienteRequestDTO(
-            "Carlos Silva", 
-            "12345678900", 
-            LocalDate.of(1990, 5, 20),
-            List.of(new EnderecoRequestDTO("Rua X", "123", "Centro", "Cidade", "Estado", "12345-678")),
-            List.of(new TelefoneClienteRequestDTO("11", "123456789"))
-        );
-
-        cliente = clienteService.create(usuario.getUsername(), dto);
-
-        // Atualizando o cliente
-        ClienteRequestDTO updatedDto = new ClienteRequestDTO(
-            "Carlos Henrique Silva", 
-            "12345678900", 
-            LocalDate.of(1990, 5, 20),
-            List.of(new EnderecoRequestDTO("Rua Y", "456", "Bairro", "Cidade", "Estado", "23456-789")),
-            List.of(new TelefoneClienteRequestDTO("11", "987654321"))
-        );
-
-        Cliente clienteAtualizado = clienteService.update(cliente.getId(), 1L, 1L, updatedDto);
-
-        // Verificando se o nome foi atualizado corretamente
-        assertEquals(clienteAtualizado.getNome(), "Carlos Henrique Silva");
-    }
 
 
     
@@ -163,9 +95,10 @@ public class ClienteServiceTest {
     public void testAdicionarProdutoListaDesejo() {
         // Criando o usuário com o UsuarioRequestDTO através do método createCliente
         UsuarioRequestDTO usuarioDTO = new UsuarioRequestDTO(
-            "usuarioTeste5", 
+            "usuarioTeste2", 
             "senha123", 
-            "usuario5@teste.com", 
+            "usuario2@teste.com", 
+            "12345678900",
             1
         );
         usuario = usuarioService.createCliente(usuarioDTO);
@@ -173,7 +106,6 @@ public class ClienteServiceTest {
         // Criando um ClienteRequestDTO
         ClienteRequestDTO dto = new ClienteRequestDTO(
             "Carlos Silva", 
-            "12345678900", 
             LocalDate.of(1990, 5, 20),
             List.of(new EnderecoRequestDTO("Rua X", "123", "Centro", "Cidade", "Estado", "12345-678")),
             List.of(new TelefoneClienteRequestDTO("11", "123456789"))

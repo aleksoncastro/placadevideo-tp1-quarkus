@@ -41,14 +41,22 @@ public class ClienteResource {
 
     @GET
     @Path("/{id}")
-    @RolesAllowed({"Adm"})
+    @RolesAllowed({ "Adm" })
     public Response findById(@PathParam("id") Long id) {
         return Response.ok(ClienteResponseDTO.valueOf(clienteService.findById(id))).build();
     }
 
     @GET
+    @Path("/{id}")
+    @RolesAllowed({ "User" })
+    public Response findByMe() {
+        String username = jsonWebToken.getSubject();
+        return Response.ok(ClienteResponseDTO.valueOf(clienteService.findByMe(username))).build();
+    }
+
+    @GET
     @Path("/search/{nome}")
-    @RolesAllowed({"Adm"})
+    @RolesAllowed({ "Adm" })
     public Response findByNome(@PathParam("nome") String nome) {
         LOG.infof("Buscando cliente pelo nome %s", nome);
         return Response.ok(clienteService.findByNome(nome).stream().map(o -> ClienteResponseDTO.valueOf(o)).toList())
@@ -56,31 +64,24 @@ public class ClienteResource {
     }
 
     @GET
-    @Path("/search/{cpf}")
-    @RolesAllowed({"Adm"})
-    public Response findByCpf(@PathParam("cpf") String cpf) {
-        LOG.infof("Buscando cliente com o cpf %s", cpf);
-        return Response.ok(ClienteResponseDTO.valueOf(clienteService.findByCpf(cpf))).build();
-    }
-
-    @GET
-    @RolesAllowed({"Adm"})
+    @RolesAllowed({ "Adm" })
     public Response findAll() {
         LOG.infof("Buscando todos os clientes");
         return Response.ok(clienteService.findAll().stream().map(o -> ClienteResponseDTO.valueOf(o)).toList()).build();
     }
 
     @POST
-    @RolesAllowed({"Adm", "User"})
+    @RolesAllowed({ "Adm", "User" })
     public Response create(ClienteRequestDTO dto) {
         LOG.infov("Criando cliente");
         String username = jsonWebToken.getSubject();
-        return Response.status(Status.CREATED).entity(ClienteResponseDTO.valueOf(clienteService.create(username,dto))).build();
+        return Response.status(Status.CREATED).entity(ClienteResponseDTO.valueOf(clienteService.create(username, dto)))
+                .build();
     }
 
     @POST
     @Path("/{id}/enderecos")
-    @RolesAllowed({"User"})
+    @RolesAllowed({ "User" })
     public Response addEndereco(@PathParam("id") Long clienteId, EnderecoRequestDTO enderecoDTO) {
 
         clienteService.addEndereco(clienteId, enderecoDTO);
@@ -89,7 +90,7 @@ public class ClienteResource {
 
     @POST
     @Path("/{id}/telefones")
-    @RolesAllowed({"User"})
+    @RolesAllowed({ "User" })
     public Response addTelefone(@PathParam("id") Long clienteId, TelefoneClienteRequestDTO telefoneDTO) {
         clienteService.addTelefone(clienteId, telefoneDTO);
         return Response.status(Status.CREATED).build();
@@ -97,7 +98,7 @@ public class ClienteResource {
 
     @POST
     @Path("/{id}/cartoes")
-    @RolesAllowed({"User"})
+    @RolesAllowed({ "User" })
     public Response addCartao(@PathParam("id") Long clienteId, CartaoRequestDTO cartaoDTO) {
         clienteService.addCartao(clienteId, cartaoDTO);
         return Response.status(Status.CREATED).build();
@@ -105,20 +106,20 @@ public class ClienteResource {
 
     @PUT
     @Path("/{id}/endereco/{enderecoId}/telefone/{telefoneId}")
-    @RolesAllowed({"Adm", "User"})
+    @RolesAllowed({ "Adm", "User" })
     public Response update(
             @PathParam("id") Long id,
             @PathParam("enderecoId") Long enderecoId,
             @PathParam("telefoneId") Long telefoneId,
             @Valid ClienteRequestDTO dto) {
-            LOG.infof("Atualizando cliente com id %d", id);
+        LOG.infof("Atualizando cliente com id %d", id);
         clienteService.update(id, enderecoId, telefoneId, dto);
         return Response.noContent().build();
     }
 
     @DELETE
     @Path("/{id}")
-    @RolesAllowed({"Adm"})
+    @RolesAllowed({ "Adm" })
     public Response delete(@PathParam("id") Long id) {
         LOG.infof("Deletetando cliente com id %d", id);
         clienteService.delete(id);

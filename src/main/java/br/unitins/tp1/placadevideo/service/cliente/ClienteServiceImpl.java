@@ -74,6 +74,10 @@ public class ClienteServiceImpl implements ClienteService {
         }
         return cliente;
     }
+    @Override
+    public Cliente findByMe(String username) {
+        return clienteRepository.findByUsername(username);
+    }
 
     @Override
     public List<Cliente> findByNome(String nome) {
@@ -81,18 +85,6 @@ public class ClienteServiceImpl implements ClienteService {
             throw new ValidationException("nome", "O nome não pode estar vazio.");
         }
         return clienteRepository.findByNome(nome);
-    }
-
-    @Override
-    public Cliente findByCpf(String cpf) {
-        if (cpf == null || !cpf.matches("\\d{11}")) {
-            throw new ValidationException("cpf", "CPF inválido. Deve conter 11 dígitos numéricos.");
-        }
-        Cliente cliente = clienteRepository.findByCpf(cpf);
-        if (cliente == null) {
-            throw new EntityNotFoundException("Cliente não encontrado com o CPF informado.");
-        }
-        return cliente;
     }
 
     @Override
@@ -129,7 +121,6 @@ public class ClienteServiceImpl implements ClienteService {
 
         Cliente cliente = new Cliente();
         cliente.setNome(dto.nome());
-        cliente.setCpf(dto.cpf());
         cliente.setDataNascimento(dto.dataNascimento());
         cliente.setUsuario(usuario);
 
@@ -159,7 +150,6 @@ public class ClienteServiceImpl implements ClienteService {
         cliente.getEnderecos().add(endereco);
     }
 
-    
     @Override
     @Transactional
     public void addTelefone(Long clienteId, TelefoneClienteRequestDTO dto) {
@@ -181,7 +171,6 @@ public class ClienteServiceImpl implements ClienteService {
     public Cliente update(Long idCliente, Long enderecoId, Long telefoneId, ClienteRequestDTO dto) {
         Cliente cliente = findById(idCliente);
         cliente.setNome(dto.nome());
-        cliente.setCpf(dto.cpf());
         cliente.setDataNascimento(dto.dataNascimento());
 
         for (EnderecoRequestDTO enderecoDTO : dto.enderecos()) {

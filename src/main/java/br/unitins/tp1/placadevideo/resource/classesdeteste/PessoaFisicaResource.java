@@ -1,4 +1,4 @@
-package br.unitins.tp1.placadevideo.resource.pessoafisica;
+package br.unitins.tp1.placadevideo.resource.classesdeteste;
 
 import br.unitins.tp1.placadevideo.dto.request.PessoaFisicaRequestDTO;
 import br.unitins.tp1.placadevideo.dto.response.PessoaFisicaResponseDTO;

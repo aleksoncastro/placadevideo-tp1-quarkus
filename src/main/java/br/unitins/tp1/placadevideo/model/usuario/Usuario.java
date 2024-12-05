@@ -9,8 +9,19 @@ public class Usuario extends DefaultEntity {
     @Column(unique = true)
     private String username;
     private String senha;
-    private String email;
     private Perfil perfil;
+    @Column(unique = true)
+    private String email;
+    @Column(length = 60, nullable = false, unique = true)
+    private String cpf;
+    
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
 
     public String getSenha() {
         return senha;
@@ -43,5 +54,6 @@ public class Usuario extends DefaultEntity {
     public void setEmail(String email) {
         this.email = email;
     }
+
 
 }

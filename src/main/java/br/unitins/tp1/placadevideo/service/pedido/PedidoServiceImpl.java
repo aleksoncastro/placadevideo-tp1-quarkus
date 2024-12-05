@@ -87,8 +87,9 @@ public class PedidoServiceImpl implements PedidoService {
 
     @Override
     public List<Pedido> findByUsername(String username) {
+        Cliente cliente = clienteRepository.findByUsername(username);
         // buscar pelo username
-        return pedidoRepository.findByUsername(username);
+        return pedidoRepository.findByCliente(cliente.getId());
 
     }
 
@@ -97,6 +98,10 @@ public class PedidoServiceImpl implements PedidoService {
     public Pedido create(@Valid PedidoRequestDTO dto, String username) {
         Pedido pedido = new Pedido();
         pedido.setData(LocalDateTime.now());
+        Cliente cliente = clienteService.findByUsername(username);
+        if (cliente == null) {
+            throw new ValidationException("cliente", "Cliente não Encontrado");
+        }
         pedido.setCliente(clienteService.findByUsername(username));
 
         pedido.setListaItemPedido(new ArrayList<>());
@@ -132,7 +137,7 @@ public class PedidoServiceImpl implements PedidoService {
                 break;
             case 3:
                 if (pedido.getCliente().getCartoes().isEmpty()) {
-                    throw new NullPointerException("O cliente não possue cartoes");
+                    throw new ValidationException("idcartao", "O cliente não possue cartoes");
                 }
                 pedido.setPagamento(registrarPagamentoCartao(pedido, dto.idCartao()));
                 createStatusPedido(pedido, 2);
@@ -145,28 +150,27 @@ public class PedidoServiceImpl implements PedidoService {
         return pedido;
     }
 
-    
-   @Override
-   @Transactional
-   public EnderecoEntrega editEnderecoEntrega(Long idPedido, EnderecoEntregaRequestDTO dto) {
-       Pedido pedido = pedidoRepository.findById(idPedido);
-       EnderecoEntrega edit = entregaRepository.findById(pedido.getEnderecoEntrega().getId());
+    @Override
+    @Transactional
+    public EnderecoEntrega editEnderecoEntrega(Long idPedido, EnderecoEntregaRequestDTO dto) {
+        Pedido pedido = pedidoRepository.findById(idPedido);
+        EnderecoEntrega edit = entregaRepository.findById(pedido.getEnderecoEntrega().getId());
 
-       if(pedido == null || edit == null ){
-           throw new ValidationException("idPedido", "Informe um idPedido válido");
-       }
+        if (pedido == null || edit == null) {
+            throw new ValidationException("idPedido", "Informe um idPedido válido");
+        }
 
-       edit.setEstado(dto.estado());
-       edit.setCidade(dto.cidade());
-       edit.setCep(dto.cep());
-       edit.setBairro(dto.bairro());
-       edit.setRua(dto.rua());
-       edit.setNumero(dto.numero());
+        edit.setEstado(dto.estado());
+        edit.setCidade(dto.cidade());
+        edit.setCep(dto.cep());
+        edit.setBairro(dto.bairro());
+        edit.setRua(dto.rua());
+        edit.setNumero(dto.numero());
 
-       pedido.setEnderecoEntrega(edit);
-       
-       return edit;
-   }
+        pedido.setEnderecoEntrega(edit);
+
+        return edit;
+    }
 
     private EnderecoEntrega getEnderecoEntrega(Cliente cliente, Long idEndereco) {
         Endereco endereco = cliente.getEnderecos()
@@ -197,44 +201,43 @@ public class PedidoServiceImpl implements PedidoService {
         for (ItemPedidoRequestDTO itemDTO : dto.listaItemPedido()) {
             ItemPedido item = new ItemPedido();
             item.setPreco(BigDecimal.ZERO);
-    
+
             Lote lote = loteService.findByIdPlacaDeVideo(itemDTO.idProduto());
             if (lote == null) {
                 throw new ValidationException("idProduto", "Por favor informe o ID de algum produto válido.");
             }
-    
+
             int quantidadeEstoque = calcularQuantidadeEstoque(itemDTO.idProduto());
             if (quantidadeEstoque < itemDTO.quantidade()) {
                 throw new ValidationException("quantidade", "Quantidade em estoque insuficiente.");
             }
-    
+
             BigDecimal precoTotal = BigDecimal.ZERO;
             int quantidadeRestante = itemDTO.quantidade();
-    
+
             while (quantidadeRestante > 0) {
                 lote = loteService.findByIdPlacaDeVideo(itemDTO.idProduto());
                 if (lote == null || lote.getEstoque() <= 0) {
                     throw new ValidationException("estoque", "Estoque insuficiente para completar o pedido.");
                 }
-    
+
                 int quantidadeUsada = Math.min(lote.getEstoque(), quantidadeRestante);
-    
+
                 lote.setEstoque(lote.getEstoque() - quantidadeUsada);
-    
+
                 BigDecimal quantidadeUsadaBD = BigDecimal.valueOf(quantidadeUsada);
                 precoTotal = precoTotal.add(quantidadeUsadaBD.multiply(lote.getPlacaDeVideo().getPreco()));
-    
+
                 quantidadeRestante -= quantidadeUsada;
             }
-    
+
             item.setLote(lote);
             item.setPreco(precoTotal);
             item.setQuantidade(itemDTO.quantidade());
-    
+
             pedido.getListaItemPedido().add(item);
         }
     }
-    
 
     private int calcularQuantidadeEstoque(Long idProduto) {
         return loteService.findByIdPlacaDeVideoQtdeTotal(idProduto)
@@ -259,7 +262,7 @@ public class PedidoServiceImpl implements PedidoService {
     @Transactional
     public Pedido updateStatusPedido(Long idPedido, Integer id) {
         Pedido p = pedidoRepository.findById(idPedido);
-        
+
         createStatusPedido(p, id);
 
         pedidoRepository.persist(p);
@@ -326,7 +329,9 @@ public class PedidoServiceImpl implements PedidoService {
             p.setPagamento(pagamentoRepository.findById(idPix));
 
             createStatusPedido(p, 2);
-            
+
+        } else {
+            throw new ValidationException("idPedido", "Pedido não encontrado");
         }
 
     }
@@ -339,6 +344,8 @@ public class PedidoServiceImpl implements PedidoService {
             p.setPagamento(pagamentoRepository.findById(idBoleto));
 
             createStatusPedido(p, 2);
+        } else {
+            throw new ValidationException("idPedido", "Pedido não encontrado");
         }
 
     }
@@ -399,11 +406,5 @@ public class PedidoServiceImpl implements PedidoService {
     public List<Pedido> findByStatus(int idStatus) {
         return pedidoRepository.findByStatus(idStatus);
     }
-
-    @Override
-    public List<ItemPedido> findByPedidoId(Long idPedido){
-        return itemPedidoRepository.findByPedidoId(idPedido);
-    }
-
 
 }

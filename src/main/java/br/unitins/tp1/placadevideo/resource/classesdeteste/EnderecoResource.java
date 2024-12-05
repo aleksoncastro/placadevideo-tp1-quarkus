@@ -1,4 +1,4 @@
-package br.unitins.tp1.placadevideo.resource.endereco;
+package br.unitins.tp1.placadevideo.resource.classesdeteste;
 
 import br.unitins.tp1.placadevideo.dto.request.EnderecoRequestDTO;
 import br.unitins.tp1.placadevideo.dto.response.EnderecoResponseDTO;

@@ -22,7 +22,7 @@ public class PlacaDeVideoFileServiceImpl implements FileService {
 
     private static final Logger LOG = Logger.getLogger(PlacaDeVideoResource.class);
 
-    private final String PATH_CLIENTE = "C:\\Users\\Alêkson\\Pictures";
+    private final String PATH_CLIENTE = "C:\\Users\\Alêkson\\placadevideo-tp1-quarkus\\placasdevideo_imagens";
     // "C:\\Users\\Alêkson\\placadevideo-tp1-quarkus\\placasdevideo";
 
     private static final List<String> SUPPORTED_MIME_TYPES = Arrays.asList("image/jpeg", "image/jpg", "image/png",
