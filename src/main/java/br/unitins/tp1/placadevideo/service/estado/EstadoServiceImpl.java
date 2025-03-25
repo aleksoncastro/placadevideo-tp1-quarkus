@@ -6,6 +6,7 @@ import br.unitins.tp1.placadevideo.dto.request.EstadoRequestDTO;
 import br.unitins.tp1.placadevideo.model.Estado;
 import br.unitins.tp1.placadevideo.repository.estado.EstadoRepository;
 import br.unitins.tp1.placadevideo.validation.ValidationException;
+import io.quarkus.hibernate.orm.panache.PanacheQuery;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -23,13 +24,32 @@ public class EstadoServiceImpl implements EstadoService {
     }
 
     @Override
+    public List<Estado> findByNome(String nome, Integer page, Integer pageSize) {
+        return estadoRepository.findByNome(nome).page(page, pageSize).list();
+    }
+
     public List<Estado> findByNome(String nome) {
-        return estadoRepository.findByNome(nome);
+        return estadoRepository.findByNome(nome).list();
+    }
+
+    public List<Estado> findAll(Integer page, Integer pageSize) {
+        PanacheQuery<Estado> query = null;
+        if (page == null || pageSize == null)
+            query = estadoRepository.findAll();
+        else
+            query = estadoRepository.findAll().page(page, pageSize);
+
+        return query.list();
     }
 
     @Override
-    public List<Estado> findAll() {
-        return estadoRepository.findAll().list();
+    public long count() {
+        return estadoRepository.findAll().count();
+    }
+
+    @Override
+    public long count(String nome) {
+        return estadoRepository.findByNome(nome).count();
     }
 
     @Override

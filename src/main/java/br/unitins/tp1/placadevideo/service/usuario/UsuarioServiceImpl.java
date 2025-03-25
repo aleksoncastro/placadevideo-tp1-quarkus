@@ -84,7 +84,7 @@ public class UsuarioServiceImpl implements UsuarioService {
         usuario.setUsername(dto.username());
         usuario.setEmail(dto.email());
         usuario.setSenha(hashService.getHashSenha(dto.senha()));
-        usuario.setPerfil(Perfil.valueOf(dto.idPerfil()));
+        usuario.setPerfil(Perfil.ADM);
         usuario.setCpf(dto.cpf());
         usuarioRepository.persist(usuario);
 
@@ -108,10 +108,10 @@ public class UsuarioServiceImpl implements UsuarioService {
             throw new ValidationException("senha", "O campo 'senha' é obrigatório.");
         }
 
-        if (dto.idPerfil() == null) {
+        /*if (dto.idPerfil() == null) {
             throw new ValidationException("idPerfil", "O campo 'idPerfil' é obrigatório.");
         }
-
+*/
         if (dto.cpf() == null || dto.cpf().isBlank()) {
             throw new ValidationException("cpf", "O campo 'cpf' é obrigatório.");
         }

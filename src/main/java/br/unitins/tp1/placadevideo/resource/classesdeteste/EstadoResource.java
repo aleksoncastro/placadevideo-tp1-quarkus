@@ -10,12 +10,14 @@ import br.unitins.tp1.placadevideo.service.estado.EstadoService;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
+import jakarta.ws.rs.DefaultValue;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 
 @Path("/estados")
@@ -28,21 +30,23 @@ public class EstadoResource {
 
     @GET
     @Path("/{id}")
-    //@RolesAllowed("Adm")
+    // @RolesAllowed("Adm")
     public Estado findById(@PathParam("id") Long id) {
         return estadoService.findById(id);
     }
 
     @GET
     @Path("/search/{nome}")
-    //@RolesAllowed("{Adm, User}")
-    public List<Estado> findByNome(@PathParam("nome") String nome) {
-        return estadoService.findByNome(nome);
+    // @RolesAllowed("{Adm, User}")
+    public List<Estado> findByNome(@PathParam("nome") String nome, @QueryParam("page") @DefaultValue("0") int page,
+            @QueryParam("page_size") @DefaultValue("100") int pageSize) {
+        return estadoService.findByNome(nome, page, pageSize);
     }
 
     @GET
-    public List<Estado> findAll() {
-        return estadoService.findAll();
+    public List<Estado> findAll(@QueryParam("page") @DefaultValue("0") int page,
+    @QueryParam("page_size") @DefaultValue("100") int pageSize) {
+        return estadoService.findAll(page, pageSize);
     }
 
     @POST
@@ -61,4 +65,17 @@ public class EstadoResource {
     public void delete(@PathParam("id") Long id) {
         estadoService.delete(id);
     }
+
+    @GET
+     @Path("/count")
+     public long total() {
+         return estadoService.count();
+     }
+ 
+     @GET
+     @Path("/nome/{nome}/count")
+     public long totalPorNome(String nome) {
+         return estadoService.count(nome);
+     }
+ 
 }

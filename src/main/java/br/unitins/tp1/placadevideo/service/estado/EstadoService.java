@@ -10,13 +10,17 @@ public interface EstadoService {
 
     Estado findById(Long id);
 
-    List<Estado> findByNome(String nome);
+    List<Estado> findByNome(String nome, Integer page, Integer pageSize);
 
-    List<Estado> findAll();
+    List<Estado> findAll(Integer page, Integer pageSize);
 
     Estado create(@Valid EstadoRequestDTO dto);
 
     Estado update(Long id, EstadoRequestDTO dto);
+
+    long count();
+
+    long count(String nome);
 
     void delete(Long id);
 

@@ -57,7 +57,7 @@ public void testFindById() {
                       "sigla", is("TO"));
                 
         // removendo o dado que foi inserido
-        estadoService.delete(estadoService.findByNome("Tocantins").getFirst().getId());
+       // estadoService.delete(estadoService.findByNome("Tocantins").getFirst().getId());
     }
 
     @Test

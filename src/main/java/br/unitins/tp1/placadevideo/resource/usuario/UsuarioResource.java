@@ -52,8 +52,8 @@ public class UsuarioResource {
     }
 
     @POST
-    @Path("/usuarios")
-    @RolesAllowed("Adm")
+    @Path("/funcionarios")
+   // @RolesAllowed("Adm")
     public Response registrarFuncionario(@Valid UsuarioRequestDTO dto) {
         LOG.info("Registrando funcionario no metodo registrarFuncionario");
         return Response.status(Status.CREATED).entity(UsuarioResponseDTO.valueOf(usuarioService.createFuncionario(dto)))
