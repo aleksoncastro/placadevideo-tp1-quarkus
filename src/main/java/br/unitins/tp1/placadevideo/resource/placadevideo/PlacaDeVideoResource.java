@@ -2,6 +2,7 @@ package br.unitins.tp1.placadevideo.resource.placadevideo;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 import org.jboss.logging.Logger;
 import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
@@ -9,6 +10,8 @@ import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 import br.unitins.tp1.placadevideo.dto.request.PlacaDeVideoRequestDTO;
 import br.unitins.tp1.placadevideo.dto.response.PlacaDeVideoResponseDTO;
 import br.unitins.tp1.placadevideo.form.ImageForm;
+import br.unitins.tp1.placadevideo.model.Fornecedor;
+import br.unitins.tp1.placadevideo.model.placadevideo.PlacaDeVideo;
 import br.unitins.tp1.placadevideo.service.placadevideo.PlacaDeVideoFileServiceImpl;
 import br.unitins.tp1.placadevideo.service.placadevideo.PlacaDeVideoService;
 import br.unitins.tp1.placadevideo.validation.ValidationException;
@@ -17,6 +20,7 @@ import jakarta.inject.Inject;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
+import jakarta.ws.rs.DefaultValue;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.PATCH;
 import jakarta.ws.rs.POST;
@@ -24,6 +28,7 @@ import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.ResponseBuilder;
@@ -44,7 +49,7 @@ public class PlacaDeVideoResource {
 
     @GET
     @Path("/{id}")
-    @RolesAllowed("Adm")
+    //@RolesAllowed("Adm")
     public Response findById(@PathParam("id") Long id) {
         LOG.infof("Buscando placa de vídeo com id %d", id);
         return Response.ok(PlacaDeVideoResponseDTO.valueOf(placaDeVideoService.findById(id))).build();
@@ -52,7 +57,7 @@ public class PlacaDeVideoResource {
 
     @GET
     @Path("/search/descricao/{descricao}")
-    @RolesAllowed({ "Adm", "User" })
+   // @RolesAllowed({ "Adm", "User" })
     public Response findByDescricao(@PathParam("descricao") String descricao) {
         LOG.infof("Buscando placa de vídeo pela descrição: %s", descricao);
         return Response.ok(PlacaDeVideoResponseDTO.valueOf(placaDeVideoService.findByDescricao(descricao))).build();
@@ -60,25 +65,21 @@ public class PlacaDeVideoResource {
 
     @GET
     @Path("/search/{modelo}")
-    @RolesAllowed({ "Adm", "User" })
-    public Response findByNome(@PathParam("modelo") String modelo) {
-        LOG.infof("Buscando placas de vídeo pelo modelo: %s", modelo);
-        return Response
-                .ok(placaDeVideoService.findByModelo(modelo).stream().map(o -> PlacaDeVideoResponseDTO.valueOf(o))
-                        .toList())
-                .build();
+   // @RolesAllowed({ "Adm", "User" })
+    public List<PlacaDeVideo> findByNome(@PathParam("nome") String nome, @QueryParam("page") @DefaultValue("0") int page,
+            @QueryParam("page_size") @DefaultValue("100") int pageSize) {
+        return placaDeVideoService.findByModelo(nome, page, pageSize);
     }
 
     @GET
-    @RolesAllowed({ "Adm", "User" })
-    public Response findAll() {
-        LOG.info("Buscando todas as placas de vídeo");
-        return Response.ok(placaDeVideoService.findAll().stream().map(o -> PlacaDeVideoResponseDTO.valueOf(o)).toList())
-                .build();
+    //@RolesAllowed({ "Adm", "User" })
+    public List<PlacaDeVideo> findAll(@QueryParam("page") @DefaultValue("0") int page,
+    @QueryParam("page_size") @DefaultValue("100") int pageSize) {
+        return placaDeVideoService.findAll(page, pageSize);
     }
 
     @POST
-    @RolesAllowed("Adm")
+    //@RolesAllowed("Adm")
     public Response create(@Valid PlacaDeVideoRequestDTO dto) {
         LOG.info("Criando nova placa de vídeo");
         return Response.status(Status.CREATED).entity(PlacaDeVideoResponseDTO.valueOf(placaDeVideoService.create(dto)))
@@ -87,7 +88,7 @@ public class PlacaDeVideoResource {
 
     @PUT
     @Path("/{id}")
-    @RolesAllowed("Adm")
+  //  @RolesAllowed("Adm")
     public Response update(@PathParam("id") Long id, @Valid PlacaDeVideoRequestDTO dto) {
         LOG.infof("Atualizando placa de vídeo com id %d", id);
         placaDeVideoService.update(id, dto);
@@ -96,7 +97,7 @@ public class PlacaDeVideoResource {
 
     @DELETE
     @Path("/{id}")
-    @RolesAllowed("Adm")
+  //  @RolesAllowed("Adm")
     public Response delete(@PathParam("id") Long id) {
         LOG.infof("Deletando placa de vídeo com id %d", id);
         placaDeVideoService.delete(id);
@@ -104,7 +105,7 @@ public class PlacaDeVideoResource {
     }
 
     @PATCH
-    @RolesAllowed({ "Adm" })
+   // @RolesAllowed({ "Adm" })
     @Path("/{idPlacaDeVideo}/upload/imagem")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     public Response uploadImage(@PathParam("idPlacaDeVideo") Long id, @MultipartForm ImageForm form) {
@@ -125,7 +126,7 @@ public class PlacaDeVideoResource {
     }
 
     @GET
-    @RolesAllowed({ "Adm" })
+  //  @RolesAllowed({ "Adm" })
     @Path("/download/imagem/{nomeImagem}")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     public Response downloadImage(@PathParam("nomeImagem") String nomeImagem) {
@@ -148,6 +149,18 @@ public class PlacaDeVideoResource {
             LOG.error("Erro ao realizar o download: " + e.getMessage(), e);
             return Response.status(500).entity("Erro interno no servidor.").build();
         }
+    }
+
+    @GET
+    @Path("/count")
+    public long total() {
+        return placaDeVideoService.count();
+    }
+
+    @GET
+    @Path("/nome/{nome}/count")
+    public long totalPorNome(String nome) {
+        return placaDeVideoService.count(nome);
     }
 
 }

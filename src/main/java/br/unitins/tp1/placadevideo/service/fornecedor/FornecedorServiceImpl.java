@@ -7,11 +7,13 @@ import java.util.NoSuchElementException;
 import br.unitins.tp1.placadevideo.dto.request.FornecedorRequestDTO;
 import br.unitins.tp1.placadevideo.dto.request.TelefoneFornecedorRequestDTO;
 import br.unitins.tp1.placadevideo.model.Fornecedor;
+import br.unitins.tp1.placadevideo.model.Fornecedor;
 import br.unitins.tp1.placadevideo.model.telefone.TelefoneFornecedor;
 import br.unitins.tp1.placadevideo.repository.fornecedor.FornecedorRepository;
 import br.unitins.tp1.placadevideo.repository.telefone.TelefoneFornecedorRepository;
 import br.unitins.tp1.placadevideo.service.telefone.TelefoneFornecedorServiceImpl;
 import br.unitins.tp1.placadevideo.validation.ValidationException;
+import io.quarkus.hibernate.orm.panache.PanacheQuery;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityNotFoundException;
@@ -67,16 +69,21 @@ public class FornecedorServiceImpl implements FornecedorService {
     }
 
     @Override
-    public List<Fornecedor> findByNome(String nome) {
+    public List<Fornecedor> findByNome(String nome, Integer page, Integer pageSize) {
         if (nome == null || nome.isEmpty()) {
             throw new ValidationException("nome", "O nome do fornecedor não pode ser nulo ou vazio.");
         }
-        return fornecedorRepository.findByNome(nome);
+        return fornecedorRepository.findByNome(nome).page(page, pageSize).list();
     }
 
-    @Override
-    public List<Fornecedor> findAll() {
-        return fornecedorRepository.findAll().list();
+    public List<Fornecedor> findAll(Integer page, Integer pageSize) {
+        PanacheQuery<Fornecedor> query = null;
+        if (page == null || pageSize == null)
+            query = fornecedorRepository.findAll();
+        else
+            query = fornecedorRepository.findAll().page(page, pageSize);
+
+        return query.list();
     }
 
     @Override
@@ -140,5 +147,15 @@ public class FornecedorServiceImpl implements FornecedorService {
         if (!fornecedorRepository.deleteById(id)) {
             throw new EntityNotFoundException("Fornecedor não encontrado para exclusão.");
         }
+    }
+
+    @Override
+    public long count() {
+        return fornecedorRepository.findAll().count();
+    }
+
+    @Override
+    public long count(String nome) {
+        return fornecedorRepository.findByNome(nome).count();
     }
 }

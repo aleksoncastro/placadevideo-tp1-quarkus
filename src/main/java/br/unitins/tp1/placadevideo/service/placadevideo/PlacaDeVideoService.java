@@ -11,9 +11,9 @@ public interface PlacaDeVideoService {
 
     PlacaDeVideo findByDescricao(String  descricao);
 
-    List<PlacaDeVideo> findByModelo(String modelo);
+    List<PlacaDeVideo> findByModelo(String modelo, Integer page, Integer pageSize);
 
-    List<PlacaDeVideo> findAll();
+    List<PlacaDeVideo> findAll(Integer page, Integer pageSize);
 
     PlacaDeVideo create(PlacaDeVideoRequestDTO dto);
 
@@ -22,6 +22,10 @@ public interface PlacaDeVideoService {
     PlacaDeVideo updateNomeImagem(Long id, String nomeImagem);
 
     void delete(Long id);
+
+    long count();
+
+    long count(String nome);
 
 
 }

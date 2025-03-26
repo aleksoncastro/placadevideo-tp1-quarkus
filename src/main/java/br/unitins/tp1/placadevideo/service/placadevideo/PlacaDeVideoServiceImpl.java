@@ -14,6 +14,7 @@ import br.unitins.tp1.placadevideo.repository.placadevideo.PlacaDeVideoRepositor
 import br.unitins.tp1.placadevideo.service.fornecedor.FornecedorService;
 import br.unitins.tp1.placadevideo.service.lote.LoteService;
 import br.unitins.tp1.placadevideo.validation.ValidationException;
+import io.quarkus.hibernate.orm.panache.PanacheQuery;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityNotFoundException;
@@ -43,13 +44,22 @@ public class PlacaDeVideoServiceImpl implements PlacaDeVideoService {
     }
 
     @Override
-    public List<PlacaDeVideo> findByModelo(String modelo) {
-        return placaDeVideoRepository.findByModelo(modelo);
+    public List<PlacaDeVideo> findByModelo(String nome, Integer page, Integer pageSize) {
+        if (nome == null || nome.isEmpty()) {
+            throw new ValidationException("nome", "O nome do fornecedor não pode ser nulo ou vazio.");
+        }
+        return placaDeVideoRepository.findByModelo(nome).page(page, pageSize).list();
     }
 
     @Override
-    public List<PlacaDeVideo> findAll() {
-        return placaDeVideoRepository.findAll().list();
+   public List<PlacaDeVideo> findAll(Integer page, Integer pageSize) {
+        PanacheQuery<PlacaDeVideo> query = null;
+        if (page == null || pageSize == null)
+            query = placaDeVideoRepository.findAll();
+        else
+            query = placaDeVideoRepository.findAll().page(page, pageSize);
+
+        return query.list();
     }
 
     @Override
@@ -153,6 +163,16 @@ public class PlacaDeVideoServiceImpl implements PlacaDeVideoService {
 
         placaDeVideo.getListaImagem().add(nomeImagem);
         return placaDeVideo;
+    }
+
+    @Override
+    public long count() {
+        return placaDeVideoRepository.findAll().count();
+    }
+
+    @Override
+    public long count(String nome) {
+        return placaDeVideoRepository.findByModelo(nome).count();
     }
 
 }

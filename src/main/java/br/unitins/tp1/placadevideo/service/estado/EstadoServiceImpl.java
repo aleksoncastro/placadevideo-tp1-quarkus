@@ -32,6 +32,7 @@ public class EstadoServiceImpl implements EstadoService {
         return estadoRepository.findByNome(nome).list();
     }
 
+    @Override
     public List<Estado> findAll(Integer page, Integer pageSize) {
         PanacheQuery<Estado> query = null;
         if (page == null || pageSize == null)

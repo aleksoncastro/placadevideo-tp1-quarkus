@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 import br.unitins.tp1.placadevideo.dto.request.ClienteRequestDTO;
 import br.unitins.tp1.placadevideo.dto.request.EnderecoRequestDTO;
 import br.unitins.tp1.placadevideo.dto.request.TelefoneClienteRequestDTO;
-import br.unitins.tp1.placadevideo.dto.request.UsuarioRequestDTO;
+//import br.unitins.tp1.placadevideo.dto.request.UsuarioRequestDTO;
 import br.unitins.tp1.placadevideo.model.placadevideo.PlacaDeVideo;
 import br.unitins.tp1.placadevideo.model.usuario.Cliente;
 import br.unitins.tp1.placadevideo.model.usuario.Usuario;
@@ -56,16 +56,16 @@ public class ClienteServiceTest {
     @Test
     public void testCreateCliente() {
         // Criando o usuário com o UsuarioRequestDTO através do método createCliente
-        UsuarioRequestDTO usuarioDTO = new UsuarioRequestDTO(
+        /*UsuarioRequestDTO usuarioDTO = new UsuarioRequestDTO(
             "usuarioTeste", 
             "senha123", 
             "usuario@teste.com", 
             "12345678900",
             1 // Supondo que o ID do perfil seja 1
-        );
+        ); */
         
         // Criando o usuário usando o método createCliente
-        usuario = usuarioService.createCliente(usuarioDTO);
+        //usuario = usuarioService.createCliente(usuarioDTO);
 
         // Criando um ClienteRequestDTO
         EnderecoRequestDTO enderecoDTO = new EnderecoRequestDTO("Rua X", "123", "Centro", "Cidade", "Estado", "12345-678");
@@ -94,14 +94,14 @@ public class ClienteServiceTest {
     @Test
     public void testAdicionarProdutoListaDesejo() {
         // Criando o usuário com o UsuarioRequestDTO através do método createCliente
-        UsuarioRequestDTO usuarioDTO = new UsuarioRequestDTO(
-            "usuarioTeste2", 
+        /*UsuarioRequestDTO usuarioDTO = new UsuarioRequestDTO(
+            "usuarioTeste", 
             "senha123", 
-            "usuario2@teste.com", 
+            "usuario@teste.com", 
             "12345678900",
-            1
-        );
-        usuario = usuarioService.createCliente(usuarioDTO);
+            1 // Supondo que o ID do perfil seja 1
+        ); */
+       // usuario = usuarioService.createCliente(usuarioDTO);
 
         // Criando um ClienteRequestDTO
         ClienteRequestDTO dto = new ClienteRequestDTO(

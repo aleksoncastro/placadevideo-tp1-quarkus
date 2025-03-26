@@ -14,9 +14,9 @@ public interface FornecedorService {
 
     Fornecedor findByIdComTelefones(Long id);
 
-    List<Fornecedor> findByNome(String nome);
+    List<Fornecedor> findByNome(String nome, Integer page, Integer pageSize);
 
-    List<Fornecedor> findAll();
+    List<Fornecedor> findAll(Integer page, Integer pageSize);
 
     Fornecedor create(FornecedorRequestDTO dto);
 
@@ -25,6 +25,10 @@ public interface FornecedorService {
     Fornecedor update(Long fornecedorId, Long telefoneId, FornecedorRequestDTO dto);
 
     void delete(Long id);
+
+    long count();
+
+    long count(String nome);
 
 
 }
