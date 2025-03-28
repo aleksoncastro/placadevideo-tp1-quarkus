@@ -4,6 +4,7 @@ import java.util.List;
 
 import br.unitins.tp1.placadevideo.dto.request.EstadoRequestDTO;
 import br.unitins.tp1.placadevideo.dto.response.EstadoResponseDTO;
+import br.unitins.tp1.placadevideo.dto.response.PageResponse;
 import br.unitins.tp1.placadevideo.model.Estado;
 import br.unitins.tp1.placadevideo.service.estado.EstadoService;
 //import jakarta.annotation.security.RolesAllowed;
@@ -19,6 +20,7 @@ import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 
 @Path("/estados")
 @Produces(MediaType.APPLICATION_JSON)
@@ -44,9 +46,13 @@ public class EstadoResource {
     }
 
     @GET
-    public List<Estado> findAll(@QueryParam("page") @DefaultValue("0") int page,
-    @QueryParam("page_size") @DefaultValue("100") int pageSize) {
-        return estadoService.findAll(page, pageSize);
+    public Response findAll(
+        @QueryParam("page") @DefaultValue("0") int page,
+        @QueryParam("page_size") @DefaultValue("100") int pageSize
+    ) {
+        Long totalCount = estadoService.count();
+        PageResponse<EstadoResponseDTO> pageResponse = PageResponse.valueOf(page, pageSize, totalCount, estadoService.findAll(page, pageSize).stream().map(EstadoResponseDTO::valueOf).toList());
+        return Response.ok(pageResponse).build();
     }
 
     @POST
