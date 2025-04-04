@@ -9,6 +9,7 @@ import br.unitins.tp1.placadevideo.repository.lote.LoteRepository;
 import br.unitins.tp1.placadevideo.repository.placadevideo.PlacaDeVideoRepository;
 import br.unitins.tp1.placadevideo.service.placadevideo.PlacaDeVideoService;
 import br.unitins.tp1.placadevideo.validation.ValidationException;
+import org.hibernate.Hibernate;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityNotFoundException;
@@ -75,6 +76,8 @@ public class LoteServiceImpl implements LoteService {
         if (placaDeVideo == null) {
             throw new EntityNotFoundException("Placa de vídeo não encontrada");
         }
+        Hibernate.initialize(placaDeVideo.getListaImagem());
+        
         lote.setPlacaDeVideo(placaDeVideo);
 
         // Atualiza o lote no banco

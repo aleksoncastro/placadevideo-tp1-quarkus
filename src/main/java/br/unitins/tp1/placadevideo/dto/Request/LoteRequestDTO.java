@@ -11,7 +11,7 @@ public record LoteRequestDTO(
     String codigo,
     @NotNull(message = "O campo codigo deve ser informado.")
     @Positive
-    Integer estoque,
+    int estoque,
     @NotNull(message = "O campo data deve ser informado.")
     LocalDate dataFabricacao,
     @NotNull(message = "O campo idPlacaDeVideo deve ser informado.")
