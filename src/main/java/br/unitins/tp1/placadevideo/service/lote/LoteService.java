@@ -9,11 +9,15 @@ public interface LoteService {
 
     Lote findById(Long id);
 
-    Lote findByCodigo(String codigo);
+    List<Lote> findByCodigo(String codigo, Integer page, Integer pageSize);
 
     Lote findByIdPlacaDeVideo(Long idPlaca );
 
-    List<Lote> findAll();
+    List<Lote> findAll(Integer page, Integer pageSize);
+     
+    long count();
+     
+    long count(String nome);
 
     List<Lote> findByIdPlacaDeVideoQtdeTotal(Long idPlacaDeVideo);
 

@@ -7,7 +7,6 @@ import java.util.NoSuchElementException;
 import br.unitins.tp1.placadevideo.dto.request.FornecedorRequestDTO;
 import br.unitins.tp1.placadevideo.dto.request.TelefoneFornecedorRequestDTO;
 import br.unitins.tp1.placadevideo.model.Fornecedor;
-import br.unitins.tp1.placadevideo.model.Fornecedor;
 import br.unitins.tp1.placadevideo.model.telefone.TelefoneFornecedor;
 import br.unitins.tp1.placadevideo.repository.fornecedor.FornecedorRepository;
 import br.unitins.tp1.placadevideo.repository.telefone.TelefoneFornecedorRepository;

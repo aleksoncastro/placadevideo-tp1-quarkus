@@ -8,8 +8,6 @@ import br.unitins.tp1.placadevideo.dto.request.FornecedorRequestDTO;
 import br.unitins.tp1.placadevideo.dto.request.TelefoneFornecedorRequestDTO;
 import br.unitins.tp1.placadevideo.dto.response.FornecedorResponseDTO;
 import br.unitins.tp1.placadevideo.model.Fornecedor;
-import br.unitins.tp1.placadevideo.model.Fornecedor;
-import br.unitins.tp1.placadevideo.model.Fornecedor;
 import br.unitins.tp1.placadevideo.service.fornecedor.FornecedorService;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;

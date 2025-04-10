@@ -1,6 +1,5 @@
 package br.unitins.tp1.placadevideo.repository.placadevideo;
 
-import java.util.List;
 
 import br.unitins.tp1.placadevideo.model.placadevideo.PlacaDeVideo;
 import io.quarkus.hibernate.orm.panache.PanacheQuery;

@@ -2,6 +2,8 @@ package br.unitins.tp1.placadevideo.service.lote;
 
 import java.util.List;
 
+import org.hibernate.Hibernate;
+
 import br.unitins.tp1.placadevideo.dto.request.LoteRequestDTO;
 import br.unitins.tp1.placadevideo.model.placadevideo.Lote;
 import br.unitins.tp1.placadevideo.model.placadevideo.PlacaDeVideo;
@@ -9,7 +11,7 @@ import br.unitins.tp1.placadevideo.repository.lote.LoteRepository;
 import br.unitins.tp1.placadevideo.repository.placadevideo.PlacaDeVideoRepository;
 import br.unitins.tp1.placadevideo.service.placadevideo.PlacaDeVideoService;
 import br.unitins.tp1.placadevideo.validation.ValidationException;
-import org.hibernate.Hibernate;
+import io.quarkus.hibernate.orm.panache.PanacheQuery;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityNotFoundException;
@@ -34,13 +36,19 @@ public class LoteServiceImpl implements LoteService {
     }
 
     @Override
-    public Lote findByCodigo(String codigo) {
-        return loteRepository.findByCodigo(codigo);
+    public List<Lote> findByCodigo(String codigo, Integer page, Integer pageSize) {
+        return loteRepository.findByCodigo(codigo).page(page, pageSize).list();
     }
 
     @Override
-    public List<Lote> findAll() {
-        return loteRepository.findAll().list();
+    public List<Lote> findAll(Integer page, Integer pageSize) {
+        PanacheQuery<Lote> query = null;
+        if (page == null || pageSize == null)
+            query = loteRepository.findAll();
+        else 
+            query = loteRepository.findAll().page(page, pageSize);
+
+        return query.list();
     }
 
     @Override
@@ -124,6 +132,16 @@ public class LoteServiceImpl implements LoteService {
     @Transactional
     public void delete(Long id) {
         loteRepository.deleteById(id);
+    }
+
+    @Override
+    public long count() {
+        return loteRepository.findAll().count();
+    }
+
+    @Override
+    public long count(String codigo) {
+        return loteRepository.findByCodigo(codigo).count();
     }
 
 }

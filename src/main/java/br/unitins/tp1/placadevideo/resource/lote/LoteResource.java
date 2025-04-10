@@ -1,23 +1,28 @@
 package br.unitins.tp1.placadevideo.resource.lote;
 
+import java.util.List;
+
+import org.jboss.logging.Logger;
+
 import br.unitins.tp1.placadevideo.dto.request.LoteRequestDTO;
 import br.unitins.tp1.placadevideo.dto.response.LoteResponseDTO;
+import br.unitins.tp1.placadevideo.model.placadevideo.Lote;
 import br.unitins.tp1.placadevideo.service.lote.LoteService;
-import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
+import jakarta.ws.rs.DefaultValue;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
-import org.jboss.logging.Logger;
 
 @Path("/lotes")
 @Produces(MediaType.APPLICATION_JSON)
@@ -38,18 +43,19 @@ public class LoteResource {
     }
 
     @GET
-    @Path("/search/codigo/{codigo}")
+    @Path("/codigo/{codigo}")
     // @RolesAllowed({"Adm"})
-    public Response findByCodigo(@PathParam("codigo") String codigo) {
+    public List<Lote> findByCodigo(@PathParam("codigo") String codigo,  @QueryParam("page") @DefaultValue("0") int page,
+    @QueryParam("page_size") @DefaultValue("100") int pageSize) {
         LOG.infof("Buscando lote pelo código %s", codigo);
-        return Response.ok(LoteResponseDTO.valueOf(loteService.findByCodigo(codigo))).build();
+        return loteService.findByCodigo(codigo, page, pageSize);
     }
 
     @GET
     // @RolesAllowed({"Adm"})
-    public Response findAll() {
-        LOG.info("Buscando todos os lotes");
-        return Response.ok(loteService.findAll().stream().map(o -> LoteResponseDTO.valueOf(o)).toList()).build();
+    public List<Lote> findAll(@QueryParam("page") @DefaultValue("0") int page,
+            @QueryParam("page_size") @DefaultValue("100") int pageSize) {
+        return loteService.findAll(page, pageSize);
     }
 
     @POST
@@ -75,5 +81,17 @@ public class LoteResource {
         LOG.infof("Deletando lote com id %d", id);
         loteService.delete(id);
         return Response.noContent().build();
+    }
+
+    @GET
+    @Path("/count")
+    public long total() {
+        return loteService.count();
+    }
+
+    @GET
+    @Path("/nome/{nome}/count")
+    public long totalPorNome(String nome) {
+        return loteService.count(nome);
     }
 }

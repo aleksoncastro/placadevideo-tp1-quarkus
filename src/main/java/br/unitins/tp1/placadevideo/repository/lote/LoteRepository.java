@@ -3,6 +3,7 @@ package br.unitins.tp1.placadevideo.repository.lote;
 import java.util.List;
 
 import br.unitins.tp1.placadevideo.model.placadevideo.Lote;
+import io.quarkus.hibernate.orm.panache.PanacheQuery;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 
@@ -24,13 +25,13 @@ public class LoteRepository implements PanacheRepository<Lote> {
         return find(jpql.toString(), idPlaca).firstResult();
     }
 
-    public Lote findByCodigo(String codigo) {
+    public PanacheQuery<Lote> findByCodigo(String codigo) {
         StringBuffer jpql = new StringBuffer();
         jpql.append("SELECT l ");
         jpql.append("FROM Lote l ");
         jpql.append("WHERE l.codigo = ?1");
 
-        return find(jpql.toString(), codigo).firstResult();
+        return find(jpql.toString(), codigo);
     }
 
     public List<Lote> findByIdPlacaDeVideoQtdeTotal(Long idPlacaDeVideo) {
