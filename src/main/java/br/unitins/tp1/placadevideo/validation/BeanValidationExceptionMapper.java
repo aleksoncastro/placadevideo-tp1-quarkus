@@ -1,5 +1,7 @@
 package br.unitins.tp1.placadevideo.validation;
 
+import org.jboss.logging.Logger;
+
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
@@ -10,17 +12,25 @@ import jakarta.ws.rs.ext.Provider;
 @Provider
 @ApplicationScoped
 public class BeanValidationExceptionMapper implements ExceptionMapper<ConstraintViolationException> {
+
+    private static final Logger LOG = Logger.getLogger(BeanValidationExceptionMapper.class);
+
     @Override
     public Response toResponse(ConstraintViolationException exception) {
-        ValidationError error = new ValidationError("400", "Erro de Validação");
+
+        ValidationError validationError = new ValidationError("400", "Erro de Validação");
+
         for (ConstraintViolation<?> violation : exception.getConstraintViolations()) {
             String fullFieldName = violation.getPropertyPath().toString();
-            int index = fullFieldName.lastIndexOf(".");
-            String fieldName = fullFieldName.substring(index + 1);
+            String parts[] = fullFieldName.split("\\.");
+            String fieldName = parts[parts.length -1];
             String message = violation.getMessage();
-            error.addFieldError(fieldName, message);
+            validationError.addFieldError(fieldName, message);
         }
-        return Response.status(400).entity(error).build();
-    }
 
+        LOG.error(exception.getMessage());
+
+        return Response.status(Response.Status.BAD_REQUEST).entity(validationError).build();
+
+    }
 }

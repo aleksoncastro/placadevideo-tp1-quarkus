@@ -6,32 +6,48 @@ import java.util.List;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 
 public record PlacaDeVideoRequestDTO(
-        @NotBlank(message = "O campo deve ser informado")
-        String modelo,
-        @NotBlank(message = "O campo deve ser informado")
-        String categoria,
-        @NotBlank(message = "O campo deve ser informado")
-        BigDecimal preco,
-        @NotBlank(message = "O campo deve ser informado")
-        String resolucao,
-        @NotBlank(message = "O campo deve ser informado")
-        Integer energia,
-        @NotBlank(message = "O campo deve ser informado")
-        String descricao,
-        @NotBlank(message = "O campo deve ser informado")
-        Integer compatibilidade,
-        @NotBlank(message = "O campo deve ser informado")
-        Double clockBase,
-        @NotBlank(message = "O campo deve ser informado")
-        Double clockBoost,
-        @NotBlank(message = "O campo deve ser informado")
-        Integer idFan,
-        @NotNull(message = "O campo deve ser informado")
-        Long idFornecedor,
-        @NotNull(message = "O campo deve ser informado")
-        Boolean suporteRayTracing,
+    @NotBlank(message = "O modelo deve ser informado")
+    String modelo,
+
+    @NotBlank(message = "A categoria deve ser informada")
+    String categoria,
+
+    @NotNull(message = "O preço deve ser informado")
+    @Positive(message = "O preço deve ser maior que zero")
+    BigDecimal preco,
+
+    @NotBlank(message = "A resolução deve ser informada")
+    String resolucao,
+
+    @NotNull(message = "A energia deve ser informada")
+    @Positive(message = "A energia deve ser um valor positivo")
+    Integer energia,
+
+    @NotBlank(message = "A descrição deve ser informada")
+    String descricao,
+
+    @NotNull(message = "A compatibilidade deve ser informada")
+    Integer compatibilidade,
+
+    @NotNull(message = "O clock base deve ser informado")
+    @Positive(message = "O clock base deve ser um valor positivo")
+    Double clockBase,
+
+    @NotNull(message = "O clock boost deve ser informado")
+    @Positive(message = "O clock boost deve ser um valor positivo")
+    Double clockBoost,
+
+    @NotNull(message = "O id do fan deve ser informado")
+    Integer idFan,
+
+    @NotNull(message = "O fornecedor deve ser informado")
+    Long idFornecedor,
+
+    @NotNull(message = "O suporte ao Ray Tracing deve ser informado")
+    Boolean suporteRayTracing,
         @Valid
         MemoriaRequestDTO memoria,
         @Valid

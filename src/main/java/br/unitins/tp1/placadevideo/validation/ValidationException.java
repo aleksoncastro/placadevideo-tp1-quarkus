@@ -1,14 +1,16 @@
 package br.unitins.tp1.placadevideo.validation;
 
 public class ValidationException extends RuntimeException {
-    private String fildName;
 
-    public ValidationException(String filedName, String message) {
+    private String fieldName;
+
+    public ValidationException(String fieldName, String message) {
         super(message);
-        this.fildName = filedName;
+        this.fieldName = fieldName;
     }
 
-    public String getFildName() {
-        return fildName;
+    public String getFieldName() {
+        return fieldName;
     }
+    
 }

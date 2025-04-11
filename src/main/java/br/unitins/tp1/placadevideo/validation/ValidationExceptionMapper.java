@@ -8,11 +8,15 @@ import jakarta.ws.rs.ext.Provider;
 @Provider
 @ApplicationScoped
 public class ValidationExceptionMapper implements ExceptionMapper<ValidationException> {
+
     @Override
     public Response toResponse(ValidationException exception) {
-        ValidationError error = new ValidationError("400", "Erro de Validação");
-        error.addFieldError(exception.getFildName(), exception.getMessage());
-        return Response.status(400).entity(error).build();
-    }
 
+        ValidationError validationError = new ValidationError("400", "Erro de Validação");
+        validationError.addFieldError(exception.getFieldName(), exception.getMessage());
+
+
+        return Response.status(Response.Status.BAD_REQUEST).entity(validationError).build();
+
+    }
 }

@@ -1,6 +1,7 @@
 package br.unitins.tp1.placadevideo.validation;
 
 public class Error {
+
     private String code;
     private String message;
 
@@ -24,4 +25,5 @@ public class Error {
     public void setMessage(String message) {
         this.message = message;
     }
+
 }
