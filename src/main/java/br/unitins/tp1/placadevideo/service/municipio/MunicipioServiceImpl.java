@@ -6,6 +6,7 @@ import br.unitins.tp1.placadevideo.dto.request.MunicipioRequestDTO;
 import br.unitins.tp1.placadevideo.model.Municipio;
 import br.unitins.tp1.placadevideo.repository.municipio.MunicipioRepository;
 import br.unitins.tp1.placadevideo.service.estado.EstadoService;
+import io.quarkus.hibernate.orm.panache.PanacheQuery;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -25,13 +26,23 @@ public class MunicipioServiceImpl implements MunicipioService{
     }
 
     @Override
-    public List<Municipio> findByNome(String nome) { 
-        return municipioRepository.findByNome(nome);
+    public List<Municipio> findByNome(String nome, Integer page, Integer pageSize) {
+        return municipioRepository.findByNome(nome).page(page, pageSize).list();
     }
 
     @Override
-    public List<Municipio> findAll() {
-        return municipioRepository.findAll().list();
+    public List<Municipio> findAll(Integer page, Integer pageSize) {
+         PanacheQuery<Municipio> query = null;
+         if (page == null || pageSize == null)
+             query = municipioRepository.findAll();
+         else 
+             query = municipioRepository.findAll().page(page, pageSize);
+ 
+         return query.list();
+     }
+
+     public List<Municipio> findByNome(String nome) {
+        return municipioRepository.findByNome(nome).list();
     }
 
     @Override
@@ -61,5 +72,15 @@ public class MunicipioServiceImpl implements MunicipioService{
     public void delete(Long id) {
       municipioRepository.deleteById(id);
     }
+
+    @Override
+     public long count() {
+         return municipioRepository.findAll().count();
+     }
+ 
+     @Override
+     public long count(String nome) {
+         return municipioRepository.findByNome(nome).count();
+     }
 
 }

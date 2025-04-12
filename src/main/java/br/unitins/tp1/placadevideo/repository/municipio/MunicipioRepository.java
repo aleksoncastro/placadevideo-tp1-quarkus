@@ -4,15 +4,16 @@ import java.util.List;
 
 import br.unitins.tp1.placadevideo.model.Estado;
 import br.unitins.tp1.placadevideo.model.Municipio;
+import io.quarkus.hibernate.orm.panache.PanacheQuery;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
 public class MunicipioRepository implements PanacheRepository<Municipio> {
     
-    public List<Municipio> findByNome(String nome ){
+    public PanacheQuery<Municipio> findByNome(String nome ){
         //return find("SELECT m FROM Municipio m Where m.nome LIKE ?1", "%"+ nome + "%").list();
-        return find("nome LIKE ?1", "%"+ nome + "%").list();
+        return find("nome LIKE ?1", "%"+ nome + "%");
     }
 
     public List<Municipio> findByNome(Estado estado ){
