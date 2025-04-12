@@ -186,3 +186,42 @@ VALUES ('2023-04-05', 20, 2, 'LOTE004');
 
 INSERT INTO Usuario (username, senha, email, cpf, perfil) 
 VALUES ('admin_user', 'xzp7AP+QWnPSmgzJYRBVWiUX7nsVqbfYVtuvPOPw2TRuCrd6T8+/fEhQoxtROBveRpbEyyBB/Xlxxc+rWHzmzQ==', 'admin@example.com', '5555555555', 1);
+                                                                                                                                       
+INSERT INTO Usuario (username, senha, email, cpf, perfil) 
+VALUES ('funcionario1', '0cctg7WgpEz7kC/AzVC+KX+bZLPXDtgJDqWWZWnmzHH+7Na2YVxYYSFPxcf7ImAjqfNckx0aT4n5qKM7WEoeEQ==', 'funcionario1@gmail.com', '1111111111', 1);
+
+INSERT INTO Usuario (username, senha, email, cpf, perfil) 
+VALUES ('funcionario2', '0cctg7WgpEz7kC/AzVC+KX+bZLPXDtgJDqWWZWnmzHH+7Na2YVxYYSFPxcf7ImAjqfNckx0aT4n5qKM7WEoeEQ==', 'funcionario2@gmail.com', '2222222222', 1);
+
+INSERT INTO Usuario (username, senha, email, cpf, perfil) 
+VALUES ('funcionario3', '0cctg7WgpEz7kC/AzVC+KX+bZLPXDtgJDqWWZWnmzHH+7Na2YVxYYSFPxcf7ImAjqfNckx0aT4n5qKM7WEoeEQ==', 'funcionario3@gmail.com', '3333333333', 1);
+
+INSERT INTO funcionario (nome,  datanascimento, salario, id_usuario, statusfuncionario)
+VALUES ('Carlos Silva', '1990-05-15', 3500.00, 1, 1);
+
+INSERT INTO funcionario (nome, datanascimento,  salario, id_usuario, statusfuncionario)
+VALUES ('Mariana Oliveira', '1985-10-22',  4200.00, 2, 1);
+
+INSERT INTO funcionario (nome, datanascimento, salario, id_usuario, statusfuncionario)
+VALUES ('João Mendes', '1992-07-08', 3100.00, 3, 1);
+
+INSERT INTO funcionario (nome, datanascimento, salario, id_usuario, statusfuncionario)
+VALUES ('Ana Paula Souza', '1988-12-03', 4800.00, 4, 1);
+
+/* INSERT INTO telefone_funcionario (ddd, numero, funcionario_id)
+VALUES ('63', '99988-7766', 1);
+
+INSERT INTO telefone_funcionario (ddd, numero, funcionario_id)
+VALUES ('11', '98877-6655', 2);
+
+INSERT INTO telefone_funcionario (ddd, numero, funcionario_id)
+VALUES ('62', '99888-1122', 3);
+
+INSERT INTO telefone_funcionario (ddd, numero, funcionario_id)
+VALUES ('62', '98765-4321', 3);
+
+INSERT INTO telefone_funcionario (ddd, numero, funcionario_id)
+VALUES ('21', '99666-3344', 4);
+
+INSERT INTO telefone_funcionario (ddd, numero, funcionario_id)
+VALUES ('21', '99444-5566', 4);*/

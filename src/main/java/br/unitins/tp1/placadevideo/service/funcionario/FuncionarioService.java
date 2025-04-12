@@ -10,19 +10,22 @@ public interface FuncionarioService {
 
     Funcionario findById(Long id);
 
-    List<Funcionario> findByNome(String nome);
+    List<Funcionario> findAll(Integer page, Integer pageSize);
+
+    List<Funcionario> findByNome(String nome, Integer page, Integer pageSize);
+
+    long count();
+
+    long count(String nome);
 
     Funcionario findByCpf(String cpf);
 
-    List<Funcionario> findAll();
-
-    Funcionario create(String Username, FuncionarioRequestDTO dto) ;
+    Funcionario create(String Username, FuncionarioRequestDTO dto);
 
     void addTelefone(Long funcionarioId, TelefoneFuncionarioRequestDTO dto);
 
     Funcionario update(Long idFuncionario, Long telefoneId, FuncionarioRequestDTO dto);
 
     void delete(Long id);
-
 
 }

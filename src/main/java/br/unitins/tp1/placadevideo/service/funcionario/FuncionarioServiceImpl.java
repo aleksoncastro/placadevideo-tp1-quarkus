@@ -14,6 +14,7 @@ import br.unitins.tp1.placadevideo.repository.telefone.TelefoneFuncionarioReposi
 import br.unitins.tp1.placadevideo.repository.usuario.UsuarioRepository;
 import br.unitins.tp1.placadevideo.service.telefone.TelefoneFuncionarioServiceImpl;
 import br.unitins.tp1.placadevideo.validation.ValidationException;
+import io.quarkus.hibernate.orm.panache.PanacheQuery;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityNotFoundException;
@@ -39,33 +40,49 @@ public class FuncionarioServiceImpl implements FuncionarioService {
     public Funcionario findById(Long id) {
         return funcionarioRepository.findById(id);
     }
-
+    
     @Override
-    public List<Funcionario> findByNome(String nome) {
-        return funcionarioRepository.findByNome(nome);
-    }
-
+    public List<Funcionario> findAll(Integer page, Integer pageSize) {
+         PanacheQuery<Funcionario> query = null;
+         if (page == null || pageSize == null)
+             query = funcionarioRepository.findAll();
+         else 
+             query = funcionarioRepository.findAll().page(page, pageSize);
+ 
+         return query.list();
+     }
+ 
+     @Override
+     public List<Funcionario> findByNome(String nome, Integer page, Integer pageSize) {
+         return funcionarioRepository.findByNome(nome).page(page, pageSize).list();
+     }
+ 
+     public List<Funcionario> findByNome(String nome) {
+         return funcionarioRepository.findByNome(nome).list();
+     }
+ 
+     @Override
+     public long count() {
+         return funcionarioRepository.findAll().count();
+     }
+ 
+     @Override
+     public long count(String nome) {
+         return funcionarioRepository.findByNome(nome).count();
+     }
     @Override
     public Funcionario findByCpf(String cpf) {
         return funcionarioRepository.findByCpf(cpf);
     }
 
-    @Override
-    public List<Funcionario> findAll() {
-        return funcionarioRepository.findAll().list();
-    }
 
     @Override
     @Transactional
     public Funcionario create(String username, @Valid FuncionarioRequestDTO dto) {
-        if (funcionarioRepository.findByCpf(dto.cpf()) != null)
-            throw new ValidationException("cpf", "Já existe um funcionário cadastrado com este CPF.");
 
         Funcionario funcionario = new Funcionario();
         funcionario.setNome(dto.nome());
-        funcionario.setCpf(dto.cpf());
         funcionario.setDataNascimento(dto.dataNascimento());
-        funcionario.setEmail(dto.email());
 
         Usuario usuario = usuarioRepository.findByUsername(username);
         if (usuario == null)
@@ -92,9 +109,7 @@ public class FuncionarioServiceImpl implements FuncionarioService {
 
         // Atualiza os dados do funcionário
         funcionario.setNome(dto.nome());
-        funcionario.setCpf(dto.cpf());
         funcionario.setDataNascimento(dto.dataNascimento());
-        funcionario.setEmail(dto.email());
 
         // Atualizar telefones
         for (TelefoneFuncionarioRequestDTO telefoneDTO : dto.telefones()) {

@@ -10,11 +10,7 @@ public record FuncionarioRequestDTO(
     @NotBlank(message = "O campo deve ser informado") 
     String nome,
     @NotBlank(message = "O campo deve ser informado") 
-    String cpf,
-    @NotBlank(message = "O campo deve ser informado") 
     LocalDate dataNascimento,
-    @NotBlank(message = "O campo deve ser informado") 
-    String email, 
     @NotBlank(message = "O campo deve ser informado")
     Double salario,
     @Valid
