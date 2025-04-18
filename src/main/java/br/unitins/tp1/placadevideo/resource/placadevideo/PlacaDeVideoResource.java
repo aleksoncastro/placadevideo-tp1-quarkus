@@ -2,6 +2,7 @@ package br.unitins.tp1.placadevideo.resource.placadevideo;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.List;
 
 import org.jboss.logging.Logger;
@@ -47,7 +48,7 @@ public class PlacaDeVideoResource {
 
     @GET
     @Path("/{id}")
-    //@RolesAllowed("Adm")
+    // @RolesAllowed("Adm")
     public Response findById(@PathParam("id") Long id) {
         LOG.infof("Buscando placa de vídeo com id %d", id);
         return Response.ok(PlacaDeVideoResponseDTO.valueOf(placaDeVideoService.findById(id))).build();
@@ -55,7 +56,7 @@ public class PlacaDeVideoResource {
 
     @GET
     @Path("/search/descricao/{descricao}")
-   // @RolesAllowed({ "Adm", "User" })
+    // @RolesAllowed({ "Adm", "User" })
     public Response findByDescricao(@PathParam("descricao") String descricao) {
         LOG.infof("Buscando placa de vídeo pela descrição: %s", descricao);
         return Response.ok(PlacaDeVideoResponseDTO.valueOf(placaDeVideoService.findByDescricao(descricao))).build();
@@ -63,21 +64,22 @@ public class PlacaDeVideoResource {
 
     @GET
     @Path("/search/{modelo}")
-   // @RolesAllowed({ "Adm", "User" })
-    public List<PlacaDeVideo> findByNome(@PathParam("nome") String nome, @QueryParam("page") @DefaultValue("0") int page,
+    // @RolesAllowed({ "Adm", "User" })
+    public List<PlacaDeVideo> findByNome(@PathParam("nome") String nome,
+            @QueryParam("page") @DefaultValue("0") int page,
             @QueryParam("page_size") @DefaultValue("100") int pageSize) {
         return placaDeVideoService.findByModelo(nome, page, pageSize);
     }
 
     @GET
-    //@RolesAllowed({ "Adm", "User" })
+    // @RolesAllowed({ "Adm", "User" })
     public List<PlacaDeVideo> findAll(@QueryParam("page") @DefaultValue("0") int page,
-    @QueryParam("page_size") @DefaultValue("100") int pageSize) {
+            @QueryParam("page_size") @DefaultValue("100") int pageSize) {
         return placaDeVideoService.findAll(page, pageSize);
     }
 
     @POST
-    //@RolesAllowed("Adm")
+    // @RolesAllowed("Adm")
     public Response create(@Valid PlacaDeVideoRequestDTO dto) {
         LOG.info("Criando nova placa de vídeo");
         return Response.status(Status.CREATED).entity(PlacaDeVideoResponseDTO.valueOf(placaDeVideoService.create(dto)))
@@ -86,7 +88,7 @@ public class PlacaDeVideoResource {
 
     @PUT
     @Path("/{id}")
-  //  @RolesAllowed("Adm")
+    // @RolesAllowed("Adm")
     public Response update(@PathParam("id") Long id, @Valid PlacaDeVideoRequestDTO dto) {
         LOG.infof("Atualizando placa de vídeo com id %d", id);
         placaDeVideoService.update(id, dto);
@@ -95,7 +97,7 @@ public class PlacaDeVideoResource {
 
     @DELETE
     @Path("/{id}")
-  //  @RolesAllowed("Adm")
+    // @RolesAllowed("Adm")
     public Response delete(@PathParam("id") Long id) {
         LOG.infof("Deletando placa de vídeo com id %d", id);
         placaDeVideoService.delete(id);
@@ -103,7 +105,7 @@ public class PlacaDeVideoResource {
     }
 
     @PATCH
-   // @RolesAllowed({ "Adm" })
+    // @RolesAllowed({ "Adm" })
     @Path("/{idPlacaDeVideo}/upload/imagem")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     public Response uploadImage(@PathParam("idPlacaDeVideo") Long id, @MultipartForm ImageForm form) {
@@ -124,7 +126,7 @@ public class PlacaDeVideoResource {
     }
 
     @GET
-  //  @RolesAllowed({ "Adm" })
+    // @RolesAllowed({ "Adm" })
     @Path("/download/imagem/{nomeImagem}")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     public Response downloadImage(@PathParam("nomeImagem") String nomeImagem) {
@@ -160,5 +162,22 @@ public class PlacaDeVideoResource {
     public long totalPorNome(String nome) {
         return placaDeVideoService.count(nome);
     }
+
+@GET
+@Path("/imagens/placasdevideo/{nome}")
+@Produces({ "image/jpeg", "image/png", "image/gif", "image/jpg" })
+public Response getImagem(@PathParam("nome") String nome) {
+    // Caminho direto para a pasta onde você está salvando as imagens
+    File imagem = new File("src/main/resources/META-INF/resources/placasdevideo_imagens/" + nome);
+
+    // Verifica se o arquivo existe
+    if (!imagem.exists()) {
+        return Response.status(Status.NOT_FOUND).entity("Imagem não encontrada").build();
+    }
+
+    // Retorna o arquivo de imagem
+    return Response.ok(imagem).build();
+}
+
 
 }

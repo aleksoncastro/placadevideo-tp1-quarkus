@@ -61,7 +61,7 @@ public class MunicipioResourceTest {
                       "estado.sigla", is("SP"));
                 
         // removendo o dado que foi inserido
-        municipioService.delete(municipioService.findByNome("Campo Grande").getFirst().getId());
+      //  municipioService.delete(municipioService.findByNome("Campo Grande").getFirst().getId());
     }
 
     @Test

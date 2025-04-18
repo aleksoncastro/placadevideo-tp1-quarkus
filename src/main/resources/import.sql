@@ -167,6 +167,10 @@ VALUES (2.1, 2.6, 3, 275, 3, 5000.00, true, 1, 19, 19, 'Gaming', 'Ultra desempen
 INSERT INTO PlacaDeVideo (clockBase, clockBoost, compatibilidade, energia, fan, preco, suporteRayTracing, fornecedor_id, id_memoria, id_tamanho, categoria, descricao, modelo, resolucao)
 VALUES (1.5, 2.0, 2, 105, 2, 1600.00, true, 2, 20, 20, 'Gaming', 'Placa intermediária com bom custo', 'RX 6650 XT', '1080p');
 
+INSERT INTO imagem_placadevideo (id_placadevideo, listaImagem) 
+VALUES (1, 'https://img.terabyteshop.com.br/produto/g/placa-de-video-asrock-radeon-rx-6600-challenger-d-8gb-gddr6-fsr-ray-tracing-90-ga2rzz-00uanf_133352.jpg');
+
+
 
 -- Lote associado à PlacaDeVideo com ID 1
 INSERT INTO Lote (datafabricacao, estoque, id_placadevideo, codigo)
@@ -207,6 +211,20 @@ VALUES ('João Mendes', '1992-07-08', 3100.00, 3, 1);
 
 INSERT INTO funcionario (nome, datanascimento, salario, id_usuario, statusfuncionario)
 VALUES ('Ana Paula Souza', '1988-12-03', 4800.00, 4, 1);
+
+INSERT INTO imagem_placadevideo (id_placadevideo, listaImagem)
+VALUES 
+  (1, '/placasdevideo_imagens/rx6600.jpeg'),
+  (1, '/placasdevideo_imagens/rx6600.jpeg'),
+  (1, '/placasdevideo_imagens/rx6600.jpeg');
+  (1, '/placasdevideo_imagens/rx6600.jpeg');
+
+INSERT INTO imagem_placadevideo (id_placadevideo, listaImagem)
+VALUES 
+  (2, '/placasdevideo_imagens/4060ti.jpeg'),
+  (2, '/placasdevideo_imagens/4060ti.jpeg'),
+  (2, '/placasdevideo_imagens/4060ti.jpeg'),
+  (2, '/placasdevideo_imagens/4060ti.jpeg');
 
 /* INSERT INTO telefone_funcionario (ddd, numero, funcionario_id)
 VALUES ('63', '99988-7766', 1);

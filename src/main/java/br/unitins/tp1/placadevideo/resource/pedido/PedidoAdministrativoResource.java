@@ -30,7 +30,7 @@ public class PedidoAdministrativoResource {
     public JsonWebToken jwt;
 
     @GET
-    @RolesAllowed({ "Adm" })
+    ////@RolesAllowed({ "Adm" })
     public Response findByUsername(String username) {
         // buscando o username do hash do jwt
         LOG.infof("Buscando pedidos pelo cliente com id %d", username);
@@ -41,21 +41,21 @@ public class PedidoAdministrativoResource {
 
     @GET
     @Path("/{id}")
-    @RolesAllowed("Adm")
+    //@RolesAllowed("Adm")
     public Response findById(@PathParam("id") Long id) {
         LOG.infof("Buscando pedido com id %d", id);
         return Response.ok(pedidoService.findById(id)).build();
     }
 
     @GET
-    @RolesAllowed({ "Adm" })
+    //@RolesAllowed({ "Adm" })
     public Response findAll() {
         LOG.info("Buscando todos os pedidos");
         return Response.ok(pedidoService.findAll().stream().map(o -> PedidoResponseDTO.valueOf(o)).toList()).build();
     }
 
     @GET
-    @RolesAllowed({ "Adm" })
+    //@RolesAllowed({ "Adm" })
     @Path("/search/item/{id}")
     public Response findByItem(@PathParam("id") Long idPlacaDeVideo) {
         LOG.infof("Buscando pedidos pelo item com id %d", idPlacaDeVideo);
@@ -63,7 +63,7 @@ public class PedidoAdministrativoResource {
     }
 
     @GET
-    @RolesAllowed({ "Adm" })
+    //@RolesAllowed({ "Adm" })
     @Path("/search/status/{id}")
     public Response findByStatus(@PathParam("id") int idStatus) {
         LOG.infof("Buscando pedidos pelo status com id %d", idStatus);
@@ -71,7 +71,7 @@ public class PedidoAdministrativoResource {
     }
 
     @PATCH
-    @RolesAllowed({ "Adm" })
+    //@RolesAllowed({ "Adm" })
     @Path("/{id}/status-pedido/{id}")
     public Response updateStatusPedido(@PathParam("id") Long idPedido, Integer id) {
         LOG.infof("Atualizando status do pedido com id %d para status %d", idPedido, id);

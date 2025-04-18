@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum Fan {
-    ONE(1,"One"),
+    ONE(1,"Single"),
     DOUBLE(2, "Double"),
     TRIPLE(3, "Triple");
 
