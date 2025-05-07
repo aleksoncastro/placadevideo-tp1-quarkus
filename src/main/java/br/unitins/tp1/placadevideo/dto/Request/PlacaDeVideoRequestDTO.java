@@ -29,8 +29,8 @@ public record PlacaDeVideoRequestDTO(
     @NotBlank(message = "A descrição deve ser informada")
     String descricao,
 
-    @NotNull(message = "A compatibilidade deve ser informada")
-    Integer compatibilidade,
+    @NotNull(message = "A barramento deve ser informada")
+    String barramento,
 
     @NotNull(message = "O clock base deve ser informado")
     @Positive(message = "O clock base deve ser um valor positivo")

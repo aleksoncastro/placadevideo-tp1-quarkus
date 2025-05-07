@@ -93,7 +93,7 @@ public class PlacaDeVideoServiceImpl implements PlacaDeVideoService {
         placaDeVideo.setResolucao(dto.resolucao());
         placaDeVideo.setEnergia(dto.energia());
         placaDeVideo.setDescricao(dto.descricao());
-        placaDeVideo.setCompatibilidade(dto.compatibilidade());
+        placaDeVideo.setBarramento(dto.barramento());
         placaDeVideo.setClockBase(dto.clockBase());
         placaDeVideo.setClockBoost(dto.clockBoost());
         placaDeVideo.setFan(Fan.valueOf(dto.idFan()));
@@ -139,7 +139,7 @@ public class PlacaDeVideoServiceImpl implements PlacaDeVideoService {
         placaDeVideo.setResolucao(dto.resolucao());
         placaDeVideo.setEnergia(dto.energia());
         placaDeVideo.setDescricao(dto.descricao());
-        placaDeVideo.setCompatibilidade(dto.compatibilidade());
+        placaDeVideo.setBarramento(dto.barramento());
         placaDeVideo.setClockBase(dto.clockBase());
         placaDeVideo.setClockBoost(dto.clockBoost());
         placaDeVideo.setFan(Fan.valueOf(dto.idFan()));

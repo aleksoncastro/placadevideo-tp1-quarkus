@@ -23,7 +23,7 @@ public class PlacaDeVideo extends DefaultEntity {
     private String resolucao;
     private Integer energia;
     private String descricao;
-    private Integer compatibilidade;
+    private String barramento;
     private Fan fan;
     private Double clockBase;
     private Double clockBoost;
@@ -129,12 +129,12 @@ public class PlacaDeVideo extends DefaultEntity {
         this.descricao = descricao;
     }
 
-    public Integer getCompatibilidade() {
-        return compatibilidade;
+    public String getBarramento() {
+        return barramento;
     }
 
-    public void setCompatibilidade(Integer compatibilidade) {
-        this.compatibilidade = compatibilidade;
+    public void setBarramento(String barramento) {
+        this.barramento = barramento;
     }
 
     public Boolean getSuporteRayTracing() {
