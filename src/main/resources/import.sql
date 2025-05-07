@@ -120,10 +120,10 @@ INSERT INTO SaidaVideo (quantidade, tipo) VALUES (4, 'DisplayPort');
 
 -- 19. Inserindo dados na tabela PlacaDeVideo
 INSERT INTO PlacaDeVideo (clockBase, clockBoost, barramento, energia, fan, preco, suporteRayTracing, fornecedor_id, id_memoria, id_tamanho, categoria, descricao, modelo, resolucao)
-VALUES (1.5, 2.0, 'PCIe 4.0 x8', 100, 2, 1300.00, true, 1, 1, 1, 'Gaming', 'Placa high-end', 'RX6600', '1080p');
+VALUES (1.5, 2.0, 'PCIe 4.0 x8', 100, 2, 1300.00, true, 3, 1, 1, 'Gaming', 'Placa high-end', 'RX6600', '1080p');
 
 INSERT INTO PlacaDeVideo (clockBase, clockBoost, barramento, energia, fan, preco, suporteRayTracing, fornecedor_id, id_memoria, id_tamanho, categoria, descricao, modelo, resolucao)
-VALUES (1.6, 2.1, 'PCIe 4.0 x16', 120, 3, 2200.00, true, 2, 2, 2, 'Gaming', 'Placa profissional', '4060ti', '1440p');
+VALUES (1.6, 2.1, 'PCIe 4.0 x16', 120, 3, 2200.00, true, 1, 2, 2, 'Gaming', 'Placa profissional', '4060ti', '1440p');
 
 INSERT INTO PlacaDeVideo (clockBase, clockBoost, barramento, energia, fan, preco, suporteRayTracing, fornecedor_id, id_memoria, id_tamanho, categoria, descricao, modelo, resolucao)
 VALUES (1.3, 1.7, 'PCIe 3.0 x16', 75, 1, 900.00, false, 3, 3, 3, 'Entry-Level', 'Placa de entrada econômica', 'GTX 1650', '1080p');
