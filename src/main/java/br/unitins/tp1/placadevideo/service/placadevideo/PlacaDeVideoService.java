@@ -2,8 +2,11 @@ package br.unitins.tp1.placadevideo.service.placadevideo;
 
 import java.util.List;
 
+import br.unitins.tp1.placadevideo.dto.request.PaginacaoDTO;
 import br.unitins.tp1.placadevideo.dto.request.PlacaDeVideoRequestDTO;
+import br.unitins.tp1.placadevideo.dto.response.PlacaDeVideoResponseDTO;
 import br.unitins.tp1.placadevideo.model.placadevideo.PlacaDeVideo;
+
 
 public interface PlacaDeVideoService {
 
@@ -13,7 +16,11 @@ public interface PlacaDeVideoService {
 
     List<PlacaDeVideo> findByModelo(String modelo, Integer page, Integer pageSize);
 
-    List<PlacaDeVideo> findAll(Integer page, Integer pageSize);
+    PaginacaoDTO findAll(Integer page, Integer pageSize);
+
+    List<PlacaDeVideoResponseDTO> findPage(int page, int pageSize);
+
+    List<PlacaDeVideo> findByLancamentos(String prefixo1, String prefixo2, String valor1, String valor2);
 
     PlacaDeVideo create(PlacaDeVideoRequestDTO dto);
 

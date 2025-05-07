@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import br.unitins.tp1.placadevideo.dto.request.PaginacaoDTO;
 import br.unitins.tp1.placadevideo.dto.request.PlacaDeVideoRequestDTO;
 import br.unitins.tp1.placadevideo.dto.request.SaidaVideoRequestDTO;
+import br.unitins.tp1.placadevideo.dto.response.PlacaDeVideoResponseDTO;
 import br.unitins.tp1.placadevideo.model.Fornecedor;
 import br.unitins.tp1.placadevideo.model.placadevideo.Fan;
 import br.unitins.tp1.placadevideo.model.placadevideo.PlacaDeVideo;
@@ -52,14 +54,32 @@ public class PlacaDeVideoServiceImpl implements PlacaDeVideoService {
     }
 
     @Override
-   public List<PlacaDeVideo> findAll(Integer page, Integer pageSize) {
-        PanacheQuery<PlacaDeVideo> query = null;
-        if (page == null || pageSize == null)
-            query = placaDeVideoRepository.findAll();
-        else
-            query = placaDeVideoRepository.findAll().page(page, pageSize);
+    public List<PlacaDeVideo> findByLancamentos(String prefixo1, String prefixo2, String valor1, String valor2) {
+        return placaDeVideoRepository.findByUltimosLancamentos(prefixo1, prefixo2, valor1, valor2);
+    }
 
-        return query.list();
+    @Override
+    public PaginacaoDTO findAll(Integer page, Integer pageSize) {
+        if (page == null || pageSize == null) {
+            page = 0;
+            pageSize = 20;
+        }
+
+        PanacheQuery<PlacaDeVideo> query = placaDeVideoRepository.findAll().page(page, pageSize);
+
+        long totalRecords = placaDeVideoRepository.count(); // Conta o total de registros
+
+        // Retorna o DTO com as informações de paginação
+        return new PaginacaoDTO(totalRecords, page, pageSize);
+    }
+
+    public List<PlacaDeVideoResponseDTO> findPage(int page, int pageSize) {
+        return placaDeVideoRepository.findAll()
+                .page(page, pageSize)
+                .list()
+                .stream()
+                .map(PlacaDeVideoResponseDTO::valueOf)
+                .toList();
     }
 
     @Override
@@ -82,7 +102,11 @@ public class PlacaDeVideoServiceImpl implements PlacaDeVideoService {
         placaDeVideo.setTamanho(dto.tamanho().intoEntity());
         // saidasVideo
         List<SaidaVideo> saidas = dto.saidas().stream()
-                .map(SaidaVideoRequestDTO::intoEntity)
+                .map(dtoSaida -> {
+                    SaidaVideo saida = dtoSaida.intoEntity();
+                    saida.setPlacaDeVideo(placaDeVideo); // importante para manter a integridade da relação
+                    return saida;
+                })
                 .collect(Collectors.toList());
 
         placaDeVideo.setSaidas(saidas);
@@ -125,10 +149,15 @@ public class PlacaDeVideoServiceImpl implements PlacaDeVideoService {
 
         // Atualização da lista de `saidas`
         List<SaidaVideo> novasSaidas = dto.saidas().stream()
-                .map(SaidaVideoRequestDTO::intoEntity)
+                .map(saidaDto -> {
+                    SaidaVideo saida = saidaDto.intoEntity();
+                    saida.setPlacaDeVideo(placaDeVideo); // estabelece relação reversa
+                    return saida;
+                })
                 .collect(Collectors.toList());
-        placaDeVideo.getSaidas().clear(); // Limpa a lista atual
-        placaDeVideo.getSaidas().addAll(novasSaidas); // Adiciona os novos itens
+
+        placaDeVideo.getSaidas().clear(); // remove as antigas
+        placaDeVideo.getSaidas().addAll(novasSaidas); // adiciona as novas
 
         // Atualiza o fornecedor
         Fornecedor fornecedor = fornecedorService.findByIdComTelefones(dto.idFornecedor());

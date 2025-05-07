@@ -2,12 +2,12 @@ package br.unitins.tp1.placadevideo.resource.placadevideo;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.List;
 
 import org.jboss.logging.Logger;
 import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 
+import br.unitins.tp1.placadevideo.dto.request.PaginacaoDTO;
 import br.unitins.tp1.placadevideo.dto.request.PlacaDeVideoRequestDTO;
 import br.unitins.tp1.placadevideo.dto.response.PlacaDeVideoResponseDTO;
 import br.unitins.tp1.placadevideo.form.ImageForm;
@@ -73,9 +73,37 @@ public class PlacaDeVideoResource {
 
     @GET
     // @RolesAllowed({ "Adm", "User" })
-    public List<PlacaDeVideo> findAll(@QueryParam("page") @DefaultValue("0") int page,
+    public PaginacaoDTO findAll(@QueryParam("page") @DefaultValue("0") int page,
             @QueryParam("page_size") @DefaultValue("100") int pageSize) {
-        return placaDeVideoService.findAll(page, pageSize);
+        return placaDeVideoService.findAll(page, pageSize); // Agora retorna o DTO de paginação
+    }
+
+    @GET
+    @Path("/page")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<PlacaDeVideoResponseDTO> findPage(@QueryParam("page") @DefaultValue("0") int page,
+            @QueryParam("page_size") @DefaultValue("20") int pageSize) {
+        return placaDeVideoService.findPage(page, pageSize);
+    }
+
+    @GET
+    @Path("/search/lancamentos/{prefixo1}/{prefixo2}/{valor1}/{valor2}")
+    // @RolesAllowed({ "Adm", "User" })
+    public Response findByLancamentos(
+            @PathParam("prefixo1") String prefixo1,
+            @PathParam("prefixo2") String prefixo2,
+            @PathParam("valor1") String valor1,
+            @PathParam("valor2") String valor2) {
+
+        LOG.infof("Buscando últimos lançamentos com prefixos [%s, %s] e valores [%s, %s]", prefixo1, prefixo2, valor1,
+                valor2);
+
+        return Response.ok(
+                placaDeVideoService.findByLancamentos(prefixo1, prefixo2, valor1, valor2)
+                        .stream()
+                        .map(PlacaDeVideoResponseDTO::valueOf)
+                        .toList())
+                .build();
     }
 
     @POST
@@ -163,21 +191,20 @@ public class PlacaDeVideoResource {
         return placaDeVideoService.count(nome);
     }
 
-@GET
-@Path("/imagens/placasdevideo/{nome}")
-@Produces({ "image/jpeg", "image/png", "image/gif", "image/jpg" })
-public Response getImagem(@PathParam("nome") String nome) {
-    // Caminho direto para a pasta onde você está salvando as imagens
-    File imagem = new File("src/main/resources/META-INF/resources/placasdevideo_imagens/" + nome);
+    @GET
+    @Path("/imagens/placasdevideo/{nome}")
+    @Produces({ "image/jpeg", "image/png", "image/gif", "image/jpg" })
+    public Response getImagem(@PathParam("nome") String nome) {
+        // Caminho direto para a pasta onde você está salvando as imagens
+        File imagem = new File("src/main/resources/META-INF/resources/placasdevideo_imagens/" + nome);
 
-    // Verifica se o arquivo existe
-    if (!imagem.exists()) {
-        return Response.status(Status.NOT_FOUND).entity("Imagem não encontrada").build();
+        // Verifica se o arquivo existe
+        if (!imagem.exists()) {
+            return Response.status(Status.NOT_FOUND).entity("Imagem não encontrada").build();
+        }
+
+        // Retorna o arquivo de imagem
+        return Response.ok(imagem).build();
     }
-
-    // Retorna o arquivo de imagem
-    return Response.ok(imagem).build();
-}
-
 
 }

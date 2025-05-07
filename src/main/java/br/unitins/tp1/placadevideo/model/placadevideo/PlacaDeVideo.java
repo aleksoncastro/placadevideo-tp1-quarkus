@@ -33,8 +33,8 @@ public class PlacaDeVideo extends DefaultEntity {
     @JoinColumn(name = "id_memoria")
     private Memoria memoria;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_saidavideo")
+    @OneToMany(mappedBy = "placaDeVideo", cascade = CascadeType.ALL, 
+    orphanRemoval = true, fetch = FetchType.EAGER)
     private List<SaidaVideo> saidas;
 
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
