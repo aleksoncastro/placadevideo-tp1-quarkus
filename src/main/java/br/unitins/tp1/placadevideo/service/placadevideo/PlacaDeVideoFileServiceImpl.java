@@ -4,26 +4,35 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
 import org.jboss.logging.Logger;
 
+import br.unitins.tp1.placadevideo.model.placadevideo.PlacaDeVideo;
+import br.unitins.tp1.placadevideo.repository.placadevideo.PlacaDeVideoRepository;
 import br.unitins.tp1.placadevideo.resource.placadevideo.PlacaDeVideoResource;
 import br.unitins.tp1.placadevideo.service.fileservice.FileService;
 import br.unitins.tp1.placadevideo.validation.ValidationException;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 
 @ApplicationScoped
 public class PlacaDeVideoFileServiceImpl implements FileService {
 
     private static final Logger LOG = Logger.getLogger(PlacaDeVideoResource.class);
 
-    private final String PATH_CLIENTE = "C:\\Users\\Alêkson\\Tópicos\\placadevideo-tp1-quarkus\\src\\main\\resources\\META-INF\\resources\\placasdevideo_imagens";
+    private final String PATH_USER = System.getProperty("user.home")
+            + File.separator + "quarkus"
+            + File.separator + "images"
+            + File.separator + "placa" + File.separator;
     // "C:\\Users\\Alêkson\\placadevideo-tp1-quarkus\\placasdevideo";
+    @Inject
+    PlacaDeVideoRepository placaDeVideoRepository;
 
     private static final List<String> SUPPORTED_MIME_TYPES = Arrays.asList("image/jpeg", "image/jpg", "image/png",
             "image/gif");
@@ -31,67 +40,72 @@ public class PlacaDeVideoFileServiceImpl implements FileService {
     private static final int MAX_FILE_SIZE = 1024 * 1024 * 10; // 10 MB
 
     @Override
-    public String save(String nomeArquivo, byte[] arquivo) throws IOException {
-        LOG.info("Iniciando o salvamento do arquivo: " + nomeArquivo);
-        verificarTipoArquivo(nomeArquivo);
-        verificarTamanhoArquivo(arquivo);
+    @Transactional
+    public void salvar(Long id, String nomeImagem, byte[] imagem) throws IOException {
+        PlacaDeVideo placa = placaDeVideoRepository.findById(id);
 
-        Path diretorio = Paths.get(PATH_CLIENTE);
-        if (!Files.exists(diretorio)) {
-            LOG.info("Diretório não encontrado. Criando diretório: " + diretorio.toString());
-            Files.createDirectory(diretorio);
-        }
+        try {
+            String novoNomeImagem = salvarImagem(imagem, nomeImagem);
+            List<String> imagens = placa.getListaImagem();
+            if (imagens == null) {
+                imagens = new ArrayList<>();
+            }
+            imagens.add(novoNomeImagem);
+            placa.setListaImagem(imagens);
 
-        String mimeType = Files.probeContentType(Paths.get(nomeArquivo));
-        if (mimeType == null) {
-            LOG.error("Não foi possível determinar o MIME type do arquivo: " + nomeArquivo);
-            throw new IOException("Não foi possível determinar o MIME type do arquivo.");
-        }
-        LOG.info("MIME type identificado: " + mimeType);
-
-        String extensao = mimeType.substring(mimeType.lastIndexOf("/") + 1);
-        String novoNomeArquivo = UUID.randomUUID() + "." + extensao;
-
-        // Evitar duplicação de nome de arquivo
-        Path filePath = diretorio.resolve(novoNomeArquivo);
-        while (filePath.toFile().exists()) {
-            LOG.warn("Conflito de nome detectado. Gerando novo nome.");
-            novoNomeArquivo = UUID.randomUUID() + "." + extensao;
-            filePath = diretorio.resolve(novoNomeArquivo);
-        }
-
-        try (FileOutputStream fos = new FileOutputStream(filePath.toFile())) {
-            fos.write(arquivo);
-            LOG.info("Arquivo salvo com sucesso em: " + filePath.toString());
+            placaDeVideoRepository.persist(placa);
+            // excluir a imagem antiga (trabalho pra quem????)
         } catch (IOException e) {
-            LOG.error("Erro ao salvar o arquivo: " + e.getMessage(), e);
             throw e;
         }
-
-        return novoNomeArquivo;
     }
 
-    private void verificarTipoArquivo(String nomeArquivo) throws IOException {
-        String mimeType = Files.probeContentType(Paths.get(nomeArquivo));
-        if (!SUPPORTED_MIME_TYPES.contains(mimeType)) {
-            throw new IOException("Formato de arquivo nao suportado pelo sistema.");
+    private String salvarImagem(byte[] imagem, String nomeImagem) throws IOException {
+        
+        // verificando o tipo da imagem
+        String mimeType = Files.probeContentType(new File(nomeImagem).toPath());
+        List<String> listMimeType = Arrays.asList("image/jpg", "image/jpeg", "image/png", "image/gif");
+        if (!listMimeType.contains(mimeType)) {
+            throw new IOException("Tipo de imagem não suportada.");
         }
-    }
 
-    private void verificarTamanhoArquivo(byte[] arquivo) throws IOException {
-        if (arquivo.length > MAX_FILE_SIZE) {
-            throw new IOException("O arquivo excede o limite maximo de 10 MB.");
-        }
+        // verificando o tamanho do arquivo, não permitor maior que 10 megas
+        if (imagem.length > (1024 * 1024 * 10))
+            throw new IOException("Arquivo muito grande.");
+
+        // criando as pastas quando não existir
+        File diretorio = new File(PATH_USER);
+        if (!diretorio.exists())
+            diretorio.mkdirs();
+
+        // gerando o nome do arquivo
+        String nomeArquivo = UUID.randomUUID()
+        +"."+mimeType.substring(mimeType.lastIndexOf("/")+1);
+
+        String path = PATH_USER + nomeArquivo;
+
+        // salvando o arquivo
+        File file = new File(path);
+        // alunos (melhorar :)
+        if (file.exists())
+            throw new IOException("O nome gerado da imagem está repedido.");
+
+        // criando um arquivo no S.O.
+        file.createNewFile();
+
+        FileOutputStream fos = new FileOutputStream(file);
+        fos.write(imagem);
+        // garantindo o envio do ultimo lote de bytes
+        fos.flush();
+        fos.close();
+
+        return nomeArquivo;
+    
     }
 
     @Override
-    public File find(String nomeArquivo) {
-        File arquivo = new File(PATH_CLIENTE, nomeArquivo);
-        LOG.info("Tentando localizar arquivo: " + arquivo.getAbsolutePath());
-        if (!arquivo.exists()) {
-            LOG.error("Arquivo não encontrado: " + arquivo.getAbsolutePath());
-            throw new ValidationException("nomeArquivo", "Arquivo não encontrado");
-        }
-        return arquivo;
+    public File download(String nomeArquivo) {
+        File file = new File(PATH_USER+nomeArquivo);
+        return file;
     }
 }

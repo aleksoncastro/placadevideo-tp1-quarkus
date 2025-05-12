@@ -12,9 +12,9 @@ import br.unitins.tp1.placadevideo.dto.request.PlacaDeVideoRequestDTO;
 import br.unitins.tp1.placadevideo.dto.response.PlacaDeVideoResponseDTO;
 import br.unitins.tp1.placadevideo.form.ImageForm;
 import br.unitins.tp1.placadevideo.model.placadevideo.PlacaDeVideo;
+import br.unitins.tp1.placadevideo.service.fileservice.FileService;
 import br.unitins.tp1.placadevideo.service.placadevideo.PlacaDeVideoFileServiceImpl;
 import br.unitins.tp1.placadevideo.service.placadevideo.PlacaDeVideoService;
-import br.unitins.tp1.placadevideo.validation.ValidationException;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.Consumes;
@@ -43,6 +43,9 @@ public class PlacaDeVideoResource {
 
     @Inject
     public PlacaDeVideoFileServiceImpl placaDeVideoFileService;
+
+    @Inject
+    FileService fileService;
 
     private static final Logger LOG = Logger.getLogger(PlacaDeVideoResource.class);
 
@@ -134,49 +137,26 @@ public class PlacaDeVideoResource {
 
     @PATCH
     // @RolesAllowed({ "Adm" })
-    @Path("/{idPlacaDeVideo}/upload/imagem")
+     @Path("/image/upload")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
-    public Response uploadImage(@PathParam("idPlacaDeVideo") Long id, @MultipartForm ImageForm form) {
-        LOG.info("Execução do uploadImage. Id da placaDeVideo: " + id);
-        LOG.info("Nome do arquivo recebido para upload: " + form.getNomeImagem());
-
+    public Response salvarImagem(@MultipartForm ImageForm form) {
         try {
-            String nomeImagem = placaDeVideoFileService.save(form.getNomeImagem(), form.getImagem());
-            LOG.info("Arquivo salvo com sucesso. Novo nome: " + nomeImagem);
-            placaDeVideoService.updateNomeImagem(id, nomeImagem);
-            LOG.info("Nome da imagem atualizado no banco de dados.");
+            fileService.salvar(form.getId(), form.getNomeImagem(), form.getImagem());
+            return Response.noContent().build();
         } catch (IOException e) {
-            LOG.error("Erro ao salvar o arquivo. Detalhes: " + e.getMessage(), e);
-            return Response.status(500).entity("Erro ao salvar o arquivo.").build();
+            return Response.status(Status.CONFLICT).build();
         }
 
-        return Response.noContent().build();
     }
 
     @GET
     // @RolesAllowed({ "Adm" })
-    @Path("/download/imagem/{nomeImagem}")
+    @Path("/image/download/{nomeImagem}")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
-    public Response downloadImage(@PathParam("nomeImagem") String nomeImagem) {
-        LOG.info("Execução do método downloadImage.");
-        LOG.info("Nome da imagem solicitado para download: " + nomeImagem);
-
-        try {
-            // Busca o arquivo pelo nome
-            File arquivo = placaDeVideoFileService.find(nomeImagem);
-            LOG.info("Arquivo localizado com sucesso: " + arquivo.getAbsolutePath());
-
-            // Retorna o arquivo como resposta
-            ResponseBuilder response = Response.ok(arquivo);
-            response.header("Content-Disposition", "attachment; filename=" + nomeImagem);
-            return response.build();
-        } catch (ValidationException e) {
-            LOG.error("Erro na validação: " + e.getMessage());
-            return Response.status(404).entity("Arquivo não encontrado.").build();
-        } catch (Exception e) {
-            LOG.error("Erro ao realizar o download: " + e.getMessage(), e);
-            return Response.status(500).entity("Erro interno no servidor.").build();
-        }
+     public Response download(@PathParam("nomeImagem") String nomeImagem) {
+        ResponseBuilder response = Response.ok(fileService.download(nomeImagem));
+        response.header("Content-Disposition", "attachment;filename=" + nomeImagem);
+        return response.build();
     }
 
     @GET
@@ -189,22 +169,6 @@ public class PlacaDeVideoResource {
     @Path("/nome/{nome}/count")
     public long totalPorNome(String nome) {
         return placaDeVideoService.count(nome);
-    }
-
-    @GET
-    @Path("/imagens/placasdevideo/{nome}")
-    @Produces({ "image/jpeg", "image/png", "image/gif", "image/jpg" })
-    public Response getImagem(@PathParam("nome") String nome) {
-        // Caminho direto para a pasta onde você está salvando as imagens
-        File imagem = new File("src/main/resources/META-INF/resources/placasdevideo_imagens/" + nome);
-
-        // Verifica se o arquivo existe
-        if (!imagem.exists()) {
-            return Response.status(Status.NOT_FOUND).entity("Imagem não encontrada").build();
-        }
-
-        // Retorna o arquivo de imagem
-        return Response.ok(imagem).build();
     }
 
 }
