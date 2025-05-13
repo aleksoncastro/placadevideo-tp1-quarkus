@@ -73,6 +73,7 @@ public class PlacaDeVideoServiceImpl implements PlacaDeVideoService {
         return new PaginacaoDTO(totalRecords, page, pageSize);
     }
 
+    @Override
     public List<PlacaDeVideoResponseDTO> findPage(int page, int pageSize) {
         return placaDeVideoRepository.findAll()
                 .page(page, pageSize)
@@ -191,6 +192,7 @@ public class PlacaDeVideoServiceImpl implements PlacaDeVideoService {
         }
 
         placaDeVideo.getListaImagem().add(nomeImagem);
+        placaDeVideoRepository.persist(placaDeVideo);
         return placaDeVideo;
     }
 

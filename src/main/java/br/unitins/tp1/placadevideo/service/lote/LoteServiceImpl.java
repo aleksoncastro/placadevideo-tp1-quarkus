@@ -5,6 +5,8 @@ import java.util.List;
 import org.hibernate.Hibernate;
 
 import br.unitins.tp1.placadevideo.dto.request.LoteRequestDTO;
+import br.unitins.tp1.placadevideo.dto.request.PaginacaoDTO;
+import br.unitins.tp1.placadevideo.dto.response.LoteResponseDTO;
 import br.unitins.tp1.placadevideo.model.placadevideo.Lote;
 import br.unitins.tp1.placadevideo.model.placadevideo.PlacaDeVideo;
 import br.unitins.tp1.placadevideo.repository.lote.LoteRepository;
@@ -41,14 +43,28 @@ public class LoteServiceImpl implements LoteService {
     }
 
     @Override
-    public List<Lote> findAll(Integer page, Integer pageSize) {
-        PanacheQuery<Lote> query = null;
-        if (page == null || pageSize == null)
-            query = loteRepository.findAll();
-        else 
-            query = loteRepository.findAll().page(page, pageSize);
+    public PaginacaoDTO findAll(Integer page, Integer pageSize) {
+        if (page == null || pageSize == null) {
+            page = 0;
+            pageSize = 20;
+        }
 
-        return query.list();
+        PanacheQuery<Lote> query = loteRepository.findAll().page(page, pageSize);
+
+        long totalRecords = loteRepository.count(); // Conta o total de registros
+
+        // Retorna o DTO com as informações de paginação
+        return new PaginacaoDTO(totalRecords, page, pageSize);
+    }
+
+    @Override
+    public List<LoteResponseDTO> findPage(int page, int pageSize) {
+        return loteRepository.findAll()
+                .page(page, pageSize)
+                .list()
+                .stream()
+                .map(LoteResponseDTO::valueOf)
+                .toList();
     }
 
     @Override

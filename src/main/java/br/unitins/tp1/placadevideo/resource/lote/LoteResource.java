@@ -5,7 +5,9 @@ import java.util.List;
 import org.jboss.logging.Logger;
 
 import br.unitins.tp1.placadevideo.dto.request.LoteRequestDTO;
+import br.unitins.tp1.placadevideo.dto.request.PaginacaoDTO;
 import br.unitins.tp1.placadevideo.dto.response.LoteResponseDTO;
+import br.unitins.tp1.placadevideo.dto.response.PlacaDeVideoResponseDTO;
 import br.unitins.tp1.placadevideo.model.placadevideo.Lote;
 import br.unitins.tp1.placadevideo.service.lote.LoteService;
 import jakarta.inject.Inject;
@@ -52,10 +54,18 @@ public class LoteResource {
     }
 
     @GET
-    // @RolesAllowed({"Adm"})
-    public List<Lote> findAll(@QueryParam("page") @DefaultValue("0") int page,
+    // @RolesAllowed({ "Adm", "User" })
+    public PaginacaoDTO findAll(@QueryParam("page") @DefaultValue("0") int page,
             @QueryParam("page_size") @DefaultValue("100") int pageSize) {
-        return loteService.findAll(page, pageSize);
+        return loteService.findAll(page, pageSize); // Agora retorna o DTO de paginação
+    }
+
+    @GET
+    @Path("/page")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<LoteResponseDTO> findPage(@QueryParam("page") @DefaultValue("0") int page,
+            @QueryParam("page_size") @DefaultValue("20") int pageSize) {
+        return loteService.findPage(page, pageSize);
     }
 
     @POST

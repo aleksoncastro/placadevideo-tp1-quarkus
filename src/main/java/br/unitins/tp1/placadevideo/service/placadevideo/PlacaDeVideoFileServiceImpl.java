@@ -53,7 +53,7 @@ public class PlacaDeVideoFileServiceImpl implements FileService {
             imagens.add(novoNomeImagem);
             placa.setListaImagem(imagens);
 
-            placaDeVideoRepository.persist(placa);
+          
             // excluir a imagem antiga (trabalho pra quem????)
         } catch (IOException e) {
             throw e;

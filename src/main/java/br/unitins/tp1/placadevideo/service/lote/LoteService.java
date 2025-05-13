@@ -3,6 +3,8 @@ package br.unitins.tp1.placadevideo.service.lote;
 import java.util.List;
 
 import br.unitins.tp1.placadevideo.dto.request.LoteRequestDTO;
+import br.unitins.tp1.placadevideo.dto.request.PaginacaoDTO;
+import br.unitins.tp1.placadevideo.dto.response.LoteResponseDTO;
 import br.unitins.tp1.placadevideo.model.placadevideo.Lote;
 
 public interface LoteService {
@@ -13,7 +15,9 @@ public interface LoteService {
 
     Lote findByIdPlacaDeVideo(Long idPlaca );
 
-    List<Lote> findAll(Integer page, Integer pageSize);
+    PaginacaoDTO findAll(Integer page, Integer pageSize);
+
+    List<LoteResponseDTO> findPage(int page, int pageSize);
      
     long count();
      
