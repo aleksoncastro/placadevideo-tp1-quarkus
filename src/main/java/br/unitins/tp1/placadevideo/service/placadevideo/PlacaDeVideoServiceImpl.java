@@ -6,7 +6,6 @@ import java.util.stream.Collectors;
 
 import br.unitins.tp1.placadevideo.dto.request.PaginacaoDTO;
 import br.unitins.tp1.placadevideo.dto.request.PlacaDeVideoRequestDTO;
-import br.unitins.tp1.placadevideo.dto.request.SaidaVideoRequestDTO;
 import br.unitins.tp1.placadevideo.dto.response.PlacaDeVideoResponseDTO;
 import br.unitins.tp1.placadevideo.model.Fornecedor;
 import br.unitins.tp1.placadevideo.model.placadevideo.Fan;
@@ -36,6 +35,7 @@ public class PlacaDeVideoServiceImpl implements PlacaDeVideoService {
     public FornecedorService fornecedorService;
 
     @Override
+    @Transactional
     public PlacaDeVideo findById(Long id) {
         return placaDeVideoRepository.findById(id);
     }
@@ -179,6 +179,8 @@ public class PlacaDeVideoServiceImpl implements PlacaDeVideoService {
         placaDeVideoRepository.deleteById(id);
     }
 
+   
+
     @Override
     @Transactional
     public PlacaDeVideo updateNomeImagem(Long id, String nomeImagem) {
@@ -188,7 +190,7 @@ public class PlacaDeVideoServiceImpl implements PlacaDeVideoService {
         }
 
         if (placaDeVideo.getListaImagem() == null) {
-            placaDeVideo.setListaImagem(new ArrayList<>());
+           placaDeVideo.setListaImagem(new ArrayList<>());  
         }
 
         placaDeVideo.getListaImagem().add(nomeImagem);

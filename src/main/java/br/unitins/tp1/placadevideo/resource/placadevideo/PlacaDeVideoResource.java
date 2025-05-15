@@ -122,8 +122,8 @@ public class PlacaDeVideoResource {
     // @RolesAllowed("Adm")
     public Response update(@PathParam("id") Long id, @Valid PlacaDeVideoRequestDTO dto) {
         LOG.infof("Atualizando placa de vídeo com id %d", id);
-        placaDeVideoService.update(id, dto);
-        return Response.noContent().build();
+        PlacaDeVideo placaAtualizada =  placaDeVideoService.update(id, dto);
+        return Response.ok(PlacaDeVideoResponseDTO.valueOf(placaAtualizada)).build();
     }
 
     @DELETE
@@ -137,11 +137,42 @@ public class PlacaDeVideoResource {
 
     @PATCH
     // @RolesAllowed({ "Adm" })
-     @Path("/image/upload")
+    @Path("/image/upload")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     public Response salvarImagem(@MultipartForm ImageForm form) {
         try {
             fileService.salvar(form.getId(), form.getNomeImagem(), form.getImagem());
+            return Response.noContent().build();
+        } catch (IOException e) {
+            return Response.status(Status.CONFLICT).build();
+        }
+    }
+
+    @PATCH
+    @Path("/image/update/{id}")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    public Response updateImagem(@PathParam("id") Long id, @MultipartForm ImageForm form) {
+        try {
+            // Primeiro, realiza o upload da imagem
+            fileService.salvar(form.getId(), form.getNomeImagem(), form.getImagem());
+
+            // Atualiza a lista de imagens da placa de vídeo
+            placaDeVideoService.updateNomeImagem(id, form.getNomeImagem());
+
+            return Response.noContent().build();
+        } catch (IOException e) {
+            return Response.status(Status.CONFLICT).entity("Erro ao salvar a imagem").build();
+        }
+    }
+
+    @PATCH
+    // @RolesAllowed({ "Adm" })
+    @Path("/image/delete/{nomeImagem}/placa/{idPlaca}")
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    public Response deleteImage(@PathParam("nomeImagem") String nomeImagem,
+            @PathParam("idPlaca") Long idPlaca) {
+        try {
+            fileService.deletarImagem(idPlaca, nomeImagem);
             return Response.noContent().build();
         } catch (IOException e) {
             return Response.status(Status.CONFLICT).build();
@@ -153,7 +184,7 @@ public class PlacaDeVideoResource {
     // @RolesAllowed({ "Adm" })
     @Path("/image/download/{nomeImagem}")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
-     public Response download(@PathParam("nomeImagem") String nomeImagem) {
+    public Response download(@PathParam("nomeImagem") String nomeImagem) {
         ResponseBuilder response = Response.ok(fileService.download(nomeImagem));
         response.header("Content-Disposition", "attachment;filename=" + nomeImagem);
         return response.build();

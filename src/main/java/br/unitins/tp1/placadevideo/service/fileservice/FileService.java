@@ -7,6 +7,8 @@ public interface FileService {
 
     void salvar(Long id, String nomeImagem, byte[] imagem) throws IOException;
 
+    void deletarImagem(Long id, String nomeImagem) throws IOException;
+
     File download(String nomeArquivo); 
 
 }

@@ -1,6 +1,7 @@
 package br.unitins.tp1.placadevideo.model.placadevideo;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 import br.unitins.tp1.placadevideo.model.DefaultEntity;
@@ -44,10 +45,10 @@ public class PlacaDeVideo extends DefaultEntity {
     @ManyToOne
     @JoinColumn(name = "fornecedor_id")
     private Fornecedor fornecedor; 
-
-    @ElementCollection
+    
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "imagem_placadevideo", joinColumns = @JoinColumn(name = "id_placadevideo"))
-    private List<String> listaImagem;
+    private List<String> listaImagem = new ArrayList<>();
     
     public Fornecedor getFornecedor() {
         return fornecedor;

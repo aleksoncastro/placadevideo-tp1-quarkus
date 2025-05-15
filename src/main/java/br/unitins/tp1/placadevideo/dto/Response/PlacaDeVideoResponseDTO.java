@@ -1,6 +1,7 @@
 package br.unitins.tp1.placadevideo.dto.response;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -46,6 +47,8 @@ public record PlacaDeVideoResponseDTO(
                         .map(SaidaVideoResponseDTO::valueOf)
                         .collect(Collectors.toList()),
                 FornecedorResponseDTO.valueOf(placaDeVideo.getFornecedor()),
-                placaDeVideo.getListaImagem());
+                placaDeVideo.getListaImagem() != null 
+                ? new ArrayList<>(placaDeVideo.getListaImagem()) : new ArrayList<>()  
+        );
     }
 }
