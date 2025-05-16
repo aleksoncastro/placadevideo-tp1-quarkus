@@ -126,7 +126,7 @@ INSERT INTO PlacaDeVideo (clockBase, clockBoost, barramento, energia, fan, preco
 VALUES (1.6, 2.1, 'PCIe 4.0 x16', 120, 3, 2200.00, true, 1, 2, 2, 'Gaming', 'Placa profissional', '4060ti', '1440p');
 
 INSERT INTO PlacaDeVideo (clockBase, clockBoost, barramento, energia, fan, preco, suporteRayTracing, fornecedor_id, id_memoria, id_tamanho, categoria, descricao, modelo, resolucao)
-VALUES (1.3, 1.7, 'PCIe 3.0 x16', 75, 1, 900.00, false, 3, 3, 3, 'Entry-Level', 'Placa de entrada econômica', 'GTX 1650', '1080p');
+VALUES (1.3, 1.7, 'PCIe 3.0 x16', 75, 1, 900.00, false, 1, 3, 3, 'Entry-Level', 'Placa de entrada econômica', 'GTX 1650', '1080p');
 
 INSERT INTO PlacaDeVideo (clockBase, clockBoost, barramento, energia, fan, preco, suporteRayTracing, fornecedor_id, id_memoria, id_tamanho, categoria, descricao, modelo, resolucao)
 VALUES (1.8, 2.3, 'PCIe 4.0 x16', 160, 2, 2500.00, true, 4, 4, 4, 'Gaming', 'Ótimo custo-benefício', 'RTX 3060', '1440p');
@@ -301,19 +301,65 @@ VALUES ('João Mendes', '1992-07-08', 3100.00, 3, 1);
 INSERT INTO funcionario (nome, datanascimento, salario, id_usuario, statusfuncionario)
 VALUES ('Ana Paula Souza', '1988-12-03', 4800.00, 4, 1);
 
-/*INSERT INTO imagem_placadevideo (id_placadevideo, listaImagem)
-VALUES 
-  (1, '/placasdevideo_imagens/rx6600.jpeg'),
-  (1, '/placasdevideo_imagens/rx6600.jpeg'),
-  (1, '/placasdevideo_imagens/rx6600.jpeg');
-  (1, '/placasdevideo_imagens/rx6600.jpeg');
 INSERT INTO imagem_placadevideo (id_placadevideo, listaImagem)
 VALUES 
-  (2, '/placasdevideo_imagens/4060ti.jpeg'),
-  (2, '/placasdevideo_imagens/4060ti.jpeg'),
-  (2, '/placasdevideo_imagens/4060ti.jpeg'),
-  (2, '/placasdevideo_imagens/4060ti.jpeg');
-*/
+  (1, 'rx66001.jpeg'),
+  (1, 'rx66002.jpg'),
+  (1, 'rx66003.jpg'),
+  (1, 'rx66004.jpg'),
+  (1, 'rx66005.jpg');
+
+
+INSERT INTO imagem_placadevideo (id_placadevideo, listaImagem)
+VALUES 
+  (2, '4060ti1.jpg'),
+  (2, '4060ti2.jpg'),
+  (2, '4060ti3.jpg'),
+  (2, '4060ti4.jpg'),
+  (2, '4060ti5.jpg');
+
+INSERT INTO imagem_placadevideo (id_placadevideo, listaImagem)
+VALUES 
+  (4, '30601.jpg'),
+  (4, '30602.jpg'),
+  (4, '30603.jpg'),
+  (4, '30604.jpg'),
+  (4, '30605.jpg');
+
+INSERT INTO imagem_placadevideo (id_placadevideo, listaImagem)
+VALUES 
+  (5, '30701.jpg'),
+  (5, '30702.jpg'),
+  (5, '30703.jpg'),
+  (5, '30704.jpg'),
+  (5, '30705.jpg');
+
+INSERT INTO imagem_placadevideo (id_placadevideo, listaImagem)
+VALUES 
+  (8, '40901.jpg'),
+  (8, '40902.jpg'),
+  (8, '40903.jpg'),
+  (8, '40904.jpg'),
+  (8, '40905.jpg');
+
+INSERT INTO imagem_placadevideo (id_placadevideo, listaImagem)
+VALUES 
+  (16, '40801.jpg'),
+  (16, '40802.jpg'),
+  (16, '40803.jpg'),
+  (16, '40804.jpg'),
+  (16, '40805.jpg');
+
+INSERT INTO imagem_placadevideo (id_placadevideo, listaImagem)
+VALUES 
+  (3, 'gtx16501.jpg'),
+  (3, 'gtx16502.jpg'),
+  (3, 'gtx16503.jpg'),
+  (3, 'gtx16504.jpg'),
+  (3, 'gtx16505.jpg');
+
+
+
 
 
 /* INSERT INTO telefone_funcionario (ddd, numero, funcionario_id)
