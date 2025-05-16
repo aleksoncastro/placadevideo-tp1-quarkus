@@ -1,6 +1,5 @@
 package br.unitins.tp1.placadevideo.resource.placadevideo;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
 

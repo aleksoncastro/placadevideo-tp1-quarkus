@@ -7,7 +7,6 @@ import org.jboss.logging.Logger;
 import br.unitins.tp1.placadevideo.dto.request.LoteRequestDTO;
 import br.unitins.tp1.placadevideo.dto.request.PaginacaoDTO;
 import br.unitins.tp1.placadevideo.dto.response.LoteResponseDTO;
-import br.unitins.tp1.placadevideo.dto.response.PlacaDeVideoResponseDTO;
 import br.unitins.tp1.placadevideo.model.placadevideo.Lote;
 import br.unitins.tp1.placadevideo.service.lote.LoteService;
 import jakarta.inject.Inject;

@@ -35,17 +35,16 @@ public class AuthResource {
     private static final Logger LOG = Logger.getLogger(ClienteResource.class);
 
     @POST
-    @Produces(MediaType.TEXT_PLAIN)
     public Response login(AuthRequestDTO authDTO) {
         LOG.info("Executando autorizacao do usuario");
         String hash = hashService.getHashSenha(authDTO.senha());
 
         Usuario usuario = usuarioService.findByUsernameAndSenha(authDTO.username(), hash);
         if (usuario == null) {
-            return Response.status(Status.NO_CONTENT)
+            return Response.status(Status.NOT_FOUND)
                     .entity("Usuario não encontrado").build();
         }
-        return Response.ok()
+        return Response.ok(usuario)
                 .header("Authorization", jwtService.generateJwt(UsuarioResponseDTO.valueOf(usuario)))
                 .build();
 

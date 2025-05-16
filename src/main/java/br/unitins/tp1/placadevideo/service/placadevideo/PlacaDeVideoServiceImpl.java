@@ -6,7 +6,6 @@ import java.util.stream.Collectors;
 
 import br.unitins.tp1.placadevideo.dto.request.PaginacaoDTO;
 import br.unitins.tp1.placadevideo.dto.request.PlacaDeVideoRequestDTO;
-import br.unitins.tp1.placadevideo.dto.request.SaidaVideoRequestDTO;
 import br.unitins.tp1.placadevideo.dto.response.PlacaDeVideoResponseDTO;
 import br.unitins.tp1.placadevideo.model.Fornecedor;
 import br.unitins.tp1.placadevideo.model.placadevideo.Fan;
