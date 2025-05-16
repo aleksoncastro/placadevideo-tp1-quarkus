@@ -4,9 +4,11 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.jboss.logging.Logger;
@@ -18,6 +20,7 @@ import br.unitins.tp1.placadevideo.service.fileservice.FileService;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import jakarta.validation.ValidationException;
 
 @ApplicationScoped
 public class PlacaDeVideoFileServiceImpl implements FileService {
@@ -40,26 +43,74 @@ public class PlacaDeVideoFileServiceImpl implements FileService {
     @Override
     @Transactional
     public void salvar(Long id, String nomeImagem, byte[] imagem) throws IOException {
+        LOG.info("Upload recebido - ID: " + id + ", nomeImagem: " + nomeImagem);
         PlacaDeVideo placa = placaDeVideoRepository.findById(id);
+        if (placa == null) {
+            throw new ValidationException("PlacaDeVideo não encontrada");
+        }
 
-        try {
-            String novoNomeImagem = salvarImagem(imagem, nomeImagem);
-            List<String> imagens = placa.getListaImagem();
-            if (imagens == null) {
-                imagens = new ArrayList<>();
+        List<String> imagens = placa.getListaImagem();
+        if (imagens == null) {
+            imagens = new ArrayList<>();
+        }
+
+        // Verifica se já existe uma imagem com esse nome
+        Optional<String> imagemExistente = imagens.stream()
+                .filter(nome -> nome.equals(nomeImagem))
+                .findFirst();
+
+        if (imagemExistente.isPresent()) {
+            // Deleta a imagem antiga do disco
+            deletarImagem(placa.getId(), nomeImagem);
+
+            // Remove da lista
+            imagens.remove(nomeImagem);
+        }
+
+        // Salva a nova imagem no disco
+        String novoNomeImagem = salvarImagem(imagem, nomeImagem);
+
+        // Adiciona o novo nome à lista
+        imagens.add(novoNomeImagem);
+        placa.setListaImagem(imagens);
+
+        placaDeVideoRepository.persist(placa);
+    }
+
+    @Override
+    @Transactional
+    public void deletarImagem(Long id, String nomeImagem) throws IOException {
+        PlacaDeVideo placa = placaDeVideoRepository.findById(id);
+        if (placa == null) {
+            throw new ValidationException("PlacaDeVideo não encontrada");
+        }
+
+        List<String> imagens = placa.getListaImagem();
+        if (imagens == null || imagens.isEmpty()) {
+            throw new ValidationException("Não há imagens para deletar");
+        }
+
+        Optional<String> imagemExistente = imagens.stream()
+                .filter(nome -> nome.equals(nomeImagem))
+                .findFirst();
+        if (imagemExistente.isEmpty()) {
+            throw new ValidationException("Imagem não encontrada na lista");
+        }
+
+        imagens.remove(nomeImagem);
+
+        Path path = Paths.get(PATH_USER, nomeImagem);
+        if (Files.exists(path)) {
+            try {
+                Files.delete(path);
+            } catch (IOException e) {
+                throw new IOException("Erro ao deletar imagem do disco: " + e.getMessage(), e);
             }
-            imagens.add(novoNomeImagem);
-            placa.setListaImagem(imagens);
-
-          
-            // excluir a imagem antiga (trabalho pra quem????)
-        } catch (IOException e) {
-            throw e;
         }
     }
 
     private String salvarImagem(byte[] imagem, String nomeImagem) throws IOException {
-        
+
         // verificando o tipo da imagem
         String mimeType = Files.probeContentType(new File(nomeImagem).toPath());
         List<String> listMimeType = Arrays.asList("image/jpg", "image/jpeg", "image/png", "image/gif");
@@ -78,7 +129,7 @@ public class PlacaDeVideoFileServiceImpl implements FileService {
 
         // gerando o nome do arquivo
         String nomeArquivo = UUID.randomUUID()
-        +"."+mimeType.substring(mimeType.lastIndexOf("/")+1);
+                + "." + mimeType.substring(mimeType.lastIndexOf("/") + 1);
 
         String path = PATH_USER + nomeArquivo;
 
@@ -98,12 +149,13 @@ public class PlacaDeVideoFileServiceImpl implements FileService {
         fos.close();
 
         return nomeArquivo;
-    
+
     }
 
     @Override
     public File download(String nomeArquivo) {
-        File file = new File(PATH_USER+nomeArquivo);
+        File file = new File(PATH_USER + nomeArquivo);
         return file;
     }
+
 }

@@ -301,19 +301,20 @@ VALUES ('João Mendes', '1992-07-08', 3100.00, 3, 1);
 INSERT INTO funcionario (nome, datanascimento, salario, id_usuario, statusfuncionario)
 VALUES ('Ana Paula Souza', '1988-12-03', 4800.00, 4, 1);
 
-INSERT INTO imagem_placadevideo (id_placadevideo, listaImagem)
+/*INSERT INTO imagem_placadevideo (id_placadevideo, listaImagem)
 VALUES 
   (1, '/placasdevideo_imagens/rx6600.jpeg'),
   (1, '/placasdevideo_imagens/rx6600.jpeg'),
   (1, '/placasdevideo_imagens/rx6600.jpeg');
   (1, '/placasdevideo_imagens/rx6600.jpeg');
-
 INSERT INTO imagem_placadevideo (id_placadevideo, listaImagem)
 VALUES 
   (2, '/placasdevideo_imagens/4060ti.jpeg'),
   (2, '/placasdevideo_imagens/4060ti.jpeg'),
   (2, '/placasdevideo_imagens/4060ti.jpeg'),
   (2, '/placasdevideo_imagens/4060ti.jpeg');
+*/
+
 
 /* INSERT INTO telefone_funcionario (ddd, numero, funcionario_id)
 VALUES ('63', '99988-7766', 1);
