@@ -48,6 +48,7 @@ INSERT INTO Fornecedor (cnpj, email, nome) VALUES ('33333333000100', 'asus@gmail
 INSERT INTO Fornecedor (cnpj, email, nome) VALUES ('44444444000100', 'palit@gmail.com', 'Palit');
 INSERT INTO Fornecedor (cnpj, email, nome) VALUES ('55555555000100', 'msi@gmail.com', 'MSI');
 INSERT INTO Fornecedor (cnpj, email, nome) VALUES ('66666666000100', 'galax@gmail.com', 'Galax');
+INSERT INTO Fornecedor (cnpj, email, nome) VALUES ('77776666000100', 'asrock@gmail.com', 'Asrock');
 
 INSERT INTO TelefoneFornecedor (codigoArea, numero) VALUES ('11', '912345678'); -- Gigabyte
 INSERT INTO TelefoneFornecedor (codigoArea, numero) VALUES ('21', '923456789'); -- Aorus
@@ -55,6 +56,7 @@ INSERT INTO TelefoneFornecedor (codigoArea, numero) VALUES ('31', '934567890'); 
 INSERT INTO TelefoneFornecedor (codigoArea, numero) VALUES ('41', '945678901'); -- Palit
 INSERT INTO TelefoneFornecedor (codigoArea, numero) VALUES ('51', '956789012'); -- MSI
 INSERT INTO TelefoneFornecedor (codigoArea, numero) VALUES ('61', '967890123'); -- Galax
+INSERT INTO TelefoneFornecedor (codigoArea, numero) VALUES ('64', '967090623'); -- Asrock 
 
 INSERT INTO Fornecedor_TelefoneFornecedor (Fornecedor_id, telefones_id) VALUES (1, 1); -- Gigabyte
 INSERT INTO Fornecedor_TelefoneFornecedor (Fornecedor_id, telefones_id) VALUES (2, 2); -- Aorus
@@ -62,6 +64,7 @@ INSERT INTO Fornecedor_TelefoneFornecedor (Fornecedor_id, telefones_id) VALUES (
 INSERT INTO Fornecedor_TelefoneFornecedor (Fornecedor_id, telefones_id) VALUES (4, 4); -- Palit
 INSERT INTO Fornecedor_TelefoneFornecedor (Fornecedor_id, telefones_id) VALUES (5, 5); -- MSI
 INSERT INTO Fornecedor_TelefoneFornecedor (Fornecedor_id, telefones_id) VALUES (6, 6); -- Galax
+INSERT INTO Fornecedor_TelefoneFornecedor (Fornecedor_id, telefones_id) VALUES (7, 7); -- Asrock
 
 -- 17. Inserindo dados na tabela Memoria
 INSERT INTO Memoria (capacidade, larguraBanda, velocidadeMemoria, tipoMemoria) VALUES (8, 256, 1600, 'GDDR6');
@@ -177,7 +180,7 @@ INSERT INTO PlacaDeVideo (clockBase, clockBoost, barramento, energia, fan, preco
 VALUES (2.1, 2.6, 'PCIe 5.0 x16', 275, 3, 5000.00, true, 1, 19, 19, 'Gaming', 'Ultra desempenho', 'RTX 4090', '8K');
 
 INSERT INTO PlacaDeVideo (clockBase, clockBoost, barramento, energia, fan, preco, suporteRayTracing, fornecedor_id, id_memoria, id_tamanho, categoria, descricao, modelo, resolucao)
-VALUES (1.5, 2.0, 'PCIe 4.0 x8', 105, 2, 1600.00, true, 2, 20, 20, 'Gaming', 'Placa intermediária com bom custo', 'RX 6650 XT', '1080p');
+VALUES (1.5, 2.0, 'PCIe 4.0 x8', 105, 2, 1600.00, true, 7, 20, 20, 'Gaming', 'Placa intermediária com bom custo', 'RX 6650 XT', '1080p');
 
 -- Associando saídas de vídeo para a placa RX 6600 (ID 1)
 INSERT INTO SaidaVideo (tipo, quantidade, placadevideo_id)
@@ -358,7 +361,53 @@ VALUES
   (3, 'gtx16504.jpg'),
   (3, 'gtx16505.jpg');
 
+INSERT INTO imagem_placadevideo (id_placadevideo, listaImagem)
+VALUES 
+  (18, '40601.jpg'),
+  (18, '40602.jpg'),
+  (18, '40603.jpg'),
+  (18, '40604.jpg'),
+  (18, '40605.jpg');
 
+INSERT INTO imagem_placadevideo (id_placadevideo, listaImagem)
+VALUES 
+  (19, '4090GB1.jpg'),
+  (19, '4090GB2.jpg'),
+  (19, '4090GB3.jpg'),
+  (19, '4090GB4.jpg'),
+  (19, '4090GB5.jpg');
+
+INSERT INTO imagem_placadevideo (id_placadevideo, listaImagem)
+VALUES 
+  (11, 'RX6700XT1.jpg'),
+  (11, 'RX6700XT2.jpg'),
+  (11, 'RX6700XT3.jpg'),
+  (11, 'RX6700XT4.jpg'),
+  (11, 'RX6700XT5.jpg');
+
+INSERT INTO imagem_placadevideo (id_placadevideo, listaImagem)
+VALUES 
+  (12, 'RX6800XT1.jpg'),
+  (12, 'RX6800XT2.jpg'),
+  (12, 'RX6800XT3.jpg'),
+  (12, 'RX6800XT4.jpg'),
+  (12, 'RX6800XT5.jpg');
+
+INSERT INTO imagem_placadevideo (id_placadevideo, listaImagem)
+VALUES 
+  (13, 'RX6900XTGB1.jpg'),
+  (13, 'RX6900XTGB2.jpg'),
+  (13, 'RX6900XTGB3.jpg'),
+  (13, 'RX6900XTGB4.jpg'),
+  (13, 'RX6900XTGB5.jpg');
+
+INSERT INTO imagem_placadevideo (id_placadevideo, listaImagem)
+VALUES 
+  (20, 'RX6650XTAR1.jpg'),
+  (20, 'RX6650XTAR2.jpg'),
+  (20, 'RX6650XTAR3.jpg'),
+  (20, 'RX6650XTAR4.jpg'),
+  (20, 'RX6650XTAR5.jpg');
 
 
 
