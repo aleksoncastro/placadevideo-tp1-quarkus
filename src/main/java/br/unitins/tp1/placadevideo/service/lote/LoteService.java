@@ -15,6 +15,8 @@ public interface LoteService {
 
     Lote findByIdPlacaDeVideo(Long idPlaca );
 
+    List<Lote> findByPlacasEmLotes(Long idPlaca);
+
     PaginacaoDTO findAll(Integer page, Integer pageSize);
 
     List<LoteResponseDTO> findPage(int page, int pageSize);

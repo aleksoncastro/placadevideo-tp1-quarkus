@@ -73,6 +73,15 @@ public class LoteServiceImpl implements LoteService {
     }
 
     @Override
+    public List<Lote> findByPlacasEmLotes(Long idPlaca){
+        PlacaDeVideo placa = placaDeVideoService.findById(idPlaca);
+        if(placa.getId() == null){
+            throw new ValidationException("placa", "placanão encontrada");
+        }
+        return loteRepository.findByPlacasEmLotes(placa.getId());
+    }
+
+    @Override
     public List<Lote> findByIdPlacaDeVideoQtdeTotal(Long idPlacaDeVideo) {
         return loteRepository.findByIdPlacaDeVideoQtdeTotal(idPlacaDeVideo);
     }

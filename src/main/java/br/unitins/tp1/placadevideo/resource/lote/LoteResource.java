@@ -60,6 +60,13 @@ public class LoteResource {
     }
 
     @GET
+    @Path("/placa/{id}")
+    public Response findByPlacasEmLotes(@PathParam("id") Long id){
+        return Response.ok(loteService.findByPlacasEmLotes(id).stream().map(o -> LoteResponseDTO.valueOf(o)).toList())
+                .build();
+    }
+
+    @GET
     @Path("/page")
     @Produces(MediaType.APPLICATION_JSON)
     public List<LoteResponseDTO> findPage(@QueryParam("page") @DefaultValue("0") int page,
