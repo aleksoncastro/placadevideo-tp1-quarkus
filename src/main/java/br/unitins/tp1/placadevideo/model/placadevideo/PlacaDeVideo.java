@@ -8,6 +8,7 @@ import br.unitins.tp1.placadevideo.model.DefaultEntity;
 import br.unitins.tp1.placadevideo.model.Fornecedor;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.CollectionTable;
+import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -23,6 +24,7 @@ public class PlacaDeVideo extends DefaultEntity {
     private BigDecimal preco;
     private String resolucao;
     private Integer energia;
+    @Column(length = 5000)
     private String descricao;
     private String barramento;
     private Fan fan;
