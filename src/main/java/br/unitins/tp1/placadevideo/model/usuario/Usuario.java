@@ -1,8 +1,15 @@
 package br.unitins.tp1.placadevideo.model.usuario;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import br.unitins.tp1.placadevideo.model.DefaultEntity;
+import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
 
 @Entity
 public class Usuario extends DefaultEntity {
@@ -14,6 +21,10 @@ public class Usuario extends DefaultEntity {
     private String email;
     @Column(length = 60, nullable = false, unique = true)
     private String cpf;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "imagem_usuario", joinColumns = @JoinColumn(name = "id_usuario"))
+    private List<String> listaImagem = new ArrayList<>();
     
     public String getCpf() {
         return cpf;
@@ -55,5 +66,12 @@ public class Usuario extends DefaultEntity {
         this.email = email;
     }
 
+    public List<String> getListaImagem() {
+        return listaImagem;
+    }
+
+    public void setListaImagem(List<String> listaImagem) {
+        this.listaImagem = listaImagem;
+    }
 
 }

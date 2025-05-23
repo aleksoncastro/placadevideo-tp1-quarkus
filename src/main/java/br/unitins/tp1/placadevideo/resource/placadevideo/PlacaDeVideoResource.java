@@ -147,22 +147,6 @@ public class PlacaDeVideoResource {
         }
     }
 
-    @PATCH
-    @Path("/image/update/{id}")
-    @Consumes(MediaType.MULTIPART_FORM_DATA)
-    public Response updateImagem(@PathParam("id") Long id, @MultipartForm ImageForm form) {
-        try {
-            // Primeiro, realiza o upload da imagem
-            fileService.salvar(form.getId(), form.getNomeImagem(), form.getImagem());
-
-            // Atualiza a lista de imagens da placa de vídeo
-            placaDeVideoService.updateNomeImagem(id, form.getNomeImagem());
-
-            return Response.noContent().build();
-        } catch (IOException e) {
-            return Response.status(Status.CONFLICT).entity("Erro ao salvar a imagem").build();
-        }
-    }
 
     @PATCH
     // @RolesAllowed({ "Adm" })
