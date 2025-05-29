@@ -307,6 +307,37 @@ VALUES ('João Mendes', '1992-07-08', 3100.00, 3, 1);
 INSERT INTO funcionario (nome, datanascimento, salario, id_usuario, statusfuncionario)
 VALUES ('Ana Paula Souza', '1988-12-03', 4800.00, 4, 1);
 
+
+-- Inserir cliente
+INSERT INTO cliente (id, nome, datanascimento, id_usuario) 
+VALUES (1, 'João Silva', '1990-05-15', 4);
+
+-- Inserir endereços
+INSERT INTO endereco (id, cep, cidade, estado, bairro, rua, numero) 
+VALUES 
+(1, '12345-678', 'São Paulo', 'SP', 'Centro', 'Rua das Flores', '100'),
+(2, '98765-432', 'Rio de Janeiro', 'RJ', 'Copacabana', 'Avenida Atlântica', '2000');
+
+
+-- Inserir telefones
+INSERT INTO telefonecliente (id, codigoarea, numero) 
+VALUES 
+(1, '11', '912345678'),
+(2, '21', '998765432');
+
+-- Tabela associativa cliente_enderecos
+INSERT INTO cliente_endereco (cliente_id, enderecos_id) 
+VALUES 
+(1, 1),
+(1, 2);
+
+-- Tabela associativa cliente_telefones
+INSERT INTO cliente_telefonecliente (cliente_id, telefones_id) 
+VALUES 
+(1, 1),
+(1, 2);
+
+
 INSERT INTO imagem_placadevideo (id_placadevideo, listaImagem)
 VALUES 
   (1, 'rx66001.jpeg'),

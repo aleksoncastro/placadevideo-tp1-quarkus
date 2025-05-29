@@ -47,7 +47,7 @@ public class ClienteResource {
     }
 
     @GET
-    @Path("/{id}")
+    @Path("/me")
     @RolesAllowed({ "User" })
     public Response findByMe() {
         String username = jsonWebToken.getSubject();

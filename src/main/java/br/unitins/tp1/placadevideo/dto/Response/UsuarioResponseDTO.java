@@ -10,6 +10,7 @@ public record UsuarioResponseDTO(
         Long id,
         String username,
         String senha,
+        String email,
         String cpf,
         Perfil perfil,
         List<String> listaImagem) {
@@ -21,6 +22,7 @@ public record UsuarioResponseDTO(
                 usuario.getId(),
                 usuario.getUsername(),
                 usuario.getSenha(),
+                usuario.getEmail(),
                 usuario.getCpf(),
                 usuario.getPerfil(),
                 usuario.getListaImagem() != null

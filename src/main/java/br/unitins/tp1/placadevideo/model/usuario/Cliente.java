@@ -24,7 +24,7 @@ public class Cliente extends DefaultEntity {
 
     private LocalDate dataNascimento;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_usuario", unique = true)
     private Usuario usuario;
 
