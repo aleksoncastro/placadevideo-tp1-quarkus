@@ -60,6 +60,7 @@ public class PlacaDeVideoRepository implements PanacheRepository<PlacaDeVideo> {
         jpql.append("  PlacaDeVideo p ");
         jpql.append("WHERE ");
         jpql.append("  LOWER(p.modelo) LIKE LOWER(?1) ");
+        jpql.append("  OR LOWER(p.fornecedor.nome) LIKE LOWER(?1) ");
         jpql.append("  OR LOWER(p.categoria) LIKE LOWER(?1) ");
         jpql.append("  OR LOWER(p.descricao) LIKE LOWER(?1) ");
 

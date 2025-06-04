@@ -198,4 +198,16 @@ public class PlacaDeVideoResource {
         return Response.ok(resultado).build();
     }
 
+     @GET
+    @Path("/search/texto/{texto}")
+    public Response findByTexto(
+            @PathParam("texto") String texto,
+            @QueryParam("page") @DefaultValue("0") int page,
+            @QueryParam("pageSize") @DefaultValue("10") int pageSize) {
+        
+        LOG.infof("Buscando placa de vídeo pelo texto: %s", texto);
+        List<PlacaDeVideoResponseDTO> resultado = placaDeVideoService.findByTexto(texto, page, pageSize);
+        return Response.ok(resultado).build();
+    }
+
 }
