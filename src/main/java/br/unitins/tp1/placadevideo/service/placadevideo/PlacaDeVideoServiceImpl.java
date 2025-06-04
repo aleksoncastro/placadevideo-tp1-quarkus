@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import br.unitins.tp1.placadevideo.dto.request.FiltroPlacaDeVideoDTO;
 import br.unitins.tp1.placadevideo.dto.request.PaginacaoDTO;
 import br.unitins.tp1.placadevideo.dto.request.PlacaDeVideoRequestDTO;
 import br.unitins.tp1.placadevideo.dto.response.PlacaDeVideoResponseDTO;
@@ -179,7 +180,37 @@ public class PlacaDeVideoServiceImpl implements PlacaDeVideoService {
         placaDeVideoRepository.deleteById(id);
     }
 
-   
+    @Override
+    public List<PlacaDeVideoResponseDTO> findByTexto(String texto, Integer page, Integer pageSize) {
+        if (texto == null || texto.isEmpty()) {
+            throw new ValidationException("texto", "O texto para busca não pode ser nulo ou vazio.");
+        }
+        PanacheQuery<PlacaDeVideo> query = placaDeVideoRepository.findByTexto(texto).page(page, pageSize);
+
+        return query.list().stream()
+                .map(PlacaDeVideoResponseDTO::valueOf)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<PlacaDeVideoResponseDTO> findByFiltros(
+            FiltroPlacaDeVideoDTO filtro,
+            Integer page,
+            Integer pageSize
+    ) {
+        PanacheQuery<PlacaDeVideo> query = placaDeVideoRepository.findByFiltros(
+                filtro.categoria(),
+                filtro.memoriaMin(),
+                filtro.memoriaMax(),
+                filtro.precoMin(),
+                filtro.precoMax(),
+                filtro.rayTracing()
+        ).page(page, pageSize);
+
+        return query.list().stream()
+                .map(PlacaDeVideoResponseDTO::valueOf)
+                .collect(Collectors.toList());
+    }
 
     @Override
     @Transactional
@@ -190,7 +221,7 @@ public class PlacaDeVideoServiceImpl implements PlacaDeVideoService {
         }
 
         if (placaDeVideo.getListaImagem() == null) {
-           placaDeVideo.setListaImagem(new ArrayList<>());  
+            placaDeVideo.setListaImagem(new ArrayList<>());
         }
 
         placaDeVideo.getListaImagem().add(nomeImagem);

@@ -6,6 +6,7 @@ import java.util.List;
 import org.jboss.logging.Logger;
 import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 
+import br.unitins.tp1.placadevideo.dto.request.FiltroPlacaDeVideoDTO;
 import br.unitins.tp1.placadevideo.dto.request.PaginacaoDTO;
 import br.unitins.tp1.placadevideo.dto.request.PlacaDeVideoRequestDTO;
 import br.unitins.tp1.placadevideo.dto.response.PlacaDeVideoResponseDTO;
@@ -121,7 +122,7 @@ public class PlacaDeVideoResource {
     // @RolesAllowed("Adm")
     public Response update(@PathParam("id") Long id, @Valid PlacaDeVideoRequestDTO dto) {
         LOG.infof("Atualizando placa de vídeo com id %d", id);
-        PlacaDeVideo placaAtualizada =  placaDeVideoService.update(id, dto);
+        PlacaDeVideo placaAtualizada = placaDeVideoService.update(id, dto);
         return Response.ok(PlacaDeVideoResponseDTO.valueOf(placaAtualizada)).build();
     }
 
@@ -146,7 +147,6 @@ public class PlacaDeVideoResource {
             return Response.status(Status.CONFLICT).build();
         }
     }
-
 
     @PATCH
     // @RolesAllowed({ "Adm" })
@@ -183,6 +183,19 @@ public class PlacaDeVideoResource {
     @Path("/nome/{nome}/count")
     public long totalPorNome(String nome) {
         return placaDeVideoService.count(nome);
+    }
+
+    @POST
+    @Path("/filtro")
+// @RolesAllowed({ "Adm", "User" })
+    public Response filtrar(@Valid FiltroPlacaDeVideoDTO filtro,
+            @QueryParam("page") @DefaultValue("0") int page,
+            @QueryParam("page_size") @DefaultValue("20") int pageSize) {
+        LOG.infof("Filtrando placas de vídeo com critérios: %s", filtro);
+
+        List<PlacaDeVideoResponseDTO> resultado = placaDeVideoService.findByFiltros(filtro, page, pageSize);
+
+        return Response.ok(resultado).build();
     }
 
 }
