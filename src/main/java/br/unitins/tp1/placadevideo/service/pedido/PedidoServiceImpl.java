@@ -129,11 +129,11 @@ public class PedidoServiceImpl implements PedidoService {
         switch (dto.tipoPagamento()) {
             case 1:
                 pedido.setPagamento(gerarPix(valorTotal));
-                createStatusPedido(pedido, 1);
+                createStatusPedido(pedido, 2);
                 break;
             case 2:
                 pedido.setPagamento(gerarBoleto(valorTotal));
-                createStatusPedido(pedido, 1);
+                createStatusPedido(pedido, 2);
                 break;
             case 3:
                 if (pedido.getCliente().getCartoes().isEmpty()) {
