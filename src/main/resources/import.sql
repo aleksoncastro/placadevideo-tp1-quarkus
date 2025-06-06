@@ -443,6 +443,37 @@ VALUES
   (20, 'RX6650XTAR4.jpg'),
   (20, 'RX6650XTAR5.jpg');
 
+INSERT INTO imagem_placadevideo (id_placadevideo, listaImagem)
+VALUES 
+  (6, '3080GALAX1.jpg'),
+  (6, '3080GALAX2.jpg'),
+  (6, '3080GALAX3.jpg'),
+  (6, '3080GALAX4.jpg'),
+  (6, '3080GALAX5.jpg');
+
+INSERT INTO imagem_placadevideo (id_placadevideo, listaImagem)
+VALUES 
+  (7, '3090GIGABYTE1.jpg'),
+  (7, '3090GIGABYTE2.jpg'),
+  (7, '3090GIGABYTE3.jpg'),
+  (7, '3090GIGABYTE4.jpg'),
+  (7, '3090GIGABYTE5.jpg');
+
+
+INSERT INTO imagem_placadevideo (id_placadevideo, listaImagem)
+VALUES 
+  (9, 'P20001.jpg'),
+  (9, 'P20002.jpg'),
+  (9, 'P20003.jpg'),
+  (9, 'P20004.jpg'),
+  (9, 'P20005.jpg');
+
+INSERT INTO imagem_placadevideo (id_placadevideo, listaImagem)
+VALUES 
+  (10, '40001.jpg'),
+  (10, '40002.jpg'),
+  (10, '40003.jpg');
+
 
 
 /* INSERT INTO telefone_funcionario (ddd, numero, funcionario_id)

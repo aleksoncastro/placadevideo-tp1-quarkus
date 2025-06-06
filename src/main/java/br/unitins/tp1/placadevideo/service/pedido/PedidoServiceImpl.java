@@ -126,14 +126,18 @@ public class PedidoServiceImpl implements PedidoService {
             throw new ValidationException("tipoPagamento", "O tipoPagamento é inválido");
         }
 
+        pedido.setTipoPagamento(dto.tipoPagamento());
+
         switch (dto.tipoPagamento()) {
             case 1:
                 pedido.setPagamento(gerarPix(valorTotal));
                 createStatusPedido(pedido, 2);
+                
                 break;
             case 2:
                 pedido.setPagamento(gerarBoleto(valorTotal));
                 createStatusPedido(pedido, 2);
+                
                 break;
             case 3:
                 if (pedido.getCliente().getCartoes().isEmpty()) {
@@ -141,7 +145,7 @@ public class PedidoServiceImpl implements PedidoService {
                 }
                 pedido.setPagamento(registrarPagamentoCartao(pedido, dto.idCartao()));
                 createStatusPedido(pedido, 2);
-
+                
                 break;
             default:
                 break;
