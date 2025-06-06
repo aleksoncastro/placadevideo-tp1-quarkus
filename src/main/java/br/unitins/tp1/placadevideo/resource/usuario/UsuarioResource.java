@@ -11,6 +11,7 @@ import br.unitins.tp1.placadevideo.dto.request.SenhaPatchRequestDTO;
 import br.unitins.tp1.placadevideo.dto.request.UsuarioRequestDTO;
 import br.unitins.tp1.placadevideo.dto.response.UsuarioResponseDTO;
 import br.unitins.tp1.placadevideo.form.ImageForm;
+import br.unitins.tp1.placadevideo.repository.usuario.UsuarioRepository;
 import br.unitins.tp1.placadevideo.resource.placadevideo.PlacaDeVideoResource;
 import br.unitins.tp1.placadevideo.service.fileservice.FileServiceUsuario;
 import br.unitins.tp1.placadevideo.service.usuario.UsuarioService;
@@ -44,6 +45,9 @@ public class UsuarioResource {
 
     @Inject
     FileServiceUsuario fileService;
+
+    @Inject
+    UsuarioRepository usuarioRepository;
 
     @GET
     @Path("/{id}")

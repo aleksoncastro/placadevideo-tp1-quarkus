@@ -38,8 +38,12 @@ public class PlacaDeVideoRepository implements PanacheRepository<PlacaDeVideo> {
 
     public List<PlacaDeVideo> findByUltimosLancamentos(String prefixo1, String prefixo2, String valor1, String valor2) {
         // Para limitar 10 resultados por conjunto de filtros
-        PanacheQuery<PlacaDeVideo> query1 = find("SELECT p FROM PlacaDeVideo p WHERE p.modelo LIKE ?1 AND p.modelo LIKE ?2", prefixo1 + "%", "%" + valor1 + "%");
-        PanacheQuery<PlacaDeVideo> query2 = find("SELECT p FROM PlacaDeVideo p WHERE p.modelo LIKE ?1 AND p.modelo LIKE ?2", prefixo2 + "%", "%" + valor2 + "%");
+        PanacheQuery<PlacaDeVideo> query1 = find(
+                "SELECT p FROM PlacaDeVideo p WHERE p.modelo LIKE ?1 AND p.modelo LIKE ?2", prefixo1 + "%",
+                "%" + valor1 + "%");
+        PanacheQuery<PlacaDeVideo> query2 = find(
+                "SELECT p FROM PlacaDeVideo p WHERE p.modelo LIKE ?1 AND p.modelo LIKE ?2", prefixo2 + "%",
+                "%" + valor2 + "%");
 
         List<PlacaDeVideo> resultados1 = query1.range(0, 9).list();
         List<PlacaDeVideo> resultados2 = query2.range(0, 9).list();
@@ -50,6 +54,21 @@ public class PlacaDeVideoRepository implements PanacheRepository<PlacaDeVideo> {
         resultados.addAll(resultados2);
 
         return resultados;
+    }
+
+    public List<PlacaDeVideo> findPlacasByPedidoId(Long pedidoId) {
+        String jpql = """
+                    SELECT DISTINCT l.placaDeVideo
+                    FROM Pedido p
+                    JOIN p.listaItemPedido item
+                    JOIN item.lote l
+                    WHERE p.id = ?1
+                """;
+
+        return getEntityManager()
+                .createQuery(jpql, PlacaDeVideo.class)
+                .setParameter(1, pedidoId)
+                .getResultList();
     }
 
     public PanacheQuery<PlacaDeVideo> findByTexto(String texto) {
@@ -73,8 +92,7 @@ public class PlacaDeVideoRepository implements PanacheRepository<PlacaDeVideo> {
             Integer memoriaMax,
             BigDecimal precoMin,
             BigDecimal precoMax,
-            Boolean rayTracing
-    ) {
+            Boolean rayTracing) {
         StringBuilder jpql = new StringBuilder("SELECT p FROM PlacaDeVideo p WHERE 1=1 ");
         Map<String, Object> params = new HashMap<>();
 
@@ -113,8 +131,7 @@ public class PlacaDeVideoRepository implements PanacheRepository<PlacaDeVideo> {
             Integer memoriaMax,
             BigDecimal precoMin,
             BigDecimal precoMax,
-            Boolean rayTracing
-    ) {
+            Boolean rayTracing) {
         StringBuilder jpql = new StringBuilder("SELECT p FROM PlacaDeVideo p WHERE 1=1 ");
         Map<String, Object> params = new HashMap<>();
 

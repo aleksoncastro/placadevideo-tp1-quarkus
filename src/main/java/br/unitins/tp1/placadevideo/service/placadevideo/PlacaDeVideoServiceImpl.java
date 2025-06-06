@@ -9,12 +9,14 @@ import br.unitins.tp1.placadevideo.dto.request.PaginacaoDTO;
 import br.unitins.tp1.placadevideo.dto.request.PlacaDeVideoRequestDTO;
 import br.unitins.tp1.placadevideo.dto.response.PlacaDeVideoResponseDTO;
 import br.unitins.tp1.placadevideo.model.Fornecedor;
+import br.unitins.tp1.placadevideo.model.pedido.Pedido;
 import br.unitins.tp1.placadevideo.model.placadevideo.Fan;
 import br.unitins.tp1.placadevideo.model.placadevideo.PlacaDeVideo;
 import br.unitins.tp1.placadevideo.model.placadevideo.SaidaVideo;
 import br.unitins.tp1.placadevideo.repository.placadevideo.PlacaDeVideoRepository;
 import br.unitins.tp1.placadevideo.service.fornecedor.FornecedorService;
 import br.unitins.tp1.placadevideo.service.lote.LoteService;
+import br.unitins.tp1.placadevideo.service.pedido.PedidoService;
 import br.unitins.tp1.placadevideo.validation.ValidationException;
 import io.quarkus.hibernate.orm.panache.PanacheQuery;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -34,6 +36,9 @@ public class PlacaDeVideoServiceImpl implements PlacaDeVideoService {
 
     @Inject
     public FornecedorService fornecedorService;
+
+    @Inject
+    public PedidoService pedidoService;
 
     @Override
     @Transactional
@@ -232,6 +237,15 @@ public class PlacaDeVideoServiceImpl implements PlacaDeVideoService {
         return query.list().stream()
                 .map(PlacaDeVideoResponseDTO::valueOf)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<PlacaDeVideo> findByPedido(Long idPedido){
+        Pedido pedido = pedidoService.findById(idPedido);
+        if(pedido.getId() == null){
+             throw new ValidationException("pedido", "pedido não encontrada");
+        }
+        return placaDeVideoRepository.findPlacasByPedidoId(idPedido);
     }
 
     @Override

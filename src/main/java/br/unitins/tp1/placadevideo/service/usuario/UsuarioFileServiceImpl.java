@@ -47,31 +47,24 @@ public class UsuarioFileServiceImpl implements FileServiceUsuario {
         LOG.info("Upload recebido - ID: " + id + ", nomeImagem: " + nomeImagem);
         Usuario usuario = usuarioRepository.findById(id);
         if (usuario == null) {
-            throw new ValidationException("Usuario não encontrada");
+            throw new ValidationException("Usuário não encontrado");
         }
 
         List<String> imagens = usuario.getListaImagem();
-        if (imagens == null) {
+        if (imagens != null && !imagens.isEmpty()) {
+            // Sempre deleta a imagem anterior
+            for (String imagemAntiga : new ArrayList<>(imagens)) {
+                deletarImagem(id, imagemAntiga);
+            }
+        } else {
             imagens = new ArrayList<>();
-        }
-
-        // Verifica se já existe uma imagem com esse nome
-        Optional<String> imagemExistente = imagens.stream()
-                .filter(nome -> nome.equals(nomeImagem))
-                .findFirst();
-
-        if (imagemExistente.isPresent()) {
-            // Deleta a imagem antiga do disco
-            deletarImagem(usuario.getId(), nomeImagem);
-
-            // Remove da lista
-            imagens.remove(nomeImagem);
         }
 
         // Salva a nova imagem no disco
         String novoNomeImagem = salvarImagem(imagem, nomeImagem);
 
-        // Adiciona o novo nome à lista
+        // Define a lista com apenas a nova imagem
+        imagens.clear();
         imagens.add(novoNomeImagem);
         usuario.setListaImagem(imagens);
 

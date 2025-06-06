@@ -149,6 +149,13 @@ public class PlacaDeVideoResource {
         }
     }
 
+    @GET
+    @Path("/pedido/{id}")
+    public Response findByPedido(@PathParam("id") Long idPedido){
+        return Response.ok(placaDeVideoService.findByPedido(idPedido).stream().map(o -> PlacaDeVideoResponseDTO.valueOf(o)).toList())
+        .build();
+    }
+
     @PATCH
     // @RolesAllowed({ "Adm" })
     @Path("/image/delete/{nomeImagem}/placa/{idPlaca}")

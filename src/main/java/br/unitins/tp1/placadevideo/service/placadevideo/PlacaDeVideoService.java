@@ -48,4 +48,6 @@ public interface PlacaDeVideoService {
             Integer page,
             Integer pageSize
     );
+
+    List<PlacaDeVideo> findByPedido(Long idPedido);
 }
