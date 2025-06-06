@@ -42,4 +42,10 @@ public interface PlacaDeVideoService {
             Integer pageSize
     );
 
+    List<PlacaDeVideoResponseDTO> findByTextoAndFiltros(
+            String texto,
+            FiltroPlacaDeVideoDTO filtro,
+            Integer page,
+            Integer pageSize
+    );
 }

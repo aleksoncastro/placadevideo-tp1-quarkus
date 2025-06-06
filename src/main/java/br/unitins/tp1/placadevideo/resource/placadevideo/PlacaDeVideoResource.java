@@ -1,6 +1,7 @@
 package br.unitins.tp1.placadevideo.resource.placadevideo;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.jboss.logging.Logger;
@@ -198,4 +199,26 @@ public class PlacaDeVideoResource {
         return Response.ok(resultado).build();
     }
 
+    @GET
+    @Path("/search")
+    public Response searchPlacas(
+            @QueryParam("q") String texto,
+            @QueryParam("categoria") String categoria,
+            @QueryParam("memoriaMin") Integer memoriaMin,
+            @QueryParam("memoriaMax") Integer memoriaMax,
+            @QueryParam("precoMin") BigDecimal precoMin,
+            @QueryParam("precoMax") BigDecimal precoMax,
+            @QueryParam("rayTracing") Boolean rayTracing,
+            @QueryParam("page") @DefaultValue("0") Integer page,
+            @QueryParam("pageSize") @DefaultValue("10") Integer pageSize
+    ) {
+        // Aqui, monta o FiltroPlacaDeVideoDTO normalmente
+        FiltroPlacaDeVideoDTO filtro = new FiltroPlacaDeVideoDTO(
+                categoria, memoriaMin, memoriaMax, precoMin, precoMax, rayTracing
+        );
+
+        List<PlacaDeVideoResponseDTO> results = placaDeVideoService.findByTextoAndFiltros(texto, filtro, page, pageSize);
+
+        return Response.ok(results).build();
+    }
 }

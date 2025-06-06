@@ -105,4 +105,57 @@ public class PlacaDeVideoRepository implements PanacheRepository<PlacaDeVideo> {
         return find(jpql.toString(), params);
     }
 
+    public PanacheQuery<PlacaDeVideo> findByTextoAndFiltros(
+            String texto,
+            String categoria,
+            Integer memoriaMin,
+            Integer memoriaMax,
+            BigDecimal precoMin,
+            BigDecimal precoMax,
+            Boolean rayTracing
+    ) {
+        StringBuilder jpql = new StringBuilder("SELECT p FROM PlacaDeVideo p WHERE 1=1 ");
+        Map<String, Object> params = new HashMap<>();
+
+        if (texto != null && !texto.isEmpty()) {
+            String[] termos = texto.trim().toLowerCase().split("\\s+");
+            for (int i = 0; i < termos.length; i++) {
+                String termo = termos[i];
+                jpql.append("AND (");
+                jpql.append("LOWER(p.modelo) LIKE :texto").append(i);
+                jpql.append(" OR LOWER(p.categoria) LIKE :texto").append(i);
+                jpql.append(" OR LOWER(p.descricao) LIKE :texto").append(i);
+                jpql.append(" OR LOWER(p.fornecedor.nome) LIKE :texto").append(i);
+                jpql.append(") ");
+                params.put("texto" + i, "%" + termo + "%");
+            }
+        }
+
+        if (categoria != null) {
+            jpql.append("AND p.categoria = :categoria ");
+            params.put("categoria", categoria);
+        }
+        if (memoriaMin != null) {
+            jpql.append("AND p.memoria.capacidade >= :memoriaMin ");
+            params.put("memoriaMin", memoriaMin);
+        }
+        if (memoriaMax != null) {
+            jpql.append("AND p.memoria.capacidade <= :memoriaMax ");
+            params.put("memoriaMax", memoriaMax);
+        }
+        if (precoMin != null) {
+            jpql.append("AND p.preco >= :precoMin ");
+            params.put("precoMin", precoMin);
+        }
+        if (precoMax != null) {
+            jpql.append("AND p.preco <= :precoMax ");
+            params.put("precoMax", precoMax);
+        }
+        if (rayTracing != null) {
+            jpql.append("AND p.suporteRayTracing = :rayTracing ");
+            params.put("rayTracing", rayTracing);
+        }
+
+        return find(jpql.toString(), params);
+    }
 }

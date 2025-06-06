@@ -213,6 +213,28 @@ public class PlacaDeVideoServiceImpl implements PlacaDeVideoService {
     }
 
     @Override
+    public List<PlacaDeVideoResponseDTO> findByTextoAndFiltros(
+            String texto,
+            FiltroPlacaDeVideoDTO filtro,
+            Integer page,
+            Integer pageSize
+    ) {
+        PanacheQuery<PlacaDeVideo> query = placaDeVideoRepository.findByTextoAndFiltros(
+                texto,
+                filtro.categoria(),
+                filtro.memoriaMin(),
+                filtro.memoriaMax(),
+                filtro.precoMin(),
+                filtro.precoMax(),
+                filtro.rayTracing()
+        ).page(page, pageSize);
+
+        return query.list().stream()
+                .map(PlacaDeVideoResponseDTO::valueOf)
+                .collect(Collectors.toList());
+    }
+
+    @Override
     @Transactional
     public PlacaDeVideo updateNomeImagem(Long id, String nomeImagem) {
         PlacaDeVideo placaDeVideo = placaDeVideoRepository.findById(id);
