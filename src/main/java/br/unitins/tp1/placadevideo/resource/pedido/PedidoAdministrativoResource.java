@@ -47,6 +47,7 @@ public class PedidoAdministrativoResource {
     }
 
     @GET
+    @Path("/all")
     //@RolesAllowed({ "Adm" })
     public Response findAll() {
         LOG.info("Buscando todos os pedidos");

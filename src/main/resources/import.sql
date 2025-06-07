@@ -283,17 +283,258 @@ VALUES ('2023-02-20', 40, 2, 'LOTE003');
 INSERT INTO Lote (datafabricacao, estoque, id_placadevideo, codigo)
 VALUES ('2023-04-05', 20, 2, 'LOTE004');
 
+-- Lotes associados às PlacaDeVideo de ID 3 a 20 (exceto 1 e 2)
+
+-- PlacaDeVideo ID 3
+INSERT INTO Lote (datafabricacao, estoque, id_placadevideo, codigo)
+VALUES ('2023-01-10', 45, 3, 'LOTE005'),
+       ('2023-03-15', 25, 3, 'LOTE006');
+
+-- PlacaDeVideo ID 4
+INSERT INTO Lote (datafabricacao, estoque, id_placadevideo, codigo)
+VALUES ('2023-02-12', 60, 4, 'LOTE007'),
+       ('2023-04-18', 35, 4, 'LOTE008');
+
+-- PlacaDeVideo ID 5
+INSERT INTO Lote (datafabricacao, estoque, id_placadevideo, codigo)
+VALUES ('2023-01-25', 50, 5, 'LOTE009'),
+       ('2023-05-02', 40, 5, 'LOTE010');
+
+-- PlacaDeVideo ID 6
+INSERT INTO Lote (datafabricacao, estoque, id_placadevideo, codigo)
+VALUES ('2023-02-28', 30, 6, 'LOTE011'),
+       ('2023-05-15', 20, 6, 'LOTE012');
+
+-- PlacaDeVideo ID 7
+INSERT INTO Lote (datafabricacao, estoque, id_placadevideo, codigo)
+VALUES ('2023-03-05', 55, 7, 'LOTE013'),
+       ('2023-06-01', 45, 7, 'LOTE014');
+
+-- PlacaDeVideo ID 8
+INSERT INTO Lote (datafabricacao, estoque, id_placadevideo, codigo)
+VALUES ('2023-01-30', 35, 8, 'LOTE015'),
+       ('2023-04-10', 25, 8, 'LOTE016');
+
+-- PlacaDeVideo ID 9
+INSERT INTO Lote (datafabricacao, estoque, id_placadevideo, codigo)
+VALUES ('2023-02-15', 40, 9, 'LOTE017'),
+       ('2023-05-22', 30, 9, 'LOTE018');
+
+-- PlacaDeVideo ID 10
+INSERT INTO Lote (datafabricacao, estoque, id_placadevideo, codigo)
+VALUES ('2023-03-01', 60, 10, 'LOTE019'),
+       ('2023-06-10', 50, 10, 'LOTE020');
+
+-- PlacaDeVideo ID 11
+INSERT INTO Lote (datafabricacao, estoque, id_placadevideo, codigo)
+VALUES ('2023-01-05', 20, 11, 'LOTE021'),
+       ('2023-03-20', 15, 11, 'LOTE022');
+
+-- PlacaDeVideo ID 12
+INSERT INTO Lote (datafabricacao, estoque, id_placadevideo, codigo)
+VALUES ('2023-02-10', 25, 12, 'LOTE023'),
+       ('2023-04-25', 35, 12, 'LOTE024');
+
+-- PlacaDeVideo ID 13
+INSERT INTO Lote (datafabricacao, estoque, id_placadevideo, codigo)
+VALUES ('2023-03-12', 50, 13, 'LOTE025'),
+       ('2023-06-15', 40, 13, 'LOTE026');
+
+-- PlacaDeVideo ID 14
+INSERT INTO Lote (datafabricacao, estoque, id_placadevideo, codigo)
+VALUES ('2023-01-18', 60, 14, 'LOTE027'),
+       ('2023-05-05', 55, 14, 'LOTE028');
+
+-- PlacaDeVideo ID 15
+INSERT INTO Lote (datafabricacao, estoque, id_placadevideo, codigo)
+VALUES ('2023-02-08', 30, 15, 'LOTE029'),
+       ('2023-04-20', 25, 15, 'LOTE030');
+
+-- PlacaDeVideo ID 16
+INSERT INTO Lote (datafabricacao, estoque, id_placadevideo, codigo)
+VALUES ('2023-03-03', 40, 16, 'LOTE031'),
+       ('2023-06-20', 35, 16, 'LOTE032');
+
+-- PlacaDeVideo ID 17
+INSERT INTO Lote (datafabricacao, estoque, id_placadevideo, codigo)
+VALUES ('2023-01-22', 50, 17, 'LOTE033'),
+       ('2023-05-18', 45, 17, 'LOTE034');
+
+-- PlacaDeVideo ID 18
+INSERT INTO Lote (datafabricacao, estoque, id_placadevideo, codigo)
+VALUES ('2023-02-25', 30, 18, 'LOTE035'),
+       ('2023-04-28', 20, 18, 'LOTE036');
+
+-- PlacaDeVideo ID 19
+INSERT INTO Lote (datafabricacao, estoque, id_placadevideo, codigo)
+VALUES ('2023-03-08', 55, 19, 'LOTE037'),
+       ('2023-06-25', 50, 19, 'LOTE038');
+
+-- PlacaDeVideo ID 20
+INSERT INTO Lote (datafabricacao, estoque, id_placadevideo, codigo)
+VALUES ('2023-01-12', 35, 20, 'LOTE039'),
+       ('2023-05-30', 40, 20, 'LOTE040');
+
+-- ItemPedido para LOTE001 (id_lote 1) placa id 1, preço 1300.00
+INSERT INTO ItemPedido (id_lote, quantidade, preco) VALUES (1, 1, 1300.00);
+
+-- ItemPedido para LOTE002 (id_lote 2) placa id 1, preço 1300.00
+INSERT INTO ItemPedido (id_lote, quantidade, preco) VALUES (2, 1, 1300.00);
+
+-- ItemPedido para LOTE003 (id_lote 3) placa id 2, preço 2200.00
+INSERT INTO ItemPedido (id_lote, quantidade, preco) VALUES (3, 1, 2200.00);
+
+-- ItemPedido para LOTE004 (id_lote 4) placa id 2, preço 2200.00
+INSERT INTO ItemPedido (id_lote, quantidade, preco) VALUES (4, 1, 2200.00);
+
+-- ItemPedido para LOTE005 (id_lote 5) placa id 3, preço 900.00
+INSERT INTO ItemPedido (id_lote, quantidade, preco) VALUES (5, 1, 900.00);
+
+-- ItemPedido para LOTE006 (id_lote 6) placa id 3, preço 900.00
+INSERT INTO ItemPedido (id_lote, quantidade, preco) VALUES (6, 1, 900.00);
+
+-- ItemPedido para LOTE007 (id_lote 7) placa id 4, preço 2500.00
+INSERT INTO ItemPedido (id_lote, quantidade, preco) VALUES (7, 1, 2500.00);
+
+-- ItemPedido para LOTE008 (id_lote 8) placa id 4, preço 2500.00
+INSERT INTO ItemPedido (id_lote, quantidade, preco) VALUES (8, 1, 2500.00);
+
+-- ItemPedido para LOTE009 (id_lote 9) placa id 5, preço 3200.00
+INSERT INTO ItemPedido (id_lote, quantidade, preco) VALUES (9, 1, 3200.00);
+
+-- ItemPedido para LOTE010 (id_lote 10) placa id 5, preço 3200.00
+INSERT INTO ItemPedido (id_lote, quantidade, preco) VALUES (10, 1, 3200.00);
+
+-- ItemPedido para LOTE011 (id_lote 11) placa id 6, preço 4500.00
+INSERT INTO ItemPedido (id_lote, quantidade, preco) VALUES (11, 1, 4500.00);
+
+-- ItemPedido para LOTE012 (id_lote 12) placa id 6, preço 4500.00
+INSERT INTO ItemPedido (id_lote, quantidade, preco) VALUES (12, 1, 4500.00);
+
+-- ItemPedido para LOTE013 (id_lote 13) placa id 7, preço 5500.00
+INSERT INTO ItemPedido (id_lote, quantidade, preco) VALUES (13, 1, 5500.00);
+
+-- ItemPedido para LOTE014 (id_lote 14) placa id 7, preço 5500.00
+INSERT INTO ItemPedido (id_lote, quantidade, preco) VALUES (14, 1, 5500.00);
+
+-- ItemPedido para LOTE015 (id_lote 15) placa id 8, preço 6500.00
+INSERT INTO ItemPedido (id_lote, quantidade, preco) VALUES (15, 1, 6500.00);
+
+-- ItemPedido para LOTE016 (id_lote 16) placa id 8, preço 6500.00
+INSERT INTO ItemPedido (id_lote, quantidade, preco) VALUES (16, 1, 6500.00);
+
+-- ItemPedido para LOTE017 (id_lote 17) placa id 9, preço 1900.00
+INSERT INTO ItemPedido (id_lote, quantidade, preco) VALUES (17, 1, 1900.00);
+
+-- ItemPedido para LOTE018 (id_lote 18) placa id 9, preço 1900.00
+INSERT INTO ItemPedido (id_lote, quantidade, preco) VALUES (18, 1, 1900.00);
+
+-- ItemPedido para LOTE019 (id_lote 19) placa id 10, preço 2700.00
+INSERT INTO ItemPedido (id_lote, quantidade, preco) VALUES (19, 1, 2700.00);
+
+-- ItemPedido para LOTE020 (id_lote 20) placa id 10, preço 2700.00
+INSERT INTO ItemPedido (id_lote, quantidade, preco) VALUES (20, 1, 2700.00);
+
+-- ItemPedido para LOTE021 (id_lote 21) placa id 11, preço 2900.00
+INSERT INTO ItemPedido (id_lote, quantidade, preco) VALUES (21, 1, 2900.00);
+
+-- ItemPedido para LOTE022 (id_lote 22) placa id 11, preço 2900.00
+INSERT INTO ItemPedido (id_lote, quantidade, preco) VALUES (22, 1, 2900.00);
+
+-- ItemPedido para LOTE023 (id_lote 23) placa id 12, preço 3800.00
+INSERT INTO ItemPedido (id_lote, quantidade, preco) VALUES (23, 1, 3800.00);
+
+-- ItemPedido para LOTE024 (id_lote 24) placa id 12, preço 3800.00
+INSERT INTO ItemPedido (id_lote, quantidade, preco) VALUES (24, 1, 3800.00);
+
+-- ItemPedido para LOTE025 (id_lote 25) placa id 13, preço 4700.00
+INSERT INTO ItemPedido (id_lote, quantidade, preco) VALUES (25, 1, 4700.00);
+
+-- ItemPedido para LOTE026 (id_lote 26) placa id 13, preço 4700.00
+INSERT INTO ItemPedido (id_lote, quantidade, preco) VALUES (26, 1, 4700.00);
+
+-- ItemPedido para LOTE027 (id_lote 27) placa id 14, preço 1800.00
+INSERT INTO ItemPedido (id_lote, quantidade, preco) VALUES (27, 1, 1800.00);
+
+-- ItemPedido para LOTE028 (id_lote 28) placa id 14, preço 1800.00
+INSERT INTO ItemPedido (id_lote, quantidade, preco) VALUES (28, 1, 1800.00);
+
+-- ItemPedido para LOTE029 (id_lote 29) placa id 15, preço 800.00
+INSERT INTO ItemPedido (id_lote, quantidade, preco) VALUES (29, 1, 800.00);
+
+-- ItemPedido para LOTE030 (id_lote 30) placa id 15, preço 800.00
+INSERT INTO ItemPedido (id_lote, quantidade, preco) VALUES (30, 1, 800.00);
+
+-- ItemPedido para LOTE031 (id_lote 31) placa id 16, preço 4200.00
+INSERT INTO ItemPedido (id_lote, quantidade, preco) VALUES (31, 1, 4200.00);
+
+-- ItemPedido para LOTE032 (id_lote 32) placa id 16, preço 4200.00
+INSERT INTO ItemPedido (id_lote, quantidade, preco) VALUES (32, 1, 4200.00);
+
+-- ItemPedido para LOTE033 (id_lote 33) placa id 17, preço 2100.00
+INSERT INTO ItemPedido (id_lote, quantidade, preco) VALUES (33, 1, 2100.00);
+
+-- ItemPedido para LOTE034 (id_lote 34) placa id 17, preço 2100.00
+INSERT INTO ItemPedido (id_lote, quantidade, preco) VALUES (34, 1, 2100.00);
+
+-- ItemPedido para LOTE035 (id_lote 35) placa id 18, preço 2400.00
+INSERT INTO ItemPedido (id_lote, quantidade, preco) VALUES (35, 1, 2400.00);
+
+-- ItemPedido para LOTE036 (id_lote 36) placa id 18, preço 2400.00
+INSERT INTO ItemPedido (id_lote, quantidade, preco) VALUES (36, 1, 2400.00);
+
+-- ItemPedido para LOTE037 (id_lote 37) placa id 19, preço 5000.00
+INSERT INTO ItemPedido (id_lote, quantidade, preco) VALUES (37, 1, 5000.00);
+
+-- ItemPedido para LOTE038 (id_lote 38) placa id 19, preço 5000.00
+INSERT INTO ItemPedido (id_lote, quantidade, preco) VALUES (38, 1, 5000.00);
+
+-- ItemPedido para LOTE039 (id_lote 39) placa id 20, preço 1600.00
+INSERT INTO ItemPedido (id_lote, quantidade, preco) VALUES (39, 1, 1600.00);
+
+-- ItemPedido para LOTE040 (id_lote 40) placa id 20, preço 1600.00
+INSERT INTO ItemPedido (id_lote, quantidade, preco) VALUES (40, 1, 1600.00);
+
+
+
 INSERT INTO Usuario (username, senha, email, cpf, perfil) 
-VALUES ('admin_user', 'xzp7AP+QWnPSmgzJYRBVWiUX7nsVqbfYVtuvPOPw2TRuCrd6T8+/fEhQoxtROBveRpbEyyBB/Xlxxc+rWHzmzQ==', 'admin@example.com', '5555555555', 1);
+VALUES ('joao123', '0cctg7WgpEz7kC/AzVC+KX+bZLPXDtgJDqWWZWnmzHH+7Na2YVxYYSFPxcf7ImAjqfNckx0aT4n5qKM7WEoeEQ==', 'cliente@gmail.com', '3333333333', 2);
+
+INSERT INTO Usuario (username, senha, email, cpf, perfil) 
+VALUES ('maria456', '0cctg7WgpEz7kC/AzVC+KX+bZLPXDtgJDqWWZWnmzHH+7Na2YVxYYSFPxcf7ImAjqfNckx0aT4n5qKM7WEoeEQ==', 'maria@example.com', '4444444444', 2);
+
+INSERT INTO Usuario (username, senha, email, cpf, perfil) 
+VALUES ('pedro789', '0cctg7WgpEz7kC/AzVC+KX+bZLPXDtgJDqWWZWnmzHH+7Na2YVxYYSFPxcf7ImAjqfNckx0aT4n5qKM7WEoeEQ==', 'pedro@example.com', '5555555555', 2);
+
+INSERT INTO Usuario (username, senha, email, cpf, perfil) 
+VALUES ('ana321', '0cctg7WgpEz7kC/AzVC+KX+bZLPXDtgJDqWWZWnmzHH+7Na2YVxYYSFPxcf7ImAjqfNckx0aT4n5qKM7WEoeEQ==', 'ana@example.com', '6666666666', 2);
+
+INSERT INTO Usuario (username, senha, email, cpf, perfil) 
+VALUES ('carlos654', '0cctg7WgpEz7kC/AzVC+KX+bZLPXDtgJDqWWZWnmzHH+7Na2YVxYYSFPxcf7ImAjqfNckx0aT4n5qKM7WEoeEQ==', 'carlos@example.com', '7777777777', 2);
+
+INSERT INTO Usuario (username, senha, email, cpf, perfil) 
+VALUES ('beatriz987', '0cctg7WgpEz7kC/AzVC+KX+bZLPXDtgJDqWWZWnmzHH+7Na2YVxYYSFPxcf7ImAjqfNckx0aT4n5qKM7WEoeEQ==', 'beatriz@example.com', '8888888888', 2);
+
+INSERT INTO Usuario (username, senha, email, cpf, perfil) 
+VALUES ('fernando111', '0cctg7WgpEz7kC/AzVC+KX+bZLPXDtgJDqWWZWnmzHH+7Na2YVxYYSFPxcf7ImAjqfNckx0aT4n5qKM7WEoeEQ==', 'fernando@example.com', '9999999999', 2);
+
+INSERT INTO Usuario (username, senha, email, cpf, perfil) 
+VALUES ('juliana222', '0cctg7WgpEz7kC/AzVC+KX+bZLPXDtgJDqWWZWnmzHH+7Na2YVxYYSFPxcf7ImAjqfNckx0aT4n5qKM7WEoeEQ==', 'juliana@example.com', '1010101010', 2);
+
+INSERT INTO Usuario (username, senha, email, cpf, perfil) 
+VALUES ('roberto333', '0cctg7WgpEz7kC/AzVC+KX+bZLPXDtgJDqWWZWnmzHH+7Na2YVxYYSFPxcf7ImAjqfNckx0aT4n5qKM7WEoeEQ==', 'roberto@example.com', '1212121212', 2);
+
+INSERT INTO Usuario (username, senha, email, cpf, perfil) 
+VALUES ('paula444', '0cctg7WgpEz7kC/AzVC+KX+bZLPXDtgJDqWWZWnmzHH+7Na2YVxYYSFPxcf7ImAjqfNckx0aT4n5qKM7WEoeEQ==', 'paula@example.com', '1313131313', 2);
+
+INSERT INTO Usuario (username, senha, email, cpf, perfil) 
+VALUES ('admin_user', 'xzp7AP+QWnPSmgzJYRBVWiUX7nsVqbfYVtuvPOPw2TRuCrd6T8+/fEhQoxtROBveRpbEyyBB/Xlxxc+rWHzmzQ==', 'admin@example.com', '554455555', 1);
                                                                                                                                        
 INSERT INTO Usuario (username, senha, email, cpf, perfil) 
 VALUES ('funcionario1', '0cctg7WgpEz7kC/AzVC+KX+bZLPXDtgJDqWWZWnmzHH+7Na2YVxYYSFPxcf7ImAjqfNckx0aT4n5qKM7WEoeEQ==', 'funcionario1@gmail.com', '1111111111', 1);
 
 INSERT INTO Usuario (username, senha, email, cpf, perfil) 
 VALUES ('funcionario2', '0cctg7WgpEz7kC/AzVC+KX+bZLPXDtgJDqWWZWnmzHH+7Na2YVxYYSFPxcf7ImAjqfNckx0aT4n5qKM7WEoeEQ==', 'funcionario2@gmail.com', '2222222222', 1);
-
-INSERT INTO Usuario (username, senha, email, cpf, perfil) 
-VALUES ('cliente', '0cctg7WgpEz7kC/AzVC+KX+bZLPXDtgJDqWWZWnmzHH+7Na2YVxYYSFPxcf7ImAjqfNckx0aT4n5qKM7WEoeEQ==', 'funcionario3@gmail.com', '3333333333', 2);
 
 INSERT INTO funcionario (nome,  datanascimento, salario, id_usuario, statusfuncionario)
 VALUES ('Carlos Silva', '1990-05-15', 3500.00, 1, 1);
@@ -309,8 +550,82 @@ VALUES ('Ana Paula Souza', '1988-12-03', 4800.00, 4, 1);
 
 
 -- Inserir cliente
+-- Clientes vinculados aos usuários gerados
+
 INSERT INTO cliente (id, nome, datanascimento, id_usuario) 
-VALUES (1, 'João Silva', '1990-05-15', 4);
+VALUES (1, 'João Silva', '1990-05-15', 1);
+
+INSERT INTO cliente (id, nome, datanascimento, id_usuario) 
+VALUES (2, 'Maria Oliveira', '1985-08-22', 2);
+
+INSERT INTO cliente (id, nome, datanascimento, id_usuario) 
+VALUES (3, 'Pedro Santos', '1992-11-03', 3);
+
+INSERT INTO cliente (id, nome, datanascimento, id_usuario) 
+VALUES (4, 'Ana Costa', '1988-04-17', 4);
+
+INSERT INTO cliente (id, nome, datanascimento, id_usuario) 
+VALUES (5, 'Carlos Almeida', '1975-09-30', 5);
+
+INSERT INTO cliente (id, nome, datanascimento, id_usuario) 
+VALUES (6, 'Beatriz Ferreira', '1993-07-12', 6);
+
+INSERT INTO cliente (id, nome, datanascimento, id_usuario) 
+VALUES (7, 'Fernando Rocha', '1980-12-25', 7);
+
+INSERT INTO cliente (id, nome, datanascimento, id_usuario) 
+VALUES (8, 'Juliana Martins', '1995-06-10', 8);
+
+INSERT INTO cliente (id, nome, datanascimento, id_usuario) 
+VALUES (9, 'Roberto Lima', '1983-03-05', 9);
+
+INSERT INTO cliente (id, nome, datanascimento, id_usuario) 
+VALUES (10, 'Paula Ribeiro', '1991-01-20', 10);
+
+-- Pagamentos correspondentes aos itens pedidos (id 1 a 40)
+
+INSERT INTO Pagamento (id, valor) VALUES (1, 1300.00);
+INSERT INTO Pagamento (id, valor) VALUES (2, 1300.00);
+INSERT INTO Pagamento (id, valor) VALUES (3, 2200.00);
+INSERT INTO Pagamento (id, valor) VALUES (4, 2200.00);
+INSERT INTO Pagamento (id, valor) VALUES (5, 900.00);
+INSERT INTO Pagamento (id, valor) VALUES (6, 900.00);
+INSERT INTO Pagamento (id, valor) VALUES (7, 2500.00);
+INSERT INTO Pagamento (id, valor) VALUES (8, 2500.00);
+INSERT INTO Pagamento (id, valor) VALUES (9, 3200.00);
+INSERT INTO Pagamento (id, valor) VALUES (10, 3200.00);
+INSERT INTO Pagamento (id, valor) VALUES (11, 4500.00);
+INSERT INTO Pagamento (id, valor) VALUES (12, 4500.00);
+INSERT INTO Pagamento (id, valor) VALUES (13, 5500.00);
+INSERT INTO Pagamento (id, valor) VALUES (14, 5500.00);
+INSERT INTO Pagamento (id, valor) VALUES (15, 6500.00);
+INSERT INTO Pagamento (id, valor) VALUES (16, 6500.00);
+INSERT INTO Pagamento (id, valor) VALUES (17, 1900.00);
+INSERT INTO Pagamento (id, valor) VALUES (18, 1900.00);
+INSERT INTO Pagamento (id, valor) VALUES (19, 2700.00);
+INSERT INTO Pagamento (id, valor) VALUES (20, 2700.00);
+INSERT INTO Pagamento (id, valor) VALUES (21, 2900.00);
+INSERT INTO Pagamento (id, valor) VALUES (22, 2900.00);
+INSERT INTO Pagamento (id, valor) VALUES (23, 3800.00);
+INSERT INTO Pagamento (id, valor) VALUES (24, 3800.00);
+INSERT INTO Pagamento (id, valor) VALUES (25, 4700.00);
+INSERT INTO Pagamento (id, valor) VALUES (26, 4700.00);
+INSERT INTO Pagamento (id, valor) VALUES (27, 1800.00);
+INSERT INTO Pagamento (id, valor) VALUES (28, 1800.00);
+INSERT INTO Pagamento (id, valor) VALUES (29, 800.00);
+INSERT INTO Pagamento (id, valor) VALUES (30, 800.00);
+INSERT INTO Pagamento (id, valor) VALUES (31, 4200.00);
+INSERT INTO Pagamento (id, valor) VALUES (32, 4200.00);
+INSERT INTO Pagamento (id, valor) VALUES (33, 2100.00);
+INSERT INTO Pagamento (id, valor) VALUES (34, 2100.00);
+INSERT INTO Pagamento (id, valor) VALUES (35, 2400.00);
+INSERT INTO Pagamento (id, valor) VALUES (36, 2400.00);
+INSERT INTO Pagamento (id, valor) VALUES (37, 5000.00);
+INSERT INTO Pagamento (id, valor) VALUES (38, 5000.00);
+INSERT INTO Pagamento (id, valor) VALUES (39, 1600.00);
+INSERT INTO Pagamento (id, valor) VALUES (40, 1600.00);
+
+
 
 -- Inserir endereços
 INSERT INTO endereco (id, cep, cidade, estado, bairro, rua, numero) 
@@ -326,16 +641,58 @@ VALUES
 (2, '21', '998765432');
 
 -- Tabela associativa cliente_enderecos
-INSERT INTO cliente_endereco (cliente_id, enderecos_id) 
-VALUES 
-(1, 1),
-(1, 2);
 
 -- Tabela associativa cliente_telefones
 INSERT INTO cliente_telefonecliente (cliente_id, telefones_id) 
 VALUES 
 (1, 1),
 (1, 2);
+
+INSERT INTO enderecoentrega (id, cep, cidade, estado, bairro, rua, numero) VALUES
+(1, '70000-000', 'Brasília', 'DF', 'Asa Norte', 'Rua das Flores', '10'),
+(2, '80000-000', 'Curitiba', 'PR', 'Centro', 'Av. Brasil', '100'),
+(3, '01000-000', 'São Paulo', 'SP', 'Bela Vista', 'Rua Augusta', '300'),
+(4, '20000-000', 'Rio de Janeiro', 'RJ', 'Copacabana', 'Av. Atlântica', '200'),
+(5, '60000-000', 'Fortaleza', 'CE', 'Meireles', 'Rua dos Coqueiros', '500'),
+(6, '40000-000', 'Salvador', 'BA', 'Barra', 'Rua da Praia', '123'),
+(7, '30000-000', 'Belo Horizonte', 'MG', 'Savassi', 'Rua Minas', '45'),
+(8, '50000-000', 'Recife', 'PE', 'Boa Viagem', 'Rua Mar', '87'),
+(9, '65000-000', 'São Luís', 'MA', 'Cohama', 'Av. São Luís', '110'),
+(10, '77000-000', 'Palmas', 'TO', 'Plano Diretor Sul', 'Rua 10', '25');
+
+
+
+INSERT INTO Pedido (id, tipopagamento, valortotal, "data", id_cliente, id_enderecoentrega, pagamento_id) 
+VALUES (1, 1, 1300.00, '2025-06-07 10:00:00', 1, 1, 1);
+
+INSERT INTO Pedido (id, tipopagamento, valortotal, "data", id_cliente, id_enderecoentrega, pagamento_id) 
+VALUES (2, 1, 1300.00, '2025-06-07 10:15:00', 2, 2, 2);
+
+INSERT INTO Pedido (id, tipopagamento, valortotal, "data", id_cliente, id_enderecoentrega, pagamento_id) 
+VALUES (3, 1, 2200.00, '2025-06-07 10:30:00', 3, 3, 3);
+
+INSERT INTO Pedido (id, tipopagamento, valortotal, "data", id_cliente, id_enderecoentrega, pagamento_id) 
+VALUES (4, 1, 2200.00, '2025-06-07 10:45:00', 4, 4, 4);
+
+INSERT INTO Pedido (id, tipopagamento, valortotal, "data", id_cliente, id_enderecoentrega, pagamento_id) 
+VALUES (5, 1, 900.00, '2025-06-07 11:00:00', 5, 5, 5);
+
+INSERT INTO Pedido (id, tipopagamento, valortotal, "data", id_cliente, id_enderecoentrega, pagamento_id) 
+VALUES (6, 1, 900.00, '2025-06-07 11:15:00', 6, 6, 6);
+
+INSERT INTO Pedido (id, tipopagamento, valortotal, "data", id_cliente, id_enderecoentrega, pagamento_id) 
+VALUES (7, 1, 2500.00, '2025-06-07 11:30:00', 7, 7, 7);
+
+INSERT INTO Pedido (id, tipopagamento, valortotal, "data", id_cliente, id_enderecoentrega, pagamento_id) 
+VALUES (8, 1, 2500.00, '2025-06-07 11:45:00', 8, 8, 8);
+
+INSERT INTO Pedido (id, tipopagamento, valortotal, "data", id_cliente, id_enderecoentrega, pagamento_id) 
+VALUES (9, 1, 3200.00, '2025-06-07 12:00:00', 9, 9, 9);
+
+INSERT INTO Pedido (id, tipopagamento, valortotal, "data", id_cliente, id_enderecoentrega, pagamento_id) 
+VALUES (10, 1, 3200.00, '2025-06-07 12:15:00', 10, 10, 10);
+
+
 
 
 INSERT INTO imagem_placadevideo (id_placadevideo, listaImagem)

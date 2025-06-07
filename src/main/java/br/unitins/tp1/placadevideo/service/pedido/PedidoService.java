@@ -4,12 +4,18 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import br.unitins.tp1.placadevideo.dto.request.EnderecoEntregaRequestDTO;
+import br.unitins.tp1.placadevideo.dto.request.PaginacaoDTO;
 import br.unitins.tp1.placadevideo.dto.request.PedidoRequestDTO;
+import br.unitins.tp1.placadevideo.dto.response.LoteResponseDTO;
+import br.unitins.tp1.placadevideo.dto.response.PedidoGeralResponseDTO;
+import br.unitins.tp1.placadevideo.dto.response.PedidoResponseDTO;
 import br.unitins.tp1.placadevideo.model.pagamento.Boleto;
 import br.unitins.tp1.placadevideo.model.pagamento.CartaoPagamento;
 import br.unitins.tp1.placadevideo.model.pagamento.Pix;
 import br.unitins.tp1.placadevideo.model.pedido.EnderecoEntrega;
 import br.unitins.tp1.placadevideo.model.pedido.Pedido;
+import br.unitins.tp1.placadevideo.model.placadevideo.Lote;
+import br.unitins.tp1.placadevideo.model.placadevideo.PlacaDeVideo;
 
 public interface PedidoService {
 
@@ -40,5 +46,8 @@ public interface PedidoService {
     Pedido updateStatusPedido(Long idPedido, Integer id);
 
     EnderecoEntrega editEnderecoEntrega(Long idPedido, EnderecoEntregaRequestDTO dto);
+
+
+   
 
 }

@@ -9,7 +9,12 @@ import java.util.UUID;
 
 import br.unitins.tp1.placadevideo.dto.request.EnderecoEntregaRequestDTO;
 import br.unitins.tp1.placadevideo.dto.request.ItemPedidoRequestDTO;
+import br.unitins.tp1.placadevideo.dto.request.PaginacaoDTO;
 import br.unitins.tp1.placadevideo.dto.request.PedidoRequestDTO;
+import br.unitins.tp1.placadevideo.dto.response.LoteResponseDTO;
+import br.unitins.tp1.placadevideo.dto.response.PedidoGeralResponseDTO;
+import br.unitins.tp1.placadevideo.dto.response.PedidoResponseDTO;
+import br.unitins.tp1.placadevideo.dto.response.PlacaDeVideoResponseDTO;
 import br.unitins.tp1.placadevideo.model.pagamento.Boleto;
 import br.unitins.tp1.placadevideo.model.pagamento.CartaoPagamento;
 import br.unitins.tp1.placadevideo.model.pagamento.Pix;
@@ -19,6 +24,7 @@ import br.unitins.tp1.placadevideo.model.pedido.Pedido;
 import br.unitins.tp1.placadevideo.model.pedido.StatusPedido;
 import br.unitins.tp1.placadevideo.model.pedido.UpdateStatusPedido;
 import br.unitins.tp1.placadevideo.model.placadevideo.Lote;
+import br.unitins.tp1.placadevideo.model.placadevideo.PlacaDeVideo;
 import br.unitins.tp1.placadevideo.model.usuario.Cartao;
 import br.unitins.tp1.placadevideo.model.usuario.Cliente;
 import br.unitins.tp1.placadevideo.model.usuario.Endereco;
@@ -35,6 +41,7 @@ import br.unitins.tp1.placadevideo.service.lote.LoteService;
 import br.unitins.tp1.placadevideo.service.placadevideo.PlacaDeVideoService;
 import br.unitins.tp1.placadevideo.service.usuario.UsuarioService;
 import br.unitins.tp1.placadevideo.validation.ValidationException;
+import io.quarkus.hibernate.orm.panache.PanacheQuery;
 import io.quarkus.scheduler.Scheduled;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -93,6 +100,7 @@ public class PedidoServiceImpl implements PedidoService {
 
     }
 
+
     @Override
     @Transactional
     public Pedido create(@Valid PedidoRequestDTO dto, String username) {
@@ -132,12 +140,12 @@ public class PedidoServiceImpl implements PedidoService {
             case 1:
                 pedido.setPagamento(gerarPix(valorTotal));
                 createStatusPedido(pedido, 2);
-                
+
                 break;
             case 2:
                 pedido.setPagamento(gerarBoleto(valorTotal));
                 createStatusPedido(pedido, 2);
-                
+
                 break;
             case 3:
                 if (pedido.getCliente().getCartoes().isEmpty()) {
@@ -145,7 +153,7 @@ public class PedidoServiceImpl implements PedidoService {
                 }
                 pedido.setPagamento(registrarPagamentoCartao(pedido, dto.idCartao()));
                 createStatusPedido(pedido, 2);
-                
+
                 break;
             default:
                 break;
