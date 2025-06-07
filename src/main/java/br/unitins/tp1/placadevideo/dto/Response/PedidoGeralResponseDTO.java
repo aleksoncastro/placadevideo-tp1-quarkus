@@ -15,7 +15,8 @@ public record PedidoGeralResponseDTO(
     EnderecoEntregaResponseDTO enderecoEntrega,
     List<UpdateSatusPedidoResponseDTO> statusPedido,
     PagamentoResponseDTO pagamento,
-    Integer tipoPagamento
+    Integer tipoPagamento,
+    ClienteResponseDTO cliente
     ) {
 
     public static PedidoGeralResponseDTO valueOf(Pedido pedido){
@@ -29,7 +30,8 @@ public record PedidoGeralResponseDTO(
             .map(UpdateSatusPedidoResponseDTO::valueOf)
             .collect(Collectors.toList()),
             PagamentoResponseDTO.valueOf(pedido.getPagamento()),
-            pedido.getTipoPagamento()   
+            pedido.getTipoPagamento(),
+            ClienteResponseDTO.valueOf(pedido.getCliente())
         );
     }
 
