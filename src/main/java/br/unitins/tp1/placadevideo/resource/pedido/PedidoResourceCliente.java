@@ -35,7 +35,7 @@ public class PedidoResourceCliente {
     private static final Logger LOG = Logger.getLogger(PedidoResourceCliente.class);
 
     @GET
-    //@RolesAllowed("User")
+    @RolesAllowed("User")
     @Path("/search/username")
     public Response findByUsername() {
         LOG.info("Execucao do metodo findByUsername");
@@ -59,7 +59,7 @@ public class PedidoResourceCliente {
     }
 
     @POST
-    //@RolesAllowed("User")
+    @RolesAllowed("User")
     public Response create(PedidoRequestDTO dto) {
         // buscando o username do hash do jwt
         String username = jwt.getSubject();
@@ -70,7 +70,7 @@ public class PedidoResourceCliente {
 
     @PATCH
     @Path("/{id}")
-    //@RolesAllowed("User")
+    @RolesAllowed("User")
     public Response editEnderecoEntrega(@PathParam("id") Long idPedido, EnderecoEntregaRequestDTO dto) {
         LOG.infof("Editando um endereco do pedido : %s", idPedido);
         return Response.status(Status.CREATED).entity(

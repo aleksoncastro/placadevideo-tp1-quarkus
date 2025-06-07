@@ -9,6 +9,7 @@ import br.unitins.tp1.placadevideo.dto.request.TelefoneFornecedorRequestDTO;
 import br.unitins.tp1.placadevideo.dto.response.FornecedorResponseDTO;
 import br.unitins.tp1.placadevideo.model.Fornecedor;
 import br.unitins.tp1.placadevideo.service.fornecedor.FornecedorService;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.Consumes;
@@ -36,6 +37,7 @@ public class FornecedorResource {
     private static final Logger LOG = Logger.getLogger(FornecedorResource.class);
 
     @GET
+    @RolesAllowed({"Adm"})
     @Path("/{id}")
     // @RolesAllowed({"Adm"})
     public Response findById(@PathParam("id") Long id) {
@@ -44,6 +46,7 @@ public class FornecedorResource {
     }
 
     @GET
+    @RolesAllowed({"Adm"})
     @Path("/search/{nome}")
     // @RolesAllowed({"Adm"})
     public List<Fornecedor> findByNome(@PathParam("nome") String nome, @QueryParam("page") @DefaultValue("0") int page,
@@ -52,6 +55,7 @@ public class FornecedorResource {
     }
 
     @GET
+    @RolesAllowed({"Adm"})
     @Path("/search/{cnpj}")
     // @RolesAllowed({"Adm"})
     public Response findByCnpj(@PathParam("cnpj") String cnpj) {
@@ -60,13 +64,14 @@ public class FornecedorResource {
     }
 
     @GET
+    @RolesAllowed({"Adm"})
     public List<Fornecedor> findAll(@QueryParam("page") @DefaultValue("0") int page,
     @QueryParam("page_size") @DefaultValue("100") int pageSize) {
         return fornecedorService.findAll(page, pageSize);
     }
 
     @POST
-    // @RolesAllowed({"Adm"})
+    @RolesAllowed({"Adm"})
     public Response create(@Valid FornecedorRequestDTO dto) {
         LOG.info("Criando novo fornecedor");
         return Response.status(Status.CREATED).entity(FornecedorResponseDTO.valueOf(fornecedorService.create(dto)))
@@ -74,6 +79,7 @@ public class FornecedorResource {
     }
 
     @POST
+    @RolesAllowed({"Adm"})
     @Path("/{id}/telefones")
     // @RolesAllowed({"Adm"})
     public Response addTelefone(@PathParam("id") Long fornecedorId, @Valid TelefoneFornecedorRequestDTO telefoneDTO) {
@@ -83,6 +89,7 @@ public class FornecedorResource {
     }
 
     @PUT
+    @RolesAllowed({"Adm"})
     @Path("/{id}/telefone/{telefoneId}")
     // @RolesAllowed({"Adm"})
     public Response update(
@@ -95,6 +102,7 @@ public class FornecedorResource {
     }
 
     @DELETE
+    @RolesAllowed({"Adm"})
     @Path("/{id}")
     // @RolesAllowed({"Adm"})
     public Response delete(@PathParam("id") Long id) {

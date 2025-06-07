@@ -51,7 +51,7 @@ public class UsuarioResource {
 
     @GET
     @Path("/{id}")
-    //@RolesAllowed("Adm")
+    @RolesAllowed("Adm")
     public Response findById(@PathParam("id") Long id) {
         return Response.ok(UsuarioResponseDTO.valueOf(usuarioService.findById(id))).build();
     }
@@ -66,7 +66,7 @@ public class UsuarioResource {
 
     @POST
     @Path("/funcionarios")
-   // @RolesAllowed("Adm")
+    @RolesAllowed("Adm")
     public Response registrarFuncionario(@Valid UsuarioRequestDTO dto) {
         LOG.info("Registrando funcionario no metodo registrarFuncionario");
         return Response.status(Status.CREATED).entity(UsuarioResponseDTO.valueOf(usuarioService.createFuncionario(dto)))
@@ -95,7 +95,7 @@ public class UsuarioResource {
         return Response.noContent().build();
     }
 
-     @GET
+    @GET
     @Path("/search/{cpf}")
     @RolesAllowed({"Adm"})
     public Response findByCpf(@PathParam("cpf") String cpf) {
@@ -104,7 +104,7 @@ public class UsuarioResource {
     }
 
     @PATCH
-    // @RolesAllowed({ "Adm" })
+    @RolesAllowed({ "Adm" })
     @Path("/image/upload")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     public Response salvarImagem(@MultipartForm ImageForm form) {
@@ -117,7 +117,7 @@ public class UsuarioResource {
     }
 
     @PATCH
-    // @RolesAllowed({ "Adm" })
+    @RolesAllowed({ "Adm" })
     @Path("/image/delete/{nomeImagem}/usuario/{idUsuario}")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     public Response deleteImage(@PathParam("nomeImagem") String nomeImagem,
@@ -132,7 +132,7 @@ public class UsuarioResource {
     }
 
     @GET
-    // @RolesAllowed({ "Adm" })
+    @RolesAllowed({ "Adm" })
     @Path("/image/download/{nomeImagem}")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     public Response download(@PathParam("nomeImagem") String nomeImagem) {
