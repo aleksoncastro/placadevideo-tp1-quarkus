@@ -293,7 +293,7 @@ INSERT INTO Usuario (username, senha, email, cpf, perfil)
 VALUES ('funcionario2', '0cctg7WgpEz7kC/AzVC+KX+bZLPXDtgJDqWWZWnmzHH+7Na2YVxYYSFPxcf7ImAjqfNckx0aT4n5qKM7WEoeEQ==', 'funcionario2@gmail.com', '2222222222', 1);
 
 INSERT INTO Usuario (username, senha, email, cpf, perfil) 
-VALUES ('cliente', '0cctg7WgpEz7kC/AzVC+KX+bZLPXDtgJDqWWZWnmzHH+7Na2YVxYYSFPxcf7ImAjqfNckx0aT4n5qKM7WEoeEQ==', 'funcionario3@gmail.com', '3333333333', 2);
+VALUES ('cliente', '0cctg7WgpEz7kC/AzVC+KX+bZLPXDtgJDqWWZWnmzHH+7Na2YVxYYSFPxcf7ImAjqfNckx0aT4n5qKM7WEoeEQ==', 'funcionario3@gmail.com', '33333333333', 2);
 
 INSERT INTO funcionario (nome,  datanascimento, salario, id_usuario, statusfuncionario)
 VALUES ('Carlos Silva', '1990-05-15', 3500.00, 1, 1);

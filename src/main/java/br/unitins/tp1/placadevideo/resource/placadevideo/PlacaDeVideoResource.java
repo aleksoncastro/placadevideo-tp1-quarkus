@@ -16,6 +16,7 @@ import br.unitins.tp1.placadevideo.model.placadevideo.PlacaDeVideo;
 import br.unitins.tp1.placadevideo.service.fileservice.FileService;
 import br.unitins.tp1.placadevideo.service.placadevideo.PlacaDeVideoFileServiceImpl;
 import br.unitins.tp1.placadevideo.service.placadevideo.PlacaDeVideoService;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.Consumes;
@@ -52,7 +53,6 @@ public class PlacaDeVideoResource {
 
     @GET
     @Path("/{id}")
-    // @RolesAllowed("Adm")
     public Response findById(@PathParam("id") Long id) {
         LOG.infof("Buscando placa de vídeo com id %d", id);
         return Response.ok(PlacaDeVideoResponseDTO.valueOf(placaDeVideoService.findById(id))).build();
@@ -60,7 +60,7 @@ public class PlacaDeVideoResource {
 
     @GET
     @Path("/search/descricao/{descricao}")
-    // @RolesAllowed({ "Adm", "User" })
+    @RolesAllowed({ "Adm", "User" })
     public Response findByDescricao(@PathParam("descricao") String descricao) {
         LOG.infof("Buscando placa de vídeo pela descrição: %s", descricao);
         return Response.ok(PlacaDeVideoResponseDTO.valueOf(placaDeVideoService.findByDescricao(descricao))).build();
@@ -68,7 +68,7 @@ public class PlacaDeVideoResource {
 
     @GET
     @Path("/search/{modelo}")
-    // @RolesAllowed({ "Adm", "User" })
+    @RolesAllowed({ "Adm", "User" })
     public List<PlacaDeVideo> findByNome(@PathParam("nome") String nome,
             @QueryParam("page") @DefaultValue("0") int page,
             @QueryParam("page_size") @DefaultValue("100") int pageSize) {
@@ -76,7 +76,7 @@ public class PlacaDeVideoResource {
     }
 
     @GET
-    // @RolesAllowed({ "Adm", "User" })
+    @RolesAllowed({ "Adm", "User" })
     public PaginacaoDTO findAll(@QueryParam("page") @DefaultValue("0") int page,
             @QueryParam("page_size") @DefaultValue("100") int pageSize) {
         return placaDeVideoService.findAll(page, pageSize); // Agora retorna o DTO de paginação
@@ -92,7 +92,6 @@ public class PlacaDeVideoResource {
 
     @GET
     @Path("/search/lancamentos/{prefixo1}/{prefixo2}/{valor1}/{valor2}")
-    // @RolesAllowed({ "Adm", "User" })
     public Response findByLancamentos(
             @PathParam("prefixo1") String prefixo1,
             @PathParam("prefixo2") String prefixo2,
@@ -111,7 +110,7 @@ public class PlacaDeVideoResource {
     }
 
     @POST
-    // @RolesAllowed("Adm")
+    @RolesAllowed("Adm")
     public Response create(@Valid PlacaDeVideoRequestDTO dto) {
         LOG.info("Criando nova placa de vídeo");
         return Response.status(Status.CREATED).entity(PlacaDeVideoResponseDTO.valueOf(placaDeVideoService.create(dto)))
@@ -120,7 +119,7 @@ public class PlacaDeVideoResource {
 
     @PUT
     @Path("/{id}")
-    // @RolesAllowed("Adm")
+    @RolesAllowed("Adm")
     public Response update(@PathParam("id") Long id, @Valid PlacaDeVideoRequestDTO dto) {
         LOG.infof("Atualizando placa de vídeo com id %d", id);
         PlacaDeVideo placaAtualizada = placaDeVideoService.update(id, dto);
@@ -129,7 +128,7 @@ public class PlacaDeVideoResource {
 
     @DELETE
     @Path("/{id}")
-    // @RolesAllowed("Adm")
+    @RolesAllowed("Adm")
     public Response delete(@PathParam("id") Long id) {
         LOG.infof("Deletando placa de vídeo com id %d", id);
         placaDeVideoService.delete(id);
@@ -137,7 +136,7 @@ public class PlacaDeVideoResource {
     }
 
     @PATCH
-    // @RolesAllowed({ "Adm" })
+    @RolesAllowed({ "Adm" })
     @Path("/image/upload")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     public Response salvarImagem(@MultipartForm ImageForm form) {
@@ -157,7 +156,7 @@ public class PlacaDeVideoResource {
     }
 
     @PATCH
-    // @RolesAllowed({ "Adm" })
+    @RolesAllowed({ "Adm" })
     @Path("/image/delete/{nomeImagem}/placa/{idPlaca}")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     public Response deleteImage(@PathParam("nomeImagem") String nomeImagem,
@@ -172,7 +171,6 @@ public class PlacaDeVideoResource {
     }
 
     @GET
-    // @RolesAllowed({ "Adm" })
     @Path("/image/download/{nomeImagem}")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     public Response download(@PathParam("nomeImagem") String nomeImagem) {
@@ -195,7 +193,7 @@ public class PlacaDeVideoResource {
 
     @POST
     @Path("/filtro")
-// @RolesAllowed({ "Adm", "User" })
+    @RolesAllowed({ "Adm", "User" })
     public Response filtrar(@Valid FiltroPlacaDeVideoDTO filtro,
             @QueryParam("page") @DefaultValue("0") int page,
             @QueryParam("page_size") @DefaultValue("20") int pageSize) {

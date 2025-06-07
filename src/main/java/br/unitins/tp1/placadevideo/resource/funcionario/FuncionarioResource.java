@@ -42,7 +42,7 @@ public class FuncionarioResource {
 
     @GET
     @Path("/{id}")
-    //@RolesAllowed({"Adm"})
+    @RolesAllowed({"Adm"})
     public Response findById(@PathParam("id") Long id) {
         LOG.infof("Buscando funcionário com id %d", id);
         return Response.ok(FuncionarioResponseDTO.valueOf(funcionarioService.findById(id))).build();
@@ -50,7 +50,7 @@ public class FuncionarioResource {
 
     @GET
     @Path("/search/{nome}")
-    //@RolesAllowed({"Adm"})
+    @RolesAllowed({"Adm"})
     public List<Funcionario> findByNome(@PathParam("nome") String nome, @QueryParam("page") @DefaultValue("0") int page,
     @QueryParam("page_size") @DefaultValue("100") int pageSize) { 
     return funcionarioService.findByNome(nome, page, pageSize);
@@ -65,7 +65,7 @@ public class FuncionarioResource {
     }
 
     @GET
-    //@RolesAllowed({"Adm"})
+    @RolesAllowed({"Adm"})
     public List<Funcionario> findAll(@QueryParam("page") @DefaultValue("0") int page,
     @QueryParam("page_size") @DefaultValue("100") int pageSize) { 
     return funcionarioService.findAll(page, pageSize);
@@ -84,7 +84,7 @@ public class FuncionarioResource {
      }
 
     @POST
-   // @RolesAllowed({"Adm"})
+    @RolesAllowed({"Adm"})
     public Response create(@Valid FuncionarioRequestDTO dto) {
         LOG.info("Criando novo funcionário");
         String username = jsonWebToken.getSubject();
@@ -93,7 +93,7 @@ public class FuncionarioResource {
 
     @POST
     @Path("/{id}/telefones")
-   // @RolesAllowed({"Adm"})
+    @RolesAllowed({"Adm"})
     public Response addTelefone(@PathParam("id") Long funcionarioId, @Valid TelefoneFuncionarioRequestDTO telefoneDTO) {
         LOG.infof("Adicionando telefone para funcionário com id %d", funcionarioId);
         funcionarioService.addTelefone(funcionarioId, telefoneDTO);
@@ -102,7 +102,7 @@ public class FuncionarioResource {
 
     @PUT
     @Path("/{id}/telefone/{telefoneId}")
-    //@RolesAllowed({"Adm"})
+    @RolesAllowed({"Adm"})
     public Response update(
             @PathParam("id") Long id,
             @PathParam("telefoneId") Long telefoneId,
@@ -114,7 +114,7 @@ public class FuncionarioResource {
 
     @DELETE
     @Path("/{id}")
-    //@RolesAllowed({"Adm"})
+    @RolesAllowed({"Adm"})
     public Response delete(@PathParam("id") Long id) {
         LOG.infof("Deletando funcionário com id %d", id);
         funcionarioService.delete(id);
