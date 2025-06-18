@@ -39,4 +39,6 @@ public interface ClienteService {
 
     List<PlacaDeVideo> getListaDesejos(String email);
 
+    Cliente findByIdUsuario(Long idUsuario);
+
 }

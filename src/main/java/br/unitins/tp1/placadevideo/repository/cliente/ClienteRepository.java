@@ -27,6 +27,16 @@ public class ClienteRepository implements PanacheRepository<Cliente> {
         return find(jpql.toString(), username).firstResult();
     }
 
+    public Cliente findByIdUsuario(Long idUsuario) {
+    StringBuffer jpql = new StringBuffer();
+    jpql.append("SELECT c ");
+    jpql.append("FROM Cliente c ");
+    jpql.append("WHERE c.usuario.id = ?1 ");
+
+    return find(jpql.toString(), idUsuario).firstResult();
+}
+
+
     
     
 

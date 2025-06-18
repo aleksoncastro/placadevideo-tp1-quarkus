@@ -9,6 +9,7 @@ import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 import br.unitins.tp1.placadevideo.dto.request.EmailPatchRequestDTO;
 import br.unitins.tp1.placadevideo.dto.request.SenhaPatchRequestDTO;
 import br.unitins.tp1.placadevideo.dto.request.UsuarioRequestDTO;
+import br.unitins.tp1.placadevideo.dto.response.ClienteResponseDTO;
 import br.unitins.tp1.placadevideo.dto.response.UsuarioResponseDTO;
 import br.unitins.tp1.placadevideo.form.ImageForm;
 import br.unitins.tp1.placadevideo.repository.usuario.UsuarioRepository;
@@ -55,13 +56,20 @@ public class UsuarioResource {
     public Response findById(@PathParam("id") Long id) {
         return Response.ok(UsuarioResponseDTO.valueOf(usuarioService.findById(id))).build();
     }
-
     @POST
     @Path("/clientes")
     public Response registrarCliente(@Valid UsuarioRequestDTO dto) {
         LOG.info("Registrando funcionario no metodo registerCliente");
         return Response.status(Status.CREATED).entity(UsuarioResponseDTO.valueOf(usuarioService.createCliente(dto)))
                 .build();
+    }
+
+    @GET
+    @Path("/me")
+    @RolesAllowed({ "User" })
+    public Response findByMe() {
+        String username = jsonWebToken.getSubject();
+        return Response.ok(UsuarioResponseDTO.valueOf(usuarioService.findByUsername(username))).build();
     }
 
     @POST

@@ -76,6 +76,9 @@ public class ClienteServiceImpl implements ClienteService {
     }
     @Override
     public Cliente findByMe(String username) {
+        if(username == null){
+            throw new ValidationException("cliente", "Cliente sem cadastro");
+        }
         return clienteRepository.findByUsername(username);
     }
 
@@ -102,6 +105,11 @@ public class ClienteServiceImpl implements ClienteService {
     @Override
     public List<Cliente> findAll() {
         return clienteRepository.findAll().list();
+    }
+
+    @Override
+    public Cliente findByIdUsuario(Long idUsuario){
+        return clienteRepository.findByIdUsuario(idUsuario);
     }
 
     @Override

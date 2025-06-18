@@ -419,6 +419,9 @@ VALUES ('funcionario2', '0cctg7WgpEz7kC/AzVC+KX+bZLPXDtgJDqWWZWnmzHH+7Na2YVxYYSF
 INSERT INTO Usuario (username, senha, email, cpf, perfil) 
 VALUES ('cliente', '0cctg7WgpEz7kC/AzVC+KX+bZLPXDtgJDqWWZWnmzHH+7Na2YVxYYSFPxcf7ImAjqfNckx0aT4n5qKM7WEoeEQ==', 'funcionario3@gmail.com', '33333333333', 2);
 
+INSERT INTO Usuario (username, senha, email, cpf, perfil) 
+VALUES ('teste', '0cctg7WgpEz7kC/AzVC+KX+bZLPXDtgJDqWWZWnmzHH+7Na2YVxYYSFPxcf7ImAjqfNckx0aT4n5qKM7WEoeEQ==', 'teste@gmail.com', '33333893333', 2);
+
 INSERT INTO funcionario (nome,  datanascimento, salario, id_usuario, statusfuncionario)
 VALUES ('Carlos Silva', '1990-05-15', 3500.00, 1, 1);
 
@@ -437,7 +440,7 @@ VALUES ('Ana Paula Souza', '1988-12-03', 4800.00, 4, 1);
 -- Inserir cliente
 -- Clientes vinculados aos usuários gerados
 
-INSERT INTO cliente (id, nome, datanascimento, id_usuario) 
+/*INSERT INTO cliente (id, nome, datanascimento, id_usuario) 
 VALUES (1, 'João Silva', '1990-05-15', 1);
 
 INSERT INTO cliente (id, nome, datanascimento, id_usuario) 
@@ -466,8 +469,6 @@ VALUES (9, 'Roberto Lima', '1983-03-05', 9);
 
 INSERT INTO cliente (id, nome, datanascimento, id_usuario) 
 VALUES (10, 'Paula Ribeiro', '1991-01-20', 10);
-
-
 
 
 -- Inserir endereços
@@ -506,6 +507,11 @@ INSERT INTO cliente_telefonecliente (cliente_id, telefones_id)
 VALUES 
 (1, 1),
 (1, 2);
+*/
+
+
+
+
 
 
 INSERT INTO imagem_placadevideo (id_placadevideo, listaImagem)

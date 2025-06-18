@@ -70,6 +70,14 @@ public class ClienteResource {
         return Response.ok(clienteService.findAll().stream().map(o -> ClienteResponseDTO.valueOf(o)).toList()).build();
     }
 
+    @GET
+    @RolesAllowed({ "User" })
+    @Path("/usuario/{id}")
+    public Response findByIdUsuario(@PathParam("id") Long id) {
+        LOG.infof("Buscando todos os clientes");
+        return Response.ok(ClienteResponseDTO.valueOf(clienteService.findByIdUsuario(id))).build();
+    }
+
     @POST
     @RolesAllowed({ "Adm", "User" })
     public Response create(ClienteRequestDTO dto) {
