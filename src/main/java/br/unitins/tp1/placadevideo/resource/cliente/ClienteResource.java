@@ -1,7 +1,6 @@
 package br.unitins.tp1.placadevideo.resource.cliente;
 
 import org.eclipse.microprofile.jwt.JsonWebToken;
-
 import org.jboss.logging.Logger;
 
 import br.unitins.tp1.placadevideo.dto.request.CartaoRequestDTO;
@@ -41,7 +40,7 @@ public class ClienteResource {
 
     @GET
     @Path("/{id}")
-    @RolesAllowed({ "Adm" })
+    @RolesAllowed({ "Adm", "User" })
     public Response findById(@PathParam("id") Long id) {
         return Response.ok(ClienteResponseDTO.valueOf(clienteService.findById(id))).build();
     }
