@@ -4,6 +4,7 @@ import java.util.List;
 
 import br.unitins.tp1.placadevideo.dto.request.EmailPatchRequestDTO;
 import br.unitins.tp1.placadevideo.dto.request.SenhaPatchRequestDTO;
+import br.unitins.tp1.placadevideo.dto.request.UsernamePatchRequestDTO;
 import br.unitins.tp1.placadevideo.dto.request.UsuarioRequestDTO;
 import br.unitins.tp1.placadevideo.model.usuario.Perfil;
 import br.unitins.tp1.placadevideo.model.usuario.Usuario;
@@ -108,10 +109,12 @@ public class UsuarioServiceImpl implements UsuarioService {
             throw new ValidationException("senha", "O campo 'senha' é obrigatório.");
         }
 
-        /*if (dto.idPerfil() == null) {
-            throw new ValidationException("idPerfil", "O campo 'idPerfil' é obrigatório.");
-        }
-*/
+        /*
+         * if (dto.idPerfil() == null) {
+         * throw new ValidationException("idPerfil",
+         * "O campo 'idPerfil' é obrigatório.");
+         * }
+         */
         if (dto.cpf() == null || dto.cpf().isBlank()) {
             throw new ValidationException("cpf", "O campo 'cpf' é obrigatório.");
         }
@@ -187,6 +190,23 @@ public class UsuarioServiceImpl implements UsuarioService {
             throw new ValidationException("novoEmail", "Email ja cadastrado");
 
         usuario.setEmail(dto.novoEmail());
+    }
+
+    @Override
+    @Transactional
+    public void updateUsername(String username, UsernamePatchRequestDTO dto) {
+        Usuario usuario = usuarioRepository.findByUsername(username);
+        if (usuario == null)
+            throw new ValidationException("username", "usuario nao encontrado");
+
+        if (dto.novoUsername().equals(usuario.getUsername()))
+            throw new ValidationException("username", "O novo email nao pode ser igual ao atual");
+
+        if (usuarioRepository.findByUsername(dto.novoUsername()) != null
+                && (!dto.novoUsername().equals(usuario.getUsername())))
+            throw new ValidationException("novoUsername", "Username ja cadastrado");
+
+        usuario.setUsername(dto.novoUsername());
     }
 
 }

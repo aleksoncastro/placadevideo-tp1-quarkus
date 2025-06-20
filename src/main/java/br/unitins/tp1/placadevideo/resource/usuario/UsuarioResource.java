@@ -8,6 +8,7 @@ import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 
 import br.unitins.tp1.placadevideo.dto.request.EmailPatchRequestDTO;
 import br.unitins.tp1.placadevideo.dto.request.SenhaPatchRequestDTO;
+import br.unitins.tp1.placadevideo.dto.request.UsernamePatchRequestDTO;
 import br.unitins.tp1.placadevideo.dto.request.UsuarioRequestDTO;
 import br.unitins.tp1.placadevideo.dto.response.ClienteResponseDTO;
 import br.unitins.tp1.placadevideo.dto.response.UsuarioResponseDTO;
@@ -56,6 +57,7 @@ public class UsuarioResource {
     public Response findById(@PathParam("id") Long id) {
         return Response.ok(UsuarioResponseDTO.valueOf(usuarioService.findById(id))).build();
     }
+
     @POST
     @Path("/clientes")
     public Response registrarCliente(@Valid UsuarioRequestDTO dto) {
@@ -82,7 +84,7 @@ public class UsuarioResource {
     }
 
     @PATCH
-    @RolesAllowed({"User", "Adm"})
+    @RolesAllowed({ "User", "Adm" })
     @Path("/update/email")
     public Response updateEmail(EmailPatchRequestDTO dto) {
         LOG.info("Execucao do metodo updateEmail");
@@ -93,7 +95,18 @@ public class UsuarioResource {
     }
 
     @PATCH
-    @RolesAllowed({"User", "Adm"})
+    @RolesAllowed({ "User", "Adm" })
+    @Path("/update/username")
+    public Response updateUsername(UsernamePatchRequestDTO dto) {
+        LOG.info("Execucao do metodo updateEmail");
+        String username = jsonWebToken.getSubject();
+
+        usuarioService.updateUsername(username, dto);
+        return Response.noContent().build();
+    }
+
+    @PATCH
+    @RolesAllowed({ "User", "Adm" })
     @Path("/update/senha")
     public Response updateSenha(SenhaPatchRequestDTO dto) {
         LOG.info("Execucao do metodo updateSenha");
@@ -105,14 +118,14 @@ public class UsuarioResource {
 
     @GET
     @Path("/search/{cpf}")
-    @RolesAllowed({"Adm"})
+    @RolesAllowed({ "Adm" })
     public Response findByCpf(@PathParam("cpf") String cpf) {
         LOG.infof("Buscando cliente com o cpf %s", cpf);
         return Response.ok(UsuarioResponseDTO.valueOf(usuarioService.findByCpf(cpf))).build();
     }
 
     @PATCH
-    @RolesAllowed({ "Adm" })
+    @RolesAllowed({ "Adm", "User" })
     @Path("/image/upload")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     public Response salvarImagem(@MultipartForm ImageForm form) {
@@ -125,7 +138,7 @@ public class UsuarioResource {
     }
 
     @PATCH
-    @RolesAllowed({ "Adm" })
+    @RolesAllowed({ "Adm", "User" })
     @Path("/image/delete/{nomeImagem}/usuario/{idUsuario}")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     public Response deleteImage(@PathParam("nomeImagem") String nomeImagem,
@@ -140,7 +153,6 @@ public class UsuarioResource {
     }
 
     @GET
-    @RolesAllowed({ "Adm" })
     @Path("/image/download/{nomeImagem}")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     public Response download(@PathParam("nomeImagem") String nomeImagem) {
@@ -149,5 +161,3 @@ public class UsuarioResource {
         return response.build();
     }
 }
-
-

@@ -5,6 +5,7 @@ import java.util.List;
 
 import br.unitins.tp1.placadevideo.dto.request.EmailPatchRequestDTO;
 import br.unitins.tp1.placadevideo.dto.request.SenhaPatchRequestDTO;
+import br.unitins.tp1.placadevideo.dto.request.UsernamePatchRequestDTO;
 import br.unitins.tp1.placadevideo.dto.request.UsuarioRequestDTO;
 import br.unitins.tp1.placadevideo.model.usuario.Usuario;
 
@@ -27,6 +28,8 @@ public interface UsuarioService {
     void updateEmail(String username, EmailPatchRequestDTO dto);
 
     void updateSenha(String username, SenhaPatchRequestDTO dto);
+    
+    void updateUsername(String username, UsernamePatchRequestDTO dto);
 
     //Usuario update(Long id, UsuarioRequestDTO dto);
 
