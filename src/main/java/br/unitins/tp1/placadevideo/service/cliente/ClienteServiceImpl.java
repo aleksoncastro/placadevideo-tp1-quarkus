@@ -204,7 +204,8 @@ public class ClienteServiceImpl implements ClienteService {
         }
     }
 
-    @Override
+    /* 
+     * @Override
     @Transactional
     public void adicionarProdutoListaDesejo(String username, Long idProduto) {
         Cliente cliente = findByUsername(username);
@@ -215,14 +216,14 @@ public class ClienteServiceImpl implements ClienteService {
         if (placadevideo == null) {
             throw new ValidationException("idProduto", "Placa de vídeo não encontrada.");
         }
-        cliente.getListaDesejos().add(placadevideo);
+  
     }
 
     @Override
     @Transactional
     public void removerProdutoListaDesejo(String username, Long idProduto) {
         Cliente cliente = findByUsername(username);
-        List<PlacaDeVideo> listaDesejos = cliente.getListaDesejos();
+       
         if (listaDesejos == null || listaDesejos.isEmpty()) {
             throw new ValidationException("listaDesejos", "Você não possui uma lista de desejos.");
         }
@@ -239,4 +240,5 @@ public class ClienteServiceImpl implements ClienteService {
         Cliente cliente = findByUsername(username);
         return cliente.getListaDesejos();
     }
+     */
 }

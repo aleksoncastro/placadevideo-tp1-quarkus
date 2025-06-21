@@ -33,11 +33,13 @@ public interface ClienteService {
 
     void delete(Long id);
 
-    void adicionarProdutoListaDesejo(String email, Long idProduto);
+    /*
+     * void adicionarProdutoListaDesejo(String email, Long idProduto);
 
     void removerProdutoListaDesejo(String email, Long idProduto);
 
     List<PlacaDeVideo> getListaDesejos(String email);
+     */
 
     Cliente findByIdUsuario(Long idUsuario);
 

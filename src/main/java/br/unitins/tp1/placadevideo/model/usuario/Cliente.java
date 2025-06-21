@@ -3,6 +3,8 @@ package br.unitins.tp1.placadevideo.model.usuario;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import br.unitins.tp1.placadevideo.model.DefaultEntity;
 import br.unitins.tp1.placadevideo.model.placadevideo.PlacaDeVideo;
 import br.unitins.tp1.placadevideo.model.telefone.TelefoneCliente;
@@ -37,9 +39,6 @@ public class Cliente extends DefaultEntity {
     @OneToMany(fetch = FetchType.EAGER, orphanRemoval = true)
     private List<Cartao> cartoes;
 
-    @ManyToMany
-    @JoinTable(name = "lista_desejo", joinColumns = @JoinColumn(name = "id_cliente"), inverseJoinColumns = @JoinColumn(name = "id_placadevideo"))
-    private List<PlacaDeVideo> listaDesejos;
 
     public List<TelefoneCliente> getTelefones() {
         return telefones;
@@ -88,14 +87,5 @@ public class Cliente extends DefaultEntity {
     public void setCartoes(List<Cartao> cartoes) {
         this.cartoes = cartoes;
     }
-
-    public List<PlacaDeVideo> getListaDesejos() {
-        return listaDesejos;
-    }
-
-    public void setListaDesejos(List<PlacaDeVideo> listaDesejos) {
-        this.listaDesejos = listaDesejos;
-    }
-
 
 }

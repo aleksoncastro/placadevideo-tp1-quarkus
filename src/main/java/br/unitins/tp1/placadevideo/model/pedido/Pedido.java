@@ -4,6 +4,9 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import br.unitins.tp1.placadevideo.model.DefaultEntity;
 import br.unitins.tp1.placadevideo.model.pagamento.Pagamento;
 import br.unitins.tp1.placadevideo.model.usuario.Cliente;
@@ -16,6 +19,10 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 
 @Entity
+@JsonIdentityInfo(
+  generator = ObjectIdGenerators.PropertyGenerator.class,
+  property = "id"
+)
 public class Pedido extends DefaultEntity {
 
     private LocalDateTime data;

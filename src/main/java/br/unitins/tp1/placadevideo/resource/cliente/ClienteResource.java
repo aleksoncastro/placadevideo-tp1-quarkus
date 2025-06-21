@@ -133,7 +133,8 @@ public class ClienteResource {
         return Response.noContent().build();
     }
 
-    @GET
+    /*
+     * @GET
     @RolesAllowed({ "User" })
     @Path("/desejos")
     public Response getListaDesejos() {
@@ -161,5 +162,6 @@ public class ClienteResource {
         clienteService.removerProdutoListaDesejo(username, idProduto);
         return Response.noContent().build();
     }
+     */
 
 }

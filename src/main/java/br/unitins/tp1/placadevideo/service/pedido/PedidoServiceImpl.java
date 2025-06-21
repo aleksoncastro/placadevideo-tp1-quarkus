@@ -404,9 +404,30 @@ public class PedidoServiceImpl implements PedidoService {
 
     }
 
+
     @Override
-    public List<Pedido> findAll() {
-        return pedidoRepository.findAll().list();
+    public PaginacaoDTO findAll(Integer page, Integer pageSize) {
+        if (page == null || pageSize == null) {
+            page = 0;
+            pageSize = 20;
+        }
+
+        PanacheQuery<Pedido> query = pedidoRepository.findAll().page(page, pageSize);
+
+        long totalRecords = pedidoRepository.count(); // Conta o total de registros
+
+        // Retorna o DTO com as informações de paginação
+        return new PaginacaoDTO(totalRecords, page, pageSize);
+    }
+
+    @Override
+    public List<PedidoResponseDTO> findPage(int page, int pageSize) {
+        return pedidoRepository.findAll()
+                .page(page, pageSize)
+                .list()
+                .stream()
+                .map(PedidoResponseDTO::valueOf)
+                .toList();
     }
 
     @Override

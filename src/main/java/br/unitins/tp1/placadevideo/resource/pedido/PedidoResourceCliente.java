@@ -69,7 +69,7 @@ public class PedidoResourceCliente {
     }
 
     @PATCH
-    @Path("/{id}")
+    @Path("endereco/{id}")
     @RolesAllowed("User")
     public Response editEnderecoEntrega(@PathParam("id") Long idPedido, EnderecoEntregaRequestDTO dto) {
         LOG.infof("Editando um endereco do pedido : %s", idPedido);
